@@ -60,7 +60,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // android annotations
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+
+    // retrofit
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+
 
 }

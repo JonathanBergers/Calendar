@@ -1,17 +1,49 @@
 package nl.saxion.calendar;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
 
-import retrofit.Retrofit;
+import nl.saxion.calendar.client.YahooClient;
 
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
+
+
+
+
+    @ViewById
+    TextView textViewWeather;
+
+
+    @RestService
+    YahooClient client;
+
+    @AfterViews
+    @Background
+    public void getWeather(){
+
+        String s = client.getWeather().toString();
+
+        System.out.println(s);
+        showWeather(s);
+
+
+    }
+
+    public void showWeather(String s){
+        textViewWeather.setText(s);
+    }
+
+
 
 
 

@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import org.androidannotations.annotations.EActivity;
 
+import retrofit.Retrofit;
+
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {

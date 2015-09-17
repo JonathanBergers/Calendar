@@ -11,7 +11,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
-import nl.saxion.calendar.client.YahooClient;
+import nl.saxion.calendar.client.OpenweatherClient;
 
 
 @EActivity(R.layout.activity_main)
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 
 
     @RestService
-    YahooClient client;
+    OpenweatherClient client;
 
     @AfterViews
     @Background

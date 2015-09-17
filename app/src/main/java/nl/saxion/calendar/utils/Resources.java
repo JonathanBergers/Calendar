@@ -5,6 +5,6 @@ package nl.saxion.calendar.utils;
  */
 public class Resources {
 
-    public static final String YAHOO_BASE_URL = "https://query.yahooapis.com/v1/public/yql?";
+    public static final String OPENWEATHER_BASEURL = "http://api.openweathermap.org/data/2.5/weather?";
 
 }

@@ -13,12 +13,12 @@ import nl.saxion.calendar.utils.Resources;
 /**
  * Created by jonathan on 17-9-15.
  */
-@Rest(rootUrl = Resources.YAHOO_BASE_URL, converters = GsonHttpMessageConverter.class)
-public interface YahooClient {
+@Rest(rootUrl = Resources.OPENWEATHER_BASEURL, converters = GsonHttpMessageConverter.class)
+public interface OpenweatherClient {
 
 
 
-    @Get("q=select wind from weather.forecast where woeid=2460286&format=json")
+    @Get("q=London")
     JsonElement getWeather();
 
 

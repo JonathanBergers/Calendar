@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -17,6 +18,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
 import nl.saxion.calendar.client.OpenweatherClient;
+import nl.saxion.calendar.view.WeatherListViewFragment;
 
 
 @EActivity(R.layout.activity_main)
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @ViewById
+    FrameLayout frameLayout;
 
 
 
@@ -36,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = new Toolbar(this);
         Drawer drawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+
+
+
+        
 
 
     }

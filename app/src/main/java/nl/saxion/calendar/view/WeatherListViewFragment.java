@@ -15,21 +15,9 @@ import java.util.ArrayList;
 
 public class WeatherListViewFragment extends Fragment {
 
-    @ViewById
-    ListView listViewTest;
 
-
-    @AfterViews
     public void init(){
 
-
-        ArrayList<String> arrayList = new ArrayList<>();
-        for(int i =0 ; i<10; i++){
-
-            arrayList.add("jo");
-        }
-
-        listViewTest.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList));
 
 
     }

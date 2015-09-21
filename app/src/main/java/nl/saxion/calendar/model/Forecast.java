@@ -18,11 +18,19 @@ public class Forecast {
     private String location;
 
 
+
     public Forecast(ArrayList<Weather> weather, double temp, int pressure, int humidity, double temp_min, double temp_max, double windSpeed, String location) {
+
+        assert weather != null : "weather can not be null";
+        assert location != null : "location can not be null";
+        assert !location.isEmpty() : "location can not be empty";
+
+
         this.humidity = humidity;
         this.location = location;
         this.pressure = pressure;
         this.temp = temp;
+
         this.temp_max = temp_max;
         this.temp_min = temp_min;
         this.windSpeed = windSpeed;
@@ -48,4 +56,37 @@ public class Forecast {
 
         return s;
     }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getPressure() {
+        return pressure;
+    }
+
+    public double getTemp() {
+        return temp;
+    }
+
+    public double getTemp_max() {
+        return temp_max;
+    }
+
+    public double getTemp_min() {
+        return temp_min;
+    }
+
+    public ArrayList<Weather> getWeather() {
+        return weather;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
 }

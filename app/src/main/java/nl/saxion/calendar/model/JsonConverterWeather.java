@@ -13,11 +13,25 @@ import java.util.ArrayList;
 
 public class JsonConverterWeather {
 
-    public Forcast getForcastfromJson(String json){
+    /**
+     *
+     * @param json the Json to read
+     * @return The Forcast from the Json, or null if it can not be read.
+     */
+    public Forecast getForcastfromJson(String json){
+
+        assert json != null : "Json can not be null";
+        assert !json.isEmpty() : "Json can not be empty";
+
+        //returns if the String is null of empty
+        if(json == null || json.isEmpty()){
+            return null;
+        }
+
         try {
 
             JSONObject jsonResponse = new JSONObject(json);
-            Log.d("My App", jsonResponse.toString());
+            Log.d("Json", jsonResponse.toString());
 
             ArrayList<Weather> weatherArray = new ArrayList<>();
             double temp;
@@ -40,6 +54,10 @@ public class JsonConverterWeather {
                 String main = weatherJson.getString("main");
                 String description = weatherJson.getString("description");
 
+                if(main.isEmpty() || description.isEmpty()){
+                    return null;
+                }
+
                 //add the weather to the Array
                 weatherArray.add(new Weather(main, description));
 
@@ -58,17 +76,21 @@ public class JsonConverterWeather {
             windSpeed = wind.getDouble("speed");
 
             //get the location
+
             location = jsonResponse.getString("name");
+            if(location.isEmpty()){
+                return null;
+            }
 
-
-            return new Forcast(weatherArray, temp, pressure, humidity, temp_min, temp_max, windSpeed, location);
+            return new Forecast(weatherArray, temp, pressure, humidity, temp_min, temp_max, windSpeed, location);
 
 
 
         } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\"");
+            return null;
         }
-        return null;
+
     }
 
 

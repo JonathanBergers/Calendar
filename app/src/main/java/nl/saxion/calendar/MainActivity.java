@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @RestService
     OpenweatherClient client;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = new Toolbar(this);
         Drawer drawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+
 
 
 

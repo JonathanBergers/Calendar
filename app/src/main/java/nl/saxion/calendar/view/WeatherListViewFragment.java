@@ -2,8 +2,17 @@ package nl.saxion.calendar.view;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
+
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
@@ -18,45 +27,31 @@ public class WeatherListViewFragment extends Fragment {
 
 
 
+    @ViewById
+    RecyclerView recyclerView;
 
 
 
+    RecyclerViewMaterialAdapter mAdapter;
+
+    @AfterViews
+    public void init(){
 
 
-//
-//
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//
-//        inflater.inflate(R.layout.weather_lisview_fragment, container, false);
-//        return super.onCreateView(inflater, container, savedInstanceState);
-//    }
+        // set layout manager, or else bug, nullpointer exep
+       LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-//    @ViewById
-//    RecyclerView listView;
-//
-//
-//
-//    RecyclerViewMaterialAdapter mAdapter;
-//
-//    @AfterViews
-//    public void init(){
-//
-//
-//        Log.d("WLFRAGMENT", "INIT");
-//
-//
-//
-//        mAdapter = new RecyclerViewMaterialAdapter(new WeatherListAdapter());
-//        listView.setAdapter(mAdapter);
-//
-//        MaterialViewPagerHelper.registerRecyclerView(getActivity(), listView, null);
-//
-//
-//
-//    }
+        // set adapter
+        mAdapter = new RecyclerViewMaterialAdapter(new WeatherListAdapter());
+        recyclerView.setAdapter(mAdapter);
+
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+
+
+
+    }
 
 
 

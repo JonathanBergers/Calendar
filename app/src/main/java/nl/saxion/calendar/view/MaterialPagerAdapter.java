@@ -27,7 +27,7 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
 
 
-        return WeatherListViewFragment.init(1);
+        return WeatherListViewFragment_.builder().build();
 
     }
 

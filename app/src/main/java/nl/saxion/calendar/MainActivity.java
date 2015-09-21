@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
@@ -27,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @ViewById
-    FrameLayout frameLayout;
-
-
 
 
     @RestService
@@ -41,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = new Toolbar(this);
         Drawer drawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+
 
 
 

@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
+import org.androidannotations.annotations.EBean;
+
 /**
  * Created by jonathan on 21-9-15.
  */

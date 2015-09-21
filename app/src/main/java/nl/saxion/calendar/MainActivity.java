@@ -1,9 +1,14 @@
 package nl.saxion.calendar;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -15,7 +20,9 @@ import nl.saxion.calendar.client.OpenweatherClient;
 
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
+
+
 
 
 
@@ -25,13 +32,14 @@ public class MainActivity extends Activity {
     OpenweatherClient client;
 
     @AfterViews
-    @Background
     public void getWeather() {
 
-        String s = client.getWeather().toString();
+        Toolbar toolbar = new Toolbar(this);
+        Drawer drawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
 
-        System.out.println(s);
+
     }
+
 
 
 

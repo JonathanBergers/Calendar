@@ -21,6 +21,13 @@ repositories {
     maven{
         url 'http://repo.spring.io/milestone'
     }
+    maven{
+        url "https://jitpack.io"
+    }
+
+
+
+
 
 }
 
@@ -77,9 +84,17 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
+
     compile ('com.github.florent37:materialviewpager:1.1.2@aar'){
         transitive = true
     }
-    compile "com.android.support:appcompat-v7:23.0.+"
+    compile "com.android.support:appcompat-v7:23.0.1"
+    compile('com.mikepenz:materialdrawer:4.2.5@aar') {
+        transitive = true
+
+
+
+    }
+
 
 }

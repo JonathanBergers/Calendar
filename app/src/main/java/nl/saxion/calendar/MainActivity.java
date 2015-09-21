@@ -30,16 +30,20 @@ public class MainActivity extends Activity {
     @Background
     public void getWeather() {
 
-        String s = client.getWeather().toString();
+        String s = client.recieveCurrentWeather("Londen").toString();
 
         //System.out.println(s);
 
         JsonConverterWeather jcw = new JsonConverterWeather();
         Forecast f =jcw.getForcastfromJson(s);
+        if(f!=null){
+            showWeather(f.toString());
+            Log.d("Weather", f.toString() );
+        } else {
+            Log.d("Weather", "could not convert to Forcast");
+        }
 
-        showWeather(f.toString());
-        System.out.println(f.toString());
-        Log.d("Weather", f.toString() );
+
 
     }
     @UiThread

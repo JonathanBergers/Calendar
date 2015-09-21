@@ -33,6 +33,7 @@ public class JsonConverterWeather {
             JSONObject jsonResponse = new JSONObject(json);
             Log.d("Json", jsonResponse.toString());
 
+            //init all variables
             ArrayList<Weather> weatherArray = new ArrayList<>();
             double temp;
             int pressure;
@@ -87,7 +88,7 @@ public class JsonConverterWeather {
 
 
         } catch (Throwable t) {
-            Log.e("My App", "Could not parse malformed JSON: \"" + json + "\"");
+            Log.e("Json", "Could not parse malformed JSON: \"" + json + "\"");
             return null;
         }
 

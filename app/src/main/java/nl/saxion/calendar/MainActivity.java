@@ -36,10 +36,14 @@ public class MainActivity extends Activity {
 
         JsonConverterWeather jcw = new JsonConverterWeather();
         Forecast f =jcw.getForcastfromJson(s);
+        if(f!=null){
+            showWeather(f.toString());
+            Log.d("Weather", f.toString() );
+        } else {
+            Log.d("Weather", "could not convert to Forcast");
+        }
 
-        showWeather(f.toString());
-        System.out.println(f.toString());
-        Log.d("Weather", f.toString() );
+
 
     }
     @UiThread

@@ -1,17 +1,19 @@
 package nl.saxion.calendar;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
 import nl.saxion.calendar.client.OpenweatherClient;
+import nl.saxion.calendar.model.Forecast;
+import nl.saxion.calendar.model.JsonConverterWeather;
 
 
 @EActivity(R.layout.activity_main)
@@ -20,27 +22,29 @@ public class MainActivity extends Activity {
 
 
 
-    @ViewById
-    TextView textViewWeather;
-
 
     @RestService
     OpenweatherClient client;
 
     @AfterViews
     @Background
-    public void getWeather(){
+    public void getWeather() {
 
         String s = client.getWeather().toString();
 
-        System.out.println(s);
-        showWeather(s);
+        //System.out.println(s);
 
+        JsonConverterWeather jcw = new JsonConverterWeather();
+        Forecast f =jcw.getForcastfromJson(s);
+
+        showWeather(f.toString());
+        System.out.println(f.toString());
+        Log.d("Weather", f.toString() );
 
     }
-
+    @UiThread
     public void showWeather(String s){
-        textViewWeather.setText(s);
+
     }
 
 

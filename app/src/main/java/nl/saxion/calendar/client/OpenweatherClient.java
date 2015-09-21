@@ -1,11 +1,9 @@
 package nl.saxion.calendar.client;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Rest;
-import org.springframework.http.HttpAuthentication;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
 import nl.saxion.calendar.utils.Resources;
@@ -18,9 +16,11 @@ public interface OpenweatherClient {
 
 
 
-    @Get("q=London")
-    JsonElement getWeather();
+    @Get("weather?q={city}")
+    JsonElement recieveCurrentWeather(String city);
 
+    @Get("weather?lat={lat}&lon={lon}")
+    JsonElement recieveCurrentWeather(double lat, double lon);
 
 
 }

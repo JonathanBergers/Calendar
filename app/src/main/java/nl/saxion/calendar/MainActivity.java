@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 
     }
 
-    }
+
     @UiThread
     public void showWeather(String s){
 

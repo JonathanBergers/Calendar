@@ -6,8 +6,8 @@ import android.view.View;
 /**
  * Created by jonathan on 21-9-15.
  */
-public class WeatherViewHolder extends RecyclerView.ViewHolder {
-    public WeatherViewHolder(View itemView) {
+public class ForecastViewHolder extends RecyclerView.ViewHolder {
+    public ForecastViewHolder(View itemView) {
         super(itemView);
     }
 }

@@ -14,28 +14,64 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
+
+import java.util.List;
 
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.client.OpenweatherClient;
+import nl.saxion.calendar.model.Forecast;
+import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.view.MaterialPagerAdapter;
 
 
 @EActivity(R.layout.activity_material_view_pager)
-public class MaterialViewPagerActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
 
+
+
+    @Bean
+    Model model;
+
+
+    @RestService
+    OpenweatherClient client;
 
     @ViewById
     MaterialViewPager materialViewPager;
+
+    protected Drawer navigationDrawer;
 
 
     @AfterViews
     public void init(){
 
+        // setup the navigation drawer
         Toolbar toolbar = new Toolbar(this);
-        Drawer drawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+        navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+
+        createMaterialViewpager();
 
 
+
+
+
+
+
+    }
+
+
+    /** inititalizes the material viewpager with the recyclerviews
+     *
+     */
+    private void createMaterialViewpager(){
+
+
+        // Header design
         materialViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
@@ -66,17 +102,19 @@ public class MaterialViewPagerActivity extends AppCompatActivity {
 
 
 
+
         // get the viewpager
         ViewPager viewPager = materialViewPager.getViewPager();
-        // set an adapter
+        // set the pager adapter
         viewPager.setAdapter(new MaterialPagerAdapter(getSupportFragmentManager()));
         // add the viewpager to the pagertitlestrip
         materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
 
 
-
-
     }
+
+
+
 
 
     @Override

@@ -15,10 +15,10 @@ import nl.saxion.calendar.R;
  * Created by jonathan on 24-9-15.
  */
 @EViewGroup
-public class WeatherView extends LinearLayout{
+public class ForecastView extends LinearLayout{
 
 
-    public WeatherView(Context context) {
+    public ForecastView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.weather_view, this);
     }

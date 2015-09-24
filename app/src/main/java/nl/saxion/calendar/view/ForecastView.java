@@ -20,8 +20,6 @@ import nl.saxion.calendar.R;
 public class ForecastView extends LinearLayout{
 
 
-    @ViewById
-    TextView textView;
 
     public ForecastView(Context context) {
         super(context);
@@ -30,6 +28,11 @@ public class ForecastView extends LinearLayout{
 
 
 
+
+    public void setData(String s){
+
+
+    }
 
     @AfterViews
     public void init(){

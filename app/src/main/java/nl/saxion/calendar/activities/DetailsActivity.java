@@ -7,10 +7,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
 
+@EActivity(R.layout.activity_details)
 public class DetailsActivity extends AppCompatActivity {
 
     @ViewById
@@ -37,13 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
     @ViewById
     Button customizeButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
 
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

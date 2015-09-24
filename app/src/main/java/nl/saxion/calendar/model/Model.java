@@ -1,6 +1,5 @@
 package nl.saxion.calendar.model;
 
-<<<<<<< HEAD
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -60,21 +59,6 @@ public class Model extends Observable{
     }
 
 
-
-
-
-
-
-}
-=======
-import org.androidannotations.annotations.EBean;
-
-/**
- * Created by Alec on 21-9-2015.
- */
-@EBean (scope = EBean.Scope.Singleton)
-public class Model {
-
     private Double latitude;
     private Double longitude;
 
@@ -101,4 +85,3 @@ public class Model {
 
 
 
->>>>>>> origin/Alex2

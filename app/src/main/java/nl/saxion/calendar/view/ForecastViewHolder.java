@@ -22,7 +22,7 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
 
     public void setData(String s){
 
-        forecastView.textView.setText(s);
+
     }
 
 

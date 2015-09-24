@@ -5,10 +5,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.FragmentByTag;
+
 /**
  * Created by jonathan on 17-9-15.
  */
 public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
+
 
 
 
@@ -22,7 +26,8 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
 
-        return new WeatherListViewFragment();
+
+        return ForecastListViewFragment_.builder().build();
 
     }
 

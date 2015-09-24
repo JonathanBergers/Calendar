@@ -2,6 +2,9 @@ package nl.saxion.calendar.model;
 
 import android.util.Log;
 
+import com.google.gson.JsonElement;
+
+import org.androidannotations.annotations.EBean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,15 +14,18 @@ import java.util.ArrayList;
  * Created by falco on 17-9-15.
  */
 
+@EBean(scope = EBean.Scope.Singleton)
 public class JsonConverterWeather {
 
     /**
      *
-     * @param json the Json to read
+     * @param jsonElement the Json to read
      * @return The Forcast from the Json, or null if it can not be read.
      */
-    public Forecast getForcastfromJson(String json){
+    public Forecast getForcastfromJson(JsonElement jsonElement){
 
+
+        String json = jsonElement.toString();
         assert json != null : "Json can not be null";
         assert !json.isEmpty() : "Json can not be empty";
 

@@ -23,35 +23,35 @@ public class MainActivity extends Activity {
 
 
 
-
-    @RestService
-    OpenweatherClient client;
-
-    @AfterViews
-    @Background
-    public void getWeather() {
-
-        String s = client.recieveCurrentWeather("Londen").toString();
-
-        System.out.println(s);
-        showWeather(s);
-
-        JsonConverterWeather jcw = new JsonConverterWeather();
-        Forecast f =jcw.getForcastfromJson(s);
-        if(f!=null){
-            showWeather(f.toString());
-            Log.d("Weather", f.toString() );
-        } else {
-            Log.d("Weather", "could not convert to Forcast");
-        }
-
-    }
-
-    }
-    @UiThread
-    public void showWeather(String s){
-
-    }
+//
+//    @RestService
+//    OpenweatherClient client;
+//
+//    @AfterViews
+//    @Background
+//    public void getWeather() {
+//
+//        String s = client.recieveCurrentWeather("Londen").toString();
+//
+//        System.out.println(s);
+//        showWeather(s);
+//
+//        JsonConverterWeather jcw = new JsonConverterWeather();
+//        Forecast f =jcw.getForcastfromJson(s);
+//        if(f!=null){
+//            showWeather(f.toString());
+//            Log.d("Weather", f.toString() );
+//        } else {
+//            Log.d("Weather", "could not convert to Forcast");
+//        }
+//
+//    }
+//
+//
+//    @UiThread
+//    public void showWeather(String s){
+//
+//    }
 
 
 

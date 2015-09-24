@@ -1,24 +1,53 @@
 package nl.saxion.calendar.model;
 
+import com.google.gson.JsonElement;
+
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.rest.RestService;
+
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import nl.saxion.calendar.client.OpenweatherClient;
 
 /**
  * Created by jonathan on 24-9-15.
  */
+@EBean
 public class Model {
 
 
 
+    @RestService
+    OpenweatherClient openweatherClient;
 
-    private List<Forecast> forecasts;
+    @Bean
+    JsonConverterWeather forecastConverter;
 
 
-    public List<Forecast> getForecasts() {
-        return forecasts;
+
+    private Map<String, Forecast> locationForecasts = new TreeMap<>();
+
+
+
+    public Forecast getForecast(String city){
+
+        retrieveForecast(city);
+        return locationForecasts.get(city);
+
     }
 
-    public void setForecasts(List<Forecast> forecasts) {
-        this.forecasts = forecasts;
+
+    @Background
+    void retrieveForecast(String city){
+
+        Forecast f = forecastConverter.getForcastfromJson(openweatherClient.recieveCurrentWeather(city));
+
+        locationForecasts.put(city, f);
+
     }
 
 

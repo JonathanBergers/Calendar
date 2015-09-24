@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewParent;
@@ -17,6 +18,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
@@ -25,6 +27,7 @@ import java.util.List;
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.model.Forecast;
+import nl.saxion.calendar.model.JsonConverterWeather;
 import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.view.MaterialPagerAdapter;
 
@@ -37,9 +40,11 @@ public class BaseActivity extends AppCompatActivity {
     @Bean
     Model model;
 
-
     @RestService
     OpenweatherClient client;
+
+
+
 
     @ViewById
     MaterialViewPager materialViewPager;
@@ -57,10 +62,25 @@ public class BaseActivity extends AppCompatActivity {
         createMaterialViewpager();
 
 
+        retrieveWeather();
 
 
 
+    }
 
+    @Background
+    void retrieveWeather(){
+        JsonConverterWeather jsonConverterWeather = new JsonConverterWeather();
+        Forecast f = jsonConverterWeather.getForcastfromJson(client.recieveCurrentWeather("London"));
+
+        showWeather(""+ f.getTemp());
+
+    }
+
+    @UiThread
+    void showWeather(String s){
+
+        Log.d("JO", "" +s);
 
     }
 

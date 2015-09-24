@@ -16,7 +16,7 @@
 
         </activity>
         <activity
-            android:name=".activities.MaterialViewPagerActivity_"
+            android:name=".activities.BaseActivity_"
             android:label="@string/title_activity_material_view_pager" >
 
             <intent-filter>

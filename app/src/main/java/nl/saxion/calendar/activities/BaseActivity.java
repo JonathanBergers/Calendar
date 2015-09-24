@@ -2,12 +2,10 @@ package nl.saxion.calendar.activities;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewParent;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
@@ -22,8 +20,6 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
-import java.util.List;
-
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.model.Forecast;
@@ -33,7 +29,7 @@ import nl.saxion.calendar.view.MaterialPagerAdapter;
 
 
 @EActivity(R.layout.activity_material_view_pager)
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity{
 
 
 
@@ -59,34 +55,12 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = new Toolbar(this);
         navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
 
+        model.retrieveForecasts("Londen");
         createMaterialViewpager();
 
 
-        retrieveWeather();
-
-
 
     }
-
-    @Background
-    void retrieveWeather(){
-        JsonConverterWeather jsonConverterWeather = new JsonConverterWeather();
-//        Forecast f = jsonConverterWeather.getForcastfromJson(client.recieveCurrentWeather("London"));
-
-
-
-        Forecast f = jsonConverterWeather.fromJsonObject(client.recieveCurrentWeather("London"));
-        showWeather(""+ f.getTemp());
-
-    }
-
-    @UiThread
-    void showWeather(String s){
-
-        Log.d("JO", "" +s);
-
-    }
-
 
     /** inititalizes the material viewpager with the recyclerviews
      *
@@ -161,4 +135,6 @@ public class BaseActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

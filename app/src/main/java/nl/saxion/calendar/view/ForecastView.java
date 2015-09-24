@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
 
@@ -17,6 +19,9 @@ import nl.saxion.calendar.R;
 @EViewGroup
 public class ForecastView extends LinearLayout{
 
+
+    @ViewById
+    TextView textView;
 
     public ForecastView(Context context) {
         super(context);

@@ -9,10 +9,12 @@ import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.model.Model;
 
 /**
  * Created by jonathan on 17-9-15.
@@ -22,6 +24,8 @@ import nl.saxion.calendar.R;
 public class ForecastListViewFragment extends Fragment {
 
 
+    @Bean
+    Model model;
 
     @ViewById
     RecyclerView recyclerView;
@@ -40,7 +44,7 @@ public class ForecastListViewFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // set adapter
-        mAdapter = new RecyclerViewMaterialAdapter(new ForecastListAdapter());
+        mAdapter = new RecyclerViewMaterialAdapter(new ForecastListAdapter(model));
         recyclerView.setAdapter(mAdapter);
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);

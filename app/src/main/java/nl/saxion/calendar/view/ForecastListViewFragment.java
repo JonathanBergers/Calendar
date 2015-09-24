@@ -32,6 +32,8 @@ public class ForecastListViewFragment extends Fragment {
 
 
 
+
+
     RecyclerViewMaterialAdapter mAdapter;
 
     @AfterViews

@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.androidannotations.annotations.EActivity;
+
 import nl.saxion.calendar.R;
 
+@EActivity(R.layout.activity_customize)
 public class CustomizeActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customize);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

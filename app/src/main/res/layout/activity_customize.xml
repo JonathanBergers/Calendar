@@ -14,25 +14,36 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Change view setting"
+                android:id="@+id/textViewTitleForecast" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Temperature"
-                android:id="@+id/tempCheckbox" />
+                android:text="Temperatuur"
+                android:id="@+id/checkBoxTemp"
+                android:checked="false" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pressure"
-                android:id="@+id/pressureCheckbox" />
+                android:id="@+id/checkBoxPressure"
+                android:checked="false"
+                android:text="Pressure" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Humidity"
-                android:id="@+id/humidityCheckbox" />
+                android:id="@+id/checkBoxHumidity"
+                android:checked="false" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -44,19 +55,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Maximum temperature"
-                android:id="@+id/temp_maxCheckbox" />
+                android:id="@+id/checkBoxTempMax"
+                android:checked="false" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Windspeed"
-                android:id="@+id/windspeedCheckbox" />
+                android:id="@+id/checkBoxWindSpeed"
+                android:checked="false" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location"
-                android:id="@+id/locationCheckbox" />
+                android:id="@+id/checkBoxLocation"
+                android:checked="false" />
+
+            <Button
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/buttonSaveForecastSettings" />
         </LinearLayout>
 
     </LinearLayout>

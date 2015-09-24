@@ -33,22 +33,8 @@ public class Model {
 
 
 
-    public Forecast getForecast(String city){
-
-        retrieveForecast(city);
-        return locationForecasts.get(city);
-
-    }
 
 
-    @Background
-    void retrieveForecast(String city){
-
-        Forecast f = forecastConverter.getForcastfromJson(openweatherClient.recieveCurrentWeather(city));
-
-        locationForecasts.put(city, f);
-
-    }
 
 
 }

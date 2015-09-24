@@ -71,8 +71,11 @@ public class BaseActivity extends AppCompatActivity {
     @Background
     void retrieveWeather(){
         JsonConverterWeather jsonConverterWeather = new JsonConverterWeather();
-        Forecast f = jsonConverterWeather.getForcastfromJson(client.recieveCurrentWeather("London"));
+//        Forecast f = jsonConverterWeather.getForcastfromJson(client.recieveCurrentWeather("London"));
 
+
+
+        Forecast f = jsonConverterWeather.fromJsonObject(client.recieveCurrentWeather("London"));
         showWeather(""+ f.getTemp());
 
     }

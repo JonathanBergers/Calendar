@@ -1,6 +1,8 @@
 package nl.saxion.calendar.client;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Rest;
@@ -17,10 +19,10 @@ public interface OpenweatherClient {
 
 
     @Get("weather?q={city}")
-    JsonElement recieveCurrentWeather(String city);
+    JsonObject recieveCurrentWeather(String city);
 
     @Get("weather?lat={lat}&lon={lon}")
-    JsonElement recieveCurrentWeather(double lat, double lon);
+    JsonObject recieveCurrentWeather(double lat, double lon);
 
 
 }

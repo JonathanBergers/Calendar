@@ -36,6 +36,7 @@ public class Forecast {
         this.windSpeed = windSpeed;
         this.weather = weather;
 
+
     }
 
     @Override

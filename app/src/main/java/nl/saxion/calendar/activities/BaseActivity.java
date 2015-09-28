@@ -1,17 +1,20 @@
 package nl.saxion.calendar.activities;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -49,7 +52,16 @@ public class BaseActivity extends AppCompatActivity{
 
 
             navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
-        navigationDrawer.addItem(new PrimaryDrawerItem().withName("Settings"));
+
+        //when setting is clicked it fires an intent to customize activity
+        navigationDrawer.addItem(new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+
+                CustomizeActivity_.intent(BaseActivity.this).start();
+                return false;
+            }
+        }));
 
 
 

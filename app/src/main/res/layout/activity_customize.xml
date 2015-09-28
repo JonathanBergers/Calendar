@@ -49,7 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Minimum temperature "
-                android:id="@+id/temp_minCheckbox" />
+                android:id="@+id/checkBoxTempMin"
+                android:checked="false" />
 
             <CheckBox
                 android:layout_width="wrap_content"

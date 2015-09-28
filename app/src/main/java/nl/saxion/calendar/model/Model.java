@@ -28,6 +28,7 @@ public class Model extends Observable{
     @Bean
     JsonConverterWeather forecastConverter;
 
+    ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
 
 
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
@@ -80,6 +81,10 @@ public class Model extends Observable{
     public Double getLongitude() {
 
         return longitude;
+    }
+
+    public ForecastSettings getSettings() {
+        return setting;
     }
 }
 

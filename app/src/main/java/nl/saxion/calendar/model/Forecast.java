@@ -15,15 +15,14 @@ public class Forecast {
     private double temp_min;
     private double temp_max;
     private double windSpeed;
-    private String location;
+    private Location location;
 
 
 
-    public Forecast(ArrayList<Weather> weather, double temp, int pressure, int humidity, double temp_min, double temp_max, double windSpeed, String location) {
+    public Forecast(ArrayList<Weather> weather, double temp, int pressure, int humidity, double temp_min, double temp_max, double windSpeed, Location location) {
 
         assert weather != null : "weather can not be null";
         assert location != null : "location can not be null";
-        assert !location.isEmpty() : "location can not be empty";
 
 
         this.humidity = humidity;
@@ -61,7 +60,7 @@ public class Forecast {
         return humidity;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 

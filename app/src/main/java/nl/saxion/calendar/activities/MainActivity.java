@@ -1,12 +1,12 @@
 package nl.saxion.calendar.activities;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
     @AfterViews
     public void initialize(){
 
-        model.retrieveForecasts("Londen");
+        //model.retrieveForecasts("Londen");
         createMaterialViewpager();
 
 

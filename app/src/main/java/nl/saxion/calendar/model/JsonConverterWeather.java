@@ -1,14 +1,10 @@
 package nl.saxion.calendar.model;
 
-import android.util.Log;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.EBean;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -37,7 +33,7 @@ public class JsonConverterWeather {
         double temp_min;
         double temp_max;
         double windSpeed;
-        String location;
+        Location location;
 
 
 
@@ -77,11 +73,14 @@ public class JsonConverterWeather {
 
         //get the location
 
+        JsonObject coord = jsonObject.getAsJsonObject("coord");
+        double lon = coord.get("lon").getAsDouble();
+        double lat = coord.get("lat").getAsDouble();
+        String city = jsonObject.get("name").getAsString();
 
-        location = jsonObject.get("name").getAsString();
+        location = new Location(city, lat, lon);
 
 
-        assert location!= null && !location.isEmpty(): "location is null or empty";
 
 
 

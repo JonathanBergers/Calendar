@@ -61,12 +61,11 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastViewHolder
 
         Log.d("JOO", (w.toString()));
 
-        holder.setData("JO");
+        holder.setData(w);
 
 
 
     }
-
 
 
 

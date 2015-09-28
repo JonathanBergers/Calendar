@@ -20,8 +20,9 @@ public class ForecastViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void setData(String s){
+    public void setData(Forecast f){
 
+        forecastView.setData(f);
 
     }
 

@@ -45,6 +45,8 @@ public class MainActivity extends BaseActivity {
     public void initialize(){
 
         model.retrieveForecasts("Londen");
+        model.retrieveForecasts("Paris");
+        model.retrieveForecasts("Amsterdam");
         createMaterialViewpager();
 
 

@@ -3,6 +3,7 @@ package nl.saxion.calendar.view;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -31,6 +33,7 @@ public class ForecastView extends LinearLayout{
     @ViewById
     MaterialEditText materialEditTextTemp, materialEditTextHumidity, materialEditTextWindspeed, materialEditTextPressure, materialEditTextTempMin, materialEditTextTempMax;
 
+
     @Bean
     Model model;
 
@@ -39,8 +42,6 @@ public class ForecastView extends LinearLayout{
         super(context);
         LayoutInflater.from(context).inflate(R.layout.weather_view, this);
     }
-
-
 
 
     public void setData(Forecast f){
@@ -54,6 +55,8 @@ public class ForecastView extends LinearLayout{
         materialEditTextTempMax.setText("" + f.getTemp_max());
         materialEditTextPressure.setText("" + f.getPressure());
 
+        //makes attribute visible or invisible depending on whether they are
+        //checked or not in settings
         materialEditTextHumidity.setVisibility(getVisible(model.getSettings().isHumidity()));
         materialEditTextTemp.setVisibility(getVisible(model.getSettings().isWindspeed()));
         materialEditTextWindspeed.setVisibility(getVisible(model.getSettings().isWindspeed()));
@@ -63,6 +66,7 @@ public class ForecastView extends LinearLayout{
 
     }
 
+    //if true show view else make invisible
     public int getVisible(boolean b) {
         if (b) {
             return View.VISIBLE;

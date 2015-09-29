@@ -3,11 +3,11 @@ package nl.saxion.calendar.view;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.AfterViews;
@@ -27,16 +27,10 @@ import nl.saxion.calendar.model.Model;
  * Created by falco on 24-9-15.
  */
 @EFragment(R.layout.location_listview_fragment)
-public class LocationViewFragment extends Fragment {
+public class LocationListViewFragment extends Fragment {
 
     @RestService
     OpenweatherClient openweatherClient;
-
-    @ViewById(R.id.editText_LocationSearch)
-    EditText ETLocationSearch;
-
-    @ViewById(R.id.button_LocationSearch)
-    Button BLocationSearch;
 
     @ViewById
     RecyclerView recyclerView;
@@ -44,20 +38,24 @@ public class LocationViewFragment extends Fragment {
     @Bean
     Model model;
 
-
+    RecyclerViewMaterialAdapter mAdapter;
 
 
     @AfterViews
     public void init(){
 
 
-        //searchCity("Vorden");
-        BLocationSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchCity(ETLocationSearch.getText().toString());
-            }
-        });
+        searchCity("Vorden");
+        // set layout manager, or else bug, nullpointer exep
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        // set adapter
+        mAdapter = new RecyclerViewMaterialAdapter(new LocationListAdapter(model));
+        recyclerView.setAdapter(mAdapter);
+
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
     }
 
 

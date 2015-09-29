@@ -23,7 +23,7 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
 
         if(position == 2){
-            return LocationViewFragment_.builder().build();
+            return LocationListViewFragment_.builder().build();
         }
 
         return ForecastListViewFragment_.builder().build();

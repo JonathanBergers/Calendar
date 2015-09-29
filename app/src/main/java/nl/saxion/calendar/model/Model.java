@@ -31,6 +31,9 @@ public class Model extends Observable{
     private List<Location> locations = new ArrayList<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
 
+    public List<Location> getLocations() {
+        return locations;
+    }
 
     public List<Forecast> getLocationForecasts(){
 

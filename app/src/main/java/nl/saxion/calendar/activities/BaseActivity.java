@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity{
 
             navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
 
-        //when setting is clicked it fires an intent to customize activity
+        //when settings is clicked it fires an intent to customize activity
         navigationDrawer.addItem(new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {

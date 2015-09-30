@@ -34,7 +34,16 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
 
-        return "JO";
+
+        switch (position){
+
+            case 0: return "Forecasts";
+            case 1: return "Locations";
+            case 2: return "Events";
+
+
+        }
+        return "False page title";
 
     }
 

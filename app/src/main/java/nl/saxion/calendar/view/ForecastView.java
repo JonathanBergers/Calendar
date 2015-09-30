@@ -2,6 +2,7 @@ package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -9,7 +10,6 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
@@ -42,6 +42,7 @@ public class ForecastView extends LinearLayout{
 
 
 
+    @SuppressWarnings("ResourceType")
     public void setData(Forecast f){
 
         textViewCity.setText(f.getLocation().getCity());

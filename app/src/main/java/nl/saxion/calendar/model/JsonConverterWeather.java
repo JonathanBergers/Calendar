@@ -50,11 +50,12 @@ public class JsonConverterWeather {
             String main = jo.get("main").getAsString();
             String description = jo.get("description").getAsString();
 
+            iconId = jo.get("icon").getAsString();
 
             assert main !=null && !main.isEmpty(): "main string null or empty";
             assert description !=null && !description.isEmpty(): "description string null or empty";
 
-            weatherArray.add(new Weather(main, description));
+            weatherArray.add(new Weather(main, description, iconId));
 
         }
         // get the main weather
@@ -66,6 +67,7 @@ public class JsonConverterWeather {
         humidity = main.get("humidity").getAsInt();
         temp_min = main.get("temp_min").getAsDouble();
         temp_max = main.get("temp_max").getAsDouble();
+
 
         //get the windspeed
         JsonObject wind = jsonObject.get("wind").getAsJsonObject();
@@ -81,6 +83,7 @@ public class JsonConverterWeather {
         location = new Location(city, lat, lon);
 
 
+       
 
 
 

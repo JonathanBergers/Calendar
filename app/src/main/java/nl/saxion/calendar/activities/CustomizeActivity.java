@@ -47,6 +47,8 @@ public class CustomizeActivity extends AppCompatActivity {
 
     @Click
     void buttonSaveForecastSettings() {
+
+        //when save button is clicked, save whether checkbox is checked or not
         model.getSettings().setTemp(checkBoxTemp.isChecked());
         model.getSettings().setPressure(checkBoxPressure.isChecked());
         model.getSettings().setHumidity(checkBoxHumidity.isChecked());
@@ -62,6 +64,8 @@ public class CustomizeActivity extends AppCompatActivity {
     @AfterViews
     public void initialize() {
 
+        //when Customize is called, sets the checkboxes to true or false
+        //by calling ForeCastSettings from the model
         checkBoxTemp.setChecked(model.getSettings().isTemp());
         checkBoxPressure.setChecked(model.getSettings().isPressure());
         checkBoxHumidity.setChecked(model.getSettings().isHumidity());

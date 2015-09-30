@@ -6,8 +6,9 @@ package nl.saxion.calendar.model;
 public class Weather {
     private String main;
     private String description;
+    private String iconId;
 
-    public Weather(String main, String description){
+    public Weather(String main, String description, String iconId){
 
         assert main != null : "main can not be null";
         assert !main.isEmpty() : "main can not be empty";
@@ -16,6 +17,7 @@ public class Weather {
 
         this.main = main;
         this.description = description;
+        this.iconId = iconId;
     }
 
     @Override
@@ -29,5 +31,9 @@ public class Weather {
 
     public String getMain() {
         return main;
+    }
+
+    public String getIconId() {
+        return iconId;
     }
 }

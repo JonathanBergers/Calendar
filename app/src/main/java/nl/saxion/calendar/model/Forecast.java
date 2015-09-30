@@ -17,6 +17,9 @@ public class Forecast {
     private double windSpeed;
     private Location location;
 
+    //difference between Kelvin and Celsius
+    private final double DIFFERENCE = 273.15;
+
 
 
     public Forecast(ArrayList<Weather> weather, double temp, int pressure, int humidity, double temp_min, double temp_max, double windSpeed, Location location) {
@@ -28,13 +31,21 @@ public class Forecast {
         this.humidity = humidity;
         this.location = location;
         this.pressure = pressure;
-        this.temp = temp;
-
-        this.temp_max = temp_max;
-        this.temp_min = temp_min;
+        this.temp = makeCelsius(temp);
+        this.temp_max = makeCelsius(temp_max);
+        this.temp_min = makeCelsius(temp_min);
         this.windSpeed = windSpeed;
         this.weather = weather;
 
+
+    }
+
+    //sets temp from Kelvin to Celsius and rounds it off
+    private double makeCelsius(double d) {
+        double value = d - DIFFERENCE;
+        double celsius = Math.round(value * 100) / 100;
+
+        return celsius;
     }
 
     @Override

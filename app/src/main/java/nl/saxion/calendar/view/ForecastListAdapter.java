@@ -22,11 +22,19 @@ import nl.saxion.calendar.model.Weather;
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastViewHolder> implements Observer {
 
 
-    public ForecastListAdapter(Model model) {
+    public ForecastListAdapter(Model model, RecyclerView recyclerView) {
         this.model = model;
+        this.recyclerView = recyclerView;
+        model.addObserver(this);
+
+
+
+        Log.d("OBSERVERS", "" + model.countObservers());
+
     }
 
 
+    RecyclerView recyclerView;
     Model model;
 
 
@@ -85,8 +93,13 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastViewHolder
     @Override
     public void update(Observable observable, Object data) {
 
+        notifyDataSetChanged();
+        super.notifyDataSetChanged();
 
 
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+        Log.d("LISTADAPTER", "FORECAST LIST ADAPTER UPDATE");
 
 
     }

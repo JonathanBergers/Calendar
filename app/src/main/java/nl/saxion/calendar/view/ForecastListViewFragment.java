@@ -2,8 +2,10 @@ package nl.saxion.calendar.view;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
@@ -31,6 +33,8 @@ public class ForecastListViewFragment extends Fragment {
     RecyclerView recyclerView;
 
 
+    @ViewById
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
 
@@ -46,13 +50,29 @@ public class ForecastListViewFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // set adapter
-        mAdapter = new RecyclerViewMaterialAdapter(new ForecastListAdapter(model));
+
+        ForecastListAdapter adapter  = new ForecastListAdapter(model, recyclerView);
+
+
+        mAdapter = new RecyclerViewMaterialAdapter(adapter);
         recyclerView.setAdapter(mAdapter);
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
 
 
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                model.retrieveForecasts("New York");
+                //TODO kan miss nog luisteren naar observer
+                swipeRefreshLayout.setRefreshing(false);
+
+
+            }
+
+        });
 
 
     }

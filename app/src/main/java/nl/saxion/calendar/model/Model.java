@@ -49,6 +49,8 @@ public class Model extends Observable{
     public void retrieveForecasts(String... city){
 
 
+        locationForecasts.clear();
+
         for(String s: city){
 
             locationForecasts.put(s, forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(s)));
@@ -57,8 +59,19 @@ public class Model extends Observable{
         }
 
 
+
+
+        UInotifiyObservers(null);
     }
 
+
+    @UiThread
+    public void UInotifiyObservers(Object data){
+
+       setChanged();
+        notifyObservers();
+
+    }
 
     private Double latitude;
     private Double longitude;

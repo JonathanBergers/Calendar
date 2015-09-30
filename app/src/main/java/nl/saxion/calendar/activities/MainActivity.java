@@ -44,9 +44,7 @@ public class MainActivity extends BaseActivity {
     @AfterViews
     public void initialize(){
 
-        model.retrieveForecasts("Londen");
-        model.retrieveForecasts("Paris");
-        model.retrieveForecasts("Amsterdam");
+        //model.retrieveForecasts("Londen");
         createMaterialViewpager();
 
 

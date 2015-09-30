@@ -33,6 +33,7 @@ public class JsonConverterWeather {
         double temp_min;
         double temp_max;
         double windSpeed;
+        String iconId;
         Location location;
 
 

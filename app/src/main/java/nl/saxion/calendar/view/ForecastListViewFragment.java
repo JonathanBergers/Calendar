@@ -16,6 +16,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
 
 /**
@@ -65,7 +66,7 @@ public class ForecastListViewFragment extends Fragment {
 
             @Override
             public void onRefresh() {
-                model.retrieveForecasts("New York");
+                model.retrieveForecasts(new Location("London", 0.0, 0.0));
                 //TODO kan miss nog luisteren naar observer
                 swipeRefreshLayout.setRefreshing(false);
 

@@ -3,6 +3,7 @@ package nl.saxion.calendar.model;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
@@ -80,12 +81,12 @@ public class Model extends Observable{
 
 
 
-        UInotifiyObservers(null);
+        UInotifiyObservers();
     }
 
 
     @UiThread
-    public void UInotifiyObservers(Object data){
+    public void UInotifiyObservers(){
 
        setChanged();
         notifyObservers();

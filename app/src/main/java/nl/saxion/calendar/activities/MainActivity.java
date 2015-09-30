@@ -67,11 +67,11 @@ public class MainActivity extends BaseActivity {
                     case 0:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                                "https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fbeachsafe.org.au%2Flocal%2Fimage.php%3Fid%3D623%26x%3D460%26f%3Djpg&f=1");
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
-                                "https://fs01.androidpit.info/a/63/0e/android-l-wallpapers-630ea6-h900.jpg");
+                                "https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.designers-revolution.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fworld-map-vector-line-art.jpg&f=1");
                     case 2:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,

@@ -38,6 +38,7 @@ public class Forecast {
         this.windSpeed = windSpeed;
         this.weather = weather;
 
+
     }
 
     //sets temp from Kelvin to Celsius and rounds it off

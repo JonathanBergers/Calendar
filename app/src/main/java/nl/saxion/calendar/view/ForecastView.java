@@ -58,12 +58,14 @@ public class ForecastView extends LinearLayout{
     }
 
 
+
+
+    @SuppressWarnings("ResourceType")
     public void setData(Forecast f){
-
-
 
         getBitmapFromURL("http://openweathermap.org/img/w/" + f.getWeather().get(0).getIconId() + ".png");
         textViewCity.setText(f.getLocation());
+        textViewCity.setText(f.getLocation().getCity());
         textViewMessage.setText(f.getWeather().get(0).getDescription());
         materialEditTextHumidity.setText("" + f.getHumidity());
         materialEditTextTemp.setText("" + f.getTemp());

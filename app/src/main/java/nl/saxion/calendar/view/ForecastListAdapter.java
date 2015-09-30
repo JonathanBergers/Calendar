@@ -4,17 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
-import nl.saxion.calendar.model.Weather;
 
 /**
  * Created by jonathan on 21-9-15.

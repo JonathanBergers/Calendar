@@ -24,6 +24,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
+import nl.saxion.calendar.GPSTrackerActivity_;
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.model.Forecast;
@@ -53,15 +54,31 @@ public class BaseActivity extends AppCompatActivity{
 
             navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
 
-        //when settings is clicked it fires an intent to customize activity
-        navigationDrawer.addItem(new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+
+        PrimaryDrawerItem settingsItem = new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
 
                 CustomizeActivity_.intent(BaseActivity.this).start();
                 return false;
             }
-        }));
+        });
+
+
+        PrimaryDrawerItem gpsItem = new PrimaryDrawerItem().withName("Current Location Demo").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+
+                GPSTrackerActivity_.intent(BaseActivity.this).start();
+                return false;
+            }
+        });
+
+
+        //when settings is clicked it fires an intent to customize activity
+        navigationDrawer.addItem(settingsItem);
+        navigationDrawer.addItem(gpsItem);
+
 
 
 

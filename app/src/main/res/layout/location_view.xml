@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#ffffffff">
+    android:backgroundTint="#ffffffff"
+    android:background="@color/cardview_light_background">
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:layout_width="281dp"

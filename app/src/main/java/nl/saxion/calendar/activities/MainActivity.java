@@ -15,6 +15,7 @@ import org.androidannotations.annotations.rest.RestService;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
+import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.view.MaterialPagerAdapter;
 
@@ -46,6 +47,15 @@ public class MainActivity extends BaseActivity {
 
         //model.retrieveForecasts("Londen");
         createMaterialViewpager();
+
+
+        model.addLocation(new Location("enschede", 0, 0));
+        model.addLocation(new Location("paris", 0, 0));
+
+
+
+        model.retrieveForecasts();
+
 
 
 

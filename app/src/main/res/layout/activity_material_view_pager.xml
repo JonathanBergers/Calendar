@@ -21,4 +21,4 @@
     app:viewpager_disableToolbar="false"
 
 
-    android:background="#000000" />
+    android:background="#ffffffff" />

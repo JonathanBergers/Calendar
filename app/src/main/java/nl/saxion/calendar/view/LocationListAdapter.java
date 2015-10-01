@@ -32,12 +32,18 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationViewHolder
         // create the viewholder
         LocationViewHolder holder = new LocationViewHolder(v);
 
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        Location l  = model.getLocations().get(position);
+
+        if(position==0){
+            holder.setData(null);
+            return;
+        }
+        Location l  = model.getLocations().get(position-1);
 
         Log.d("JOO", (l.toString()));
 
@@ -48,6 +54,8 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationViewHolder
 
     @Override
     public int getItemCount() {
-        return model.getLocations().size();
+        return model.getLocations().size()+1;
     }
+
+
 }

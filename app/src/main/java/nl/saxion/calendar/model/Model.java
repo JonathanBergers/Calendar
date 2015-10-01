@@ -1,5 +1,11 @@
 package nl.saxion.calendar.model;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+
+import com.google.gson.JsonObject;
+
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -88,7 +94,7 @@ public class Model extends Observable{
     @UiThread
     public void UInotifiyObservers(){
 
-       setChanged();
+        setChanged();
         notifyObservers();
 
     }
@@ -119,6 +125,58 @@ public class Model extends Observable{
     public ForecastSettings getSettings() {
         return setting;
     }
+
+
+    @Background
+    public void searchCity(String city, Context c){
+        JsonObject result = openweatherClient.recieveCurrentWeather(city);
+        if(result!=null){
+
+            JsonObject coord = result.getAsJsonObject("coord");
+            double resultLon = coord.get("lon").getAsDouble();
+            double resultLat = coord.get("lat").getAsDouble();
+            String resultCity = result.get("name").getAsString();
+
+            Location resultLocation = new Location(resultCity, resultLat, resultLon);
+
+            getRightCity(city, resultLocation, c);
+        } else {
+            //give error
+        }
+        return;
+    }
+    @UiThread
+    public void getRightCity(String searedCity, final Location resultLocation, Context c){
+        if(searedCity.equalsIgnoreCase(resultLocation.getCity())){
+            addLocation(resultLocation);
+        } else {
+            //geef gebruiker keuze
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            addLocation(resultLocation);
+                            UInotifiyObservers();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            //do nothing for now
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(c);
+            builder.setMessage("u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+                    .setNegativeButton("Nee", dialogClickListener).show();
+        }
+        return;
+    }
+
+
 }
 
 

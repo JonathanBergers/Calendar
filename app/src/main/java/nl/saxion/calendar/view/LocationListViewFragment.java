@@ -45,7 +45,6 @@ public class LocationListViewFragment extends Fragment {
     public void init(){
 
 
-        searchCity("Vorden");
         // set layout manager, or else bug, nullpointer exep
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);

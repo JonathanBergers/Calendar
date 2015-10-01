@@ -84,6 +84,26 @@ public class Model extends Observable{
         UInotifiyObservers();
     }
 
+    /**retrieves the forecasts for the current locations
+     *
+     */
+    @Background
+    public void retrieveForecasts(){
+
+
+        for(Location l: getLocations()){
+
+            locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
+
+
+        }
+
+
+
+
+        UInotifiyObservers();
+    }
+
 
     @UiThread
     public void UInotifiyObservers(){

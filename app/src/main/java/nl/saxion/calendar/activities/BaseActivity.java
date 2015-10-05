@@ -74,10 +74,18 @@ public class BaseActivity extends AppCompatActivity{
             }
         });
 
+        PrimaryDrawerItem loginItem = new PrimaryDrawerItem().withName("Login").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
 
+                LoginActivity_.intent(BaseActivity.this).start();
+                return false;
+            }
+        });
         //when settings is clicked it fires an intent to customize activity
         navigationDrawer.addItem(settingsItem);
         navigationDrawer.addItem(gpsItem);
+        navigationDrawer.addItem(loginItem);
 
 
 

@@ -35,7 +35,7 @@
 
         </activity>
         <activity android:name=".activities.CustomizeActivity_"></activity>
-        <activity android:name=".GPSTrackerActivity_"></activity>
+        <activity android:name=".activities.SettingsActivity_"></activity>
         <activity android:name=".activities.LoginActivity_">
 
         </activity>

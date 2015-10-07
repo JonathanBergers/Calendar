@@ -163,14 +163,21 @@ public class Model extends Observable{
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
         if(result!=null){
 
+
             JsonObject coord = result.getAsJsonObject("coord");
-            double resultLon = coord.get("lon").getAsDouble();
-            double resultLat = coord.get("lat").getAsDouble();
-            String resultCity = result.get("name").getAsString();
 
-            Location resultLocation = new Location(resultCity, resultLat, resultLon);
+            if(coord!=null) {
+                double resultLon = coord.get("lon").getAsDouble();
+                double resultLat = coord.get("lat").getAsDouble();
+                String resultCity = result.get("name").getAsString();
 
-            getRightCity(city, resultLocation, c);
+                Location resultLocation = new Location(resultCity, resultLat, resultLon);
+
+                getRightCity(city, resultLocation, c);
+
+            }else{
+                // give error
+            }
         } else {
             //give error
         }

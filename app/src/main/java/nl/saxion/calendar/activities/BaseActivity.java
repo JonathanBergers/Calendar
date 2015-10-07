@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity{
             @Override
             public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
 
-                CustomizeActivity_.intent(BaseActivity.this).start();
+                SettingsActivity_.intent(BaseActivity.this).start();
                 return false;
             }
         });

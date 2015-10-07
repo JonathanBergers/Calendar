@@ -35,12 +35,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import nl.saxion.calendar.model.Model;
 
 @EActivity
 public class LoginActivity extends BaseActivity {
@@ -53,6 +56,10 @@ public class LoginActivity extends BaseActivity {
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+
+    @Bean
+    Model model;
+
 
     /**
      * Create the main activity.
@@ -91,6 +98,13 @@ public class LoginActivity extends BaseActivity {
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff())
                 .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+
+        assert mCredential!= null: "credentials null";
+        assert mCredential.getSelectedAccountName() != null: "acc name null";
+        assert !mCredential.getSelectedAccountName().isEmpty(): "acc name empty";
+
+        model.setCredentials(mCredential);
+
     }
 
 
@@ -300,6 +314,7 @@ public class LoginActivity extends BaseActivity {
             List<Event> items = events.getItems();
 
             for (Event event : items) {
+
                 DateTime start = event.getStart().getDateTime();
                 if (start == null) {
                     // All-day events don't have start times, so just use

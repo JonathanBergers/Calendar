@@ -3,7 +3,7 @@
     package="nl.saxion.calendar" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -31,5 +31,6 @@
         <activity android:name=".activities.CustomizeActivity_"></activity>
         <activity android:name=".GPSTrackerActivity_"></activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

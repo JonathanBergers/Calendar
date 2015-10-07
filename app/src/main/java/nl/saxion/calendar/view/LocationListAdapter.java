@@ -2,8 +2,13 @@ package nl.saxion.calendar.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
+import org.androidannotations.annotations.ViewById;
+
+import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
 
@@ -23,6 +28,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationViewHolder
     }
 
 
+    int listIndex = -1;
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create the weatherview
@@ -31,7 +37,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationViewHolder
 
         // create the viewholder
         LocationViewHolder holder = new LocationViewHolder(v);
-
 
         return holder;
     }
@@ -50,7 +55,10 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationViewHolder
         holder.setData(l);
 
 
+
+
     }
+
 
     @Override
     public int getItemCount() {

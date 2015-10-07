@@ -34,6 +34,8 @@ public class Model extends Observable{
     @Bean
     JsonConverterWeather forecastConverter;
 
+    private String standaardLocatie;
+
     ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
 
     private List<Location> locations = new ArrayList<>();
@@ -140,6 +142,14 @@ public class Model extends Observable{
     public Double getLongitude() {
 
         return longitude;
+    }
+
+    public String getStandaardLocatie() {
+        return standaardLocatie;
+    }
+
+    public void setStandaardLocatie(String standaardLocatie) {
+        this.standaardLocatie = standaardLocatie;
     }
 
     public ForecastSettings getSettings() {

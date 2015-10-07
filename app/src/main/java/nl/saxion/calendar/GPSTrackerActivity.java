@@ -31,13 +31,22 @@ public class GPSTrackerActivity extends Activity {
     @AfterInject
     public void init() {
         // use location manager to get gps location
-        LocationManager myLocationManager =
+               LocationManager myLocationManager =
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener myLocationListener = new MyLocationListener();
 
         myLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 0, 0, myLocationListener);
+
+        //retrieves lat and long coordinates from the model
+        String gpsLocation = "current location is: latitude = " +
+                model.getLatitude() + " and longitude = " + model.getLongitude();
+
+        // logs coordinates and shows them with a toast
+        Log.d("OnLocationChanged ", gpsLocation);
+
+
 
 //        location = (TextView) findViewById(R.id.location);
 //

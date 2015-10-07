@@ -9,4 +9,5 @@
         android:layout_height="wrap_content"
         class="android.support.v7.widget.RecyclerView"
         android:id="@+id/recyclerView" />
+
 </LinearLayout>

@@ -1,44 +1,89 @@
-//package nl.saxion.calendar.client;
-//
-//import android.os.AsyncTask;
-//import android.text.TextUtils;
-//import android.util.Log;
-//
-//import com.google.api.client.extensions.android.http.AndroidHttp;
-//import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-//import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-//import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-//import com.google.api.client.http.HttpTransport;
-//import com.google.api.client.json.JsonFactory;
-//import com.google.api.client.json.jackson2.JacksonFactory;
-//import com.google.api.client.util.DateTime;
-//import com.google.api.services.calendar.model.Event;
-//import com.google.api.services.calendar.model.Events;
-//
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-///**
-// * Created by jonathan on 7-10-15.
-// */
-//public class GoogleCalendarClient {
-//    private com.google.api.services.calendar.Calendar mService = null;
-//    private Exception mLastError = null;
-//
-//    public GoogleCalendarClient() {
-//
-//
-//
-////            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-////            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-////            mService = new com.google.api.services.calendar.Calendar.Builder(
-////                    transport, jsonFactory, credential)
-////                    .setApplicationName("Calendar")
-////                    .build();
-//        }
-//    }
-//
+package nl.saxion.calendar.client;
+
+import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import nl.saxion.calendar.model.Model;
+
+/**
+ * Created by jonathan on 7-10-15.
+ */
+@EBean
+public class GoogleCalendarClient {
+    private com.google.api.services.calendar.Calendar mService = null;
+    private Exception mLastError = null;
+
+    @Bean
+    Model model;
+
+
+    public GoogleCalendarClient() {
+
+
+
+
+
+    }
+
+    @AfterInject
+    public void init() {
+
+
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        mService = new com.google.api.services.calendar.Calendar.Builder(
+                transport, jsonFactory, model.getCredentials())
+                .setApplicationName("Calendar")
+                .build();
+
+
+
+    }
+
+
+    @Background
+    public void retrieveEvents(){
+
+        DateTime now = new DateTime(System.currentTimeMillis());
+        List<String> eventStrings = new ArrayList<String>();
+        Events events = null;
+        try {
+            events = mService.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Event> items = events.getItems();
+        model.setEvents(items);
+
+    }
+
+
 //    /**
 //     * An asynchronous task that handles the Google Calendar API call.
 //     * Placing the API calls in their own task ensures the UI stays responsive.
@@ -146,6 +191,6 @@
 //    }
 //
 //
-//
-//
-//}
+
+
+}

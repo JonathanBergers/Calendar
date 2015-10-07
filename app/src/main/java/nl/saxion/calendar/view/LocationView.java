@@ -42,6 +42,7 @@ public class LocationView extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     model.searchCity(TELocation.getText().toString(),getContext());
+
                 }
             });
         } else {

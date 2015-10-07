@@ -158,7 +158,7 @@ public class Model extends Observable{
 
 
         setChanged();
-        notifyObservers(new NotifyMessage(NotifyMessage.Type.EVENTS));
+        notifyObservers();
     }
 
     private Double latitude;

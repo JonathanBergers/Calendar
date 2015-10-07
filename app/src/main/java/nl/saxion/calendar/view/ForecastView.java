@@ -34,7 +34,7 @@ import nl.saxion.calendar.model.Model;
  * Created by jonathan on 24-9-15.
  */
 @EViewGroup
-public class ForecastView extends LinearLayout{
+public class ForecastView extends LinearLayout implements SetData<Forecast>{
 
 
 

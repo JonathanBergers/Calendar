@@ -1,4 +1,4 @@
-package nl.saxion.calendar;
+package nl.saxion.calendar.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
 
+import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
 
 @EActivity(R.layout.activity_gpstracker)

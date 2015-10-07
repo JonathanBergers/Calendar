@@ -55,6 +55,8 @@ public class LocationListViewFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+
+
     }
 
 
@@ -65,15 +67,19 @@ public class LocationListViewFragment extends Fragment {
         if(result!=null){
 
             JsonObject coord = result.getAsJsonObject("coord");
-            double resultLon = coord.get("lon").getAsDouble();
-            double resultLat = coord.get("lat").getAsDouble();
-            String resultCity = result.get("name").getAsString();
+            if(coord!=null) {
+                double resultLon = coord.get("lon").getAsDouble();
+                double resultLat = coord.get("lat").getAsDouble();
+                String resultCity = result.get("name").getAsString();
 
-            Location resultLocation = new Location(resultCity, resultLat, resultLon);
+                Location resultLocation = new Location(resultCity, resultLat, resultLon);
 
-            getRightCity(city, resultLocation);
+                getRightCity(city, resultLocation);
+            }else{
+                // give error , plaats niet gevonden
+            }
         } else {
-            //give error
+            //give error, result is null, internet conn fout ?
         }
         return;
     }
@@ -102,7 +108,7 @@ public class LocationListViewFragment extends Fragment {
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+            builder.setMessage(model.getCredentials().getSelectedAccountName() + "u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
         return;

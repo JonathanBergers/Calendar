@@ -3,12 +3,8 @@
     package="nl.saxion.calendar" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".model.CalendarApplication_"
@@ -26,8 +22,6 @@
             </intent-filter>
 
         </activity>
-
-
         <activity
             android:name=".activities.BaseActivity_"
             android:label="@string/title_activity_material_view_pager" >
@@ -36,13 +30,7 @@
         </activity>
         <activity android:name=".activities.CustomizeActivity_"></activity>
         <activity android:name=".GPSTrackerActivity_"></activity>
-        <activity android:name=".activities.LoginActivity_">
-
-        </activity>
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

@@ -35,6 +35,8 @@ public class Model extends Observable{
     @Bean
     JsonConverterWeather forecastConverter;
 
+    private String standaardLocatie;
+
     ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
 
     private GoogleAccountCredential credentials;
@@ -153,6 +155,14 @@ public class Model extends Observable{
         return longitude;
     }
 
+    public String getStandaardLocatie() {
+        return standaardLocatie;
+    }
+
+    public void setStandaardLocatie(String standaardLocatie) {
+        this.standaardLocatie = standaardLocatie;
+    }
+
     public ForecastSettings getSettings() {
         return setting;
     }
@@ -163,14 +173,21 @@ public class Model extends Observable{
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
         if(result!=null){
 
+
             JsonObject coord = result.getAsJsonObject("coord");
-            double resultLon = coord.get("lon").getAsDouble();
-            double resultLat = coord.get("lat").getAsDouble();
-            String resultCity = result.get("name").getAsString();
 
-            Location resultLocation = new Location(resultCity, resultLat, resultLon);
+            if(coord!=null) {
+                double resultLon = coord.get("lon").getAsDouble();
+                double resultLat = coord.get("lat").getAsDouble();
+                String resultCity = result.get("name").getAsString();
 
-            getRightCity(city, resultLocation, c);
+                Location resultLocation = new Location(resultCity, resultLat, resultLon);
+
+                getRightCity(city, resultLocation, c);
+
+            }else{
+                // give error
+            }
         } else {
             //give error
         }

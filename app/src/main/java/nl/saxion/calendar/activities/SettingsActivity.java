@@ -65,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void initialize() {
 
         //when Customize is called, sets the checkboxes to true or false
-        //by calling ForeCastSettings from the model
+        //depending on the values of the ForeCastSettings object from the model
         checkBoxTemp.setChecked(model.getSettings().isTemp());
         checkBoxPressure.setChecked(model.getSettings().isPressure());
         checkBoxHumidity.setChecked(model.getSettings().isHumidity());

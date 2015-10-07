@@ -18,7 +18,7 @@ import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
 
 @EActivity(R.layout.activity_customize)
-public class CustomizeActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
 
     @ViewById

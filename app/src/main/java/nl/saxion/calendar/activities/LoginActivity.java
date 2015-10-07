@@ -132,10 +132,7 @@ public class LoginActivity extends BaseActivity {
             case REQUEST_ACCOUNT_PICKER:
 
 
-                Log.d("LOGIN", data.toString());
-                Log.d("LOGIN", data.getExtras().toString());
 
-                Log.d("LOGIN", "" + resultCode);
 
                 if (resultCode == RESULT_OK  && data!= null&&
                         data.getExtras() != null) {
@@ -148,12 +145,7 @@ public class LoginActivity extends BaseActivity {
                     if (accountName != null) {
 
 
-                        Log.d("ACC NAME", accountName);
                         mCredential.setSelectedAccountName(accountName);
-
-                        Log.d("ACC NAME GET", mCredential.getSelectedAccountName());
-
-
                         SharedPreferences settings =
                                 getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = settings.edit();

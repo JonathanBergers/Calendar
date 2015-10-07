@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 
 import java.io.IOException;
@@ -141,10 +142,18 @@ public class LoginActivity extends BaseActivity {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
 
-                    Log.d("LOGIN", accountName);
+
+
 
                     if (accountName != null) {
+
+
+                        Log.d("ACC NAME", accountName);
                         mCredential.setSelectedAccountName(accountName);
+
+                        Log.d("ACC NAME GET", mCredential.getSelectedAccountName());
+
+
                         SharedPreferences settings =
                                 getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = settings.edit();
@@ -152,7 +161,9 @@ public class LoginActivity extends BaseActivity {
                         editor.apply();
 
 
-}
+
+
+                }
                 } else if (resultCode == RESULT_CANCELED) {
                     mOutputText.setText("Account unspecified.");
                 }
@@ -160,6 +171,7 @@ public class LoginActivity extends BaseActivity {
             case REQUEST_AUTHORIZATION:
 
                 Log.d("LOGIN", "REQ AUTH ");
+
                 if (resultCode != RESULT_OK) {
                     chooseAccount();
                 }
@@ -178,10 +190,11 @@ public class LoginActivity extends BaseActivity {
         Log.d("LOGIN", " DEVICE ONLINE" + isDeviceOnline());
 
         if (mCredential.getSelectedAccountName() == null) {
-            chooseAccount()
-;
+            chooseAccount();
         } else {
             if (isDeviceOnline()) {
+
+                Log.d("TASK", mCredential.getSelectedAccountName());
                 new MakeRequestTask(mCredential).execute();
             } else {
                 mOutputText.setText("No network connection available.");
@@ -206,6 +219,8 @@ public class LoginActivity extends BaseActivity {
         ConnectivityManager connMgr =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        Log.d("DEVICE STATUS" , networkInfo.isConnected() + networkInfo.getReason());
         return (networkInfo != null && networkInfo.isConnected());
     }
 
@@ -256,7 +271,7 @@ public class LoginActivity extends BaseActivity {
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(
                     transport, jsonFactory, credential)
-                    .setApplicationName("Google Calendar API Android Quickstart")
+                    .setApplicationName("Calendar")
                     .build();
         }
 
@@ -265,7 +280,7 @@ public class LoginActivity extends BaseActivity {
          * @param params no parameters needed for this task.
          */
         @Override
-        protected List<String> doInBackground(Void... params) {
+        public List<String> doInBackground(Void... params) {
             try {
                 return getDataFromApi();
             } catch (Exception e) {

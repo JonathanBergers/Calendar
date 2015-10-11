@@ -1,4 +1,4 @@
-package nl.saxion.calendar.view;
+package nl.saxion.calendar.view.fragments;
 
 
 import android.support.v4.app.Fragment;

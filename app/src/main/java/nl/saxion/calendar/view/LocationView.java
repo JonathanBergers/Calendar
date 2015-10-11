@@ -12,6 +12,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Set;
+
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
@@ -20,7 +22,7 @@ import nl.saxion.calendar.model.Model;
  * Created by falco on 28-9-15.
  */
 @EViewGroup
-public class LocationView extends LinearLayout {
+public class LocationView extends LinearLayout implements SetData<Location>{
 
     @ViewById(R.id.materialEditText_Location)
     MaterialEditText TELocation;

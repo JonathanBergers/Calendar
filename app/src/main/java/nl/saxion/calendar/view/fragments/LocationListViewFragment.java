@@ -1,64 +1,35 @@
-package nl.saxion.calendar.view;
+package nl.saxion.calendar.view.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
+import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.model.Location;
-import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.view.LocationView;
+import nl.saxion.calendar.view.LocationView_;
 
 /**
  * Created by falco on 24-9-15.
  */
 @EFragment(R.layout.location_listview_fragment)
-public class LocationListViewFragment extends Fragment {
+public class LocationListViewFragment extends GenericListViewFragment<Location, LocationView> {
 
     @RestService
     OpenweatherClient openweatherClient;
-
-    @ViewById
-    RecyclerView recyclerView;
-
-    @Bean
-    Model model;
-
-    RecyclerViewMaterialAdapter mAdapter;
-
-
-    @AfterViews
-    public void init(){
-
-
-        // set layout manager, or else bug, nullpointer exep
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        // set adapter
-        mAdapter = new RecyclerViewMaterialAdapter(new LocationListAdapter(model));
-        recyclerView.setAdapter(mAdapter);
-
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
-
-
-    }
-
 
 
     @Background
@@ -81,7 +52,7 @@ public class LocationListViewFragment extends Fragment {
         } else {
             //give error, result is null, internet conn fout ?
         }
-        return;
+
     }
 
     @UiThread
@@ -111,9 +82,23 @@ public class LocationListViewFragment extends Fragment {
             builder.setMessage(model.getCredentials().getSelectedAccountName() + "u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
-        return;
+
     }
 
 
+    @Override
+    public List<Location> getItems() {
+        return model.getLocations();
+    }
 
+    @Override
+    protected Function<Context, LocationView> createView() {
+        return new Function<Context, LocationView>() {
+            @Nullable
+            @Override
+            public LocationView apply(Context input) {
+                return LocationView_.build(input);
+            }
+        };
+    }
 }

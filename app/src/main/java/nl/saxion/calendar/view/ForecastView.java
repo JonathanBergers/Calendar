@@ -29,12 +29,13 @@ import java.net.URL;
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 24-9-15.
  */
 @EViewGroup
-public class ForecastView extends LinearLayout implements SetData<Forecast>{
+public class ForecastView extends LinearLayout implements SetData<Forecast> {
 
 
 
@@ -60,7 +61,6 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>{
 
 
 
-    @SuppressWarnings("ResourceType")
     public void setData(Forecast f){
 
         getBitmapFromURL("http://openweathermap.org/img/w/" + f.getWeather().get(0).getIconId() + ".png");

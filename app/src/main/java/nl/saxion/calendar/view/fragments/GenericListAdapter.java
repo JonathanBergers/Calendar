@@ -1,17 +1,20 @@
-package nl.saxion.calendar.view;
+package nl.saxion.calendar.view.fragments;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.common.base.Function;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 7-10-15.
@@ -23,59 +26,66 @@ import nl.saxion.calendar.model.Model;
  *
  * de viewholder wordt automatisch gemaakt
  */
-public class GenericListAdapter<T, V extends View & SetData<T>, VH extends GenericViewHolder<T, V>> extends RecyclerView.Adapter<VH> implements Observer {
+public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>> implements Observer{
 
     RecyclerView recyclerView;
     Model model;
-    VH viewHolder;
-    V view;
     List<T> items = new ArrayList<>();
+    Function<Context, V> createView;
 
     /**model om de observer bij te regristreren
      *
      * @param model
      * @param recyclerView
-     * @param view de view die weergegeven moet worden
      */
-    public GenericListAdapter(Model model, RecyclerView recyclerView, V view, List<T> items) {
+    public GenericListAdapter(Model model, RecyclerView recyclerView, List<T> items, Function<Context, V> functionCreateView) {
         this.model = model;
         this.recyclerView = recyclerView;
-        this.view = view;
         this.items = items;
+        this.createView = functionCreateView;
+
+        Log.d("ITEMS", ""+ items.size());
         model.addObserver(this);
 
 
 
-        Log.d("OBSERVERS", "" + model.countObservers());
-
     }
 
 
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public  GenericViewHolder<T, V> onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        GenericViewHolder<T, V> holder = new GenericViewHolder<>(view);
-        return (VH) holder;
 
+
+        V view = (V) createView.apply(parent.getContext());
+
+        return new GenericViewHolder<>(view);
     }
 
+
+
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(GenericViewHolder<T, V> holder, int position) {
 
         holder.setData(items.get(position));
     }
 
+
+
     @Override
     public int getItemCount(){
+        if(items == null){
+            return 0;
+
+        }
         return items.size();
     }
-
-
 
 
     @Override
     public void update(Observable observable, Object data) {
         notifyDataSetChanged();
     }
+
 
 }

@@ -1,5 +1,6 @@
-package nl.saxion.calendar.view;
+package nl.saxion.calendar.view.fragments;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,15 +9,18 @@ import android.view.View;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
+import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
+
 import nl.saxion.calendar.R;
-import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 7-10-15.
@@ -40,31 +44,32 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
         RecyclerViewMaterialAdapter mAdapter;
 
 
-    /**
-     * used to build the adapter and viewholder
-     * @return
-     */
-    public abstract V createView();
+
+
+    public abstract List<T> getItems();
+    protected abstract Function<Context, V> createView();
 
 
 
     @AfterViews
-        public void init(){
+    public void init(){
 
 
             // set layout manager, or else bug, nullpointer exep
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+
+        //linearLayoutManager.setRecycleChildrenOnDetach(false);
             //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
+
+            System.out.println(recyclerView==null);
             recyclerView.setLayoutManager(linearLayoutManager);
 
 
             // make view for adapter
-            V view  = createView();
-            // make viewholder for adapter
-            GenericViewHolder<T, V> vh = new GenericViewHolder<T, V>(view);
             // make adapter
-            GenericListAdapter<T, V, GenericViewHolder<T, V>> adapter  =
-                    new GenericListAdapter(model, recyclerView, view, model.getLocationForecasts());
+            GenericListAdapter<T, V> adapter  =
+                    new GenericListAdapter<T, V>(model, recyclerView, getItems(), createView() );
 
 
             // set adapter
@@ -73,6 +78,8 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
 
             MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
 
+
+            model.retrieveForecasts();
 
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.calendar.model.Event;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.Background;
@@ -14,11 +15,14 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
+import com.google.api.services.calendar.Calendar.Events;
 
+import nl.saxion.calendar.client.GoogleCalendarClient;
 import nl.saxion.calendar.client.OpenweatherClient;
 
 /**
@@ -35,11 +39,27 @@ public class Model extends Observable{
     @Bean
     JsonConverterWeather forecastConverter;
 
-    private String standaardLocatie;
+    @Bean
+    GoogleCalendarClient calendarClient;
 
     ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
 
     private GoogleAccountCredential credentials;
+    private List<Event> events ;
+    private List<Location> locations = new ArrayList<>();
+    private Map<String, Forecast> locationForecasts = new TreeMap<>();
+
+
+
+
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public GoogleAccountCredential getCredentials() {
         return credentials;
@@ -48,10 +68,6 @@ public class Model extends Observable{
     public void setCredentials(GoogleAccountCredential credentials) {
         this.credentials = credentials;
     }
-
-    private List<Location> locations = new ArrayList<>();
-    private Map<String, Forecast> locationForecasts = new TreeMap<>();
-
     public List<Location> getLocations() {
         return locations;
     }
@@ -85,6 +101,12 @@ public class Model extends Observable{
         return null;
     }
 
+
+    @Background
+    public void retrieveEvents(){
+        calendarClient.retrieveEvents();
+
+    }
 
     @Background
     public void retrieveForecasts(Location... city){
@@ -132,6 +154,13 @@ public class Model extends Observable{
 
     }
 
+    public void UInotifyEvents(){
+
+
+        setChanged();
+        notifyObservers();
+    }
+
     private Double latitude;
     private Double longitude;
 
@@ -153,14 +182,6 @@ public class Model extends Observable{
     public Double getLongitude() {
 
         return longitude;
-    }
-
-    public String getStandaardLocatie() {
-        return standaardLocatie;
-    }
-
-    public void setStandaardLocatie(String standaardLocatie) {
-        this.standaardLocatie = standaardLocatie;
     }
 
     public ForecastSettings getSettings() {

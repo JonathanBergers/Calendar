@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
         createMaterialViewpager();
 
 
-        model.addLocation(new Location("enschede", 0, 0));
-        model.addLocation(new Location("paris", 0, 0));
+        model.addLocation(new Location("london", 0, 0));
+        model.addLocation(new Location("zutphen", 0, 0));
 
         model.retrieveForecasts();
 

@@ -64,8 +64,8 @@ public class LocationView extends LinearLayout implements SetData<Location>{
             BSearch.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    model.setStandaardLocatie(TELocation.getText().toString());
-                    Log.d("LocationView!!!", "city is " + model.getStandaardLocatie());
+//                    model.setStandaardLocatie(TELocation.getText().toString());
+//                    Log.d("LocationView!!!", "city is " + model.getStandaardLocatie());
                 }
             });
         }
@@ -75,7 +75,9 @@ public class LocationView extends LinearLayout implements SetData<Location>{
 
     }
 
-    //wanneer geklikt, stelt die locatie in als standaard locatie
+    //TODO IIETTSS
+//
+//    //wanneer geklikt, stelt die locatie in als standaard locatie
 //    @Click
 //    void buttonStandaardLocatie() {
 //        model.setStandaardLocatie(TELocation.getText().toString());

@@ -38,9 +38,6 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
         @ViewById
         RecyclerView recyclerView;
 
-        @ViewById
-        SwipeRefreshLayout swipeRefreshLayout;
-
         RecyclerViewMaterialAdapter mAdapter;
 
 
@@ -82,26 +79,8 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
             model.retrieveForecasts();
 
 
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-                @Override
-                public void onRefresh() {
-
-                    onRefreshData();
-                    swipeRefreshLayout.setRefreshing(false);
-
-                }
-
-            });
 
 
-        }
-
-
-    /**
-     * override for action at refresh
-     */
-        protected void onRefreshData(){
 
         }
 

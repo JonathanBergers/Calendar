@@ -1,10 +1,13 @@
 package nl.saxion.calendar.view.fragments;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.google.common.base.Function;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -21,6 +24,9 @@ import nl.saxion.calendar.view.ForecastView_;
 @EFragment(R.layout.weather_lisview_fragment)
 public class ForecastListViewFragment extends GenericListViewFragment<Forecast, ForecastView> {
 
+
+    @ViewById
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -41,5 +47,18 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
         };
     }
 
+
+    @AfterViews
+    public void initRefreshlayout(){
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
 
 }

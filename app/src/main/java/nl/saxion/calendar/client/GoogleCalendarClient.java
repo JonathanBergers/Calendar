@@ -8,7 +8,6 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
@@ -17,7 +16,6 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.saxion.calendar.model.Model;
@@ -105,6 +103,8 @@ public class GoogleCalendarClient {
 
         System.out.println(createdCalendar.getId());
     }
+
+
 
 
 //    /**

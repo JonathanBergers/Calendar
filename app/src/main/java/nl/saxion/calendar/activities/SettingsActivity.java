@@ -1,8 +1,7 @@
 package nl.saxion.calendar.activities;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,14 +11,13 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
 
 @EActivity(R.layout.activity_customize)
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
 
 
     @ViewById
@@ -69,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Click
-    void ButtonChooseWeatherAgenda(){
+    void buttonChooseWeatherAgenda(){
         //geef gebruiker keuze
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -88,9 +86,9 @@ public class SettingsActivity extends AppCompatActivity {
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-        builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("Ja", dialogClickListener)
-                .setNegativeButton("Nee, ik wil een nieuwe agenda maken", dialogClickListener).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("kies een agenda", dialogClickListener)
+                .setNegativeButton("maak een agenda", dialogClickListener).show();
     }
 
 
@@ -124,31 +122,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    @UiThread
-    public void chooseWeatherCalendar(){
-
-            //geef gebruiker keuze
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            //Yes button clicked
-
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            //No button clicked
-
-                            break;
-                    }
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("Ja", dialogClickListener)
-                    .setNegativeButton("Nee, ik wil een nieuwe agenda maken", dialogClickListener).show();
     }
 
 

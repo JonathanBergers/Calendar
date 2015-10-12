@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.calendar.model.Event;
-import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.Background;
@@ -253,10 +252,18 @@ public class Model extends Observable{
     }
 
     public void selectWeatherAgenda(){
+        // get all agenda's
 
+        // choose agenda
+
+        // set agenda
+        System.out.println("SELECT AGENDA");
     }
     public void makeWeatherAgenda(){
+        // make new agenda
 
+        // set agenda
+        System.out.println("MAKE AGENDA");
     }
 
 

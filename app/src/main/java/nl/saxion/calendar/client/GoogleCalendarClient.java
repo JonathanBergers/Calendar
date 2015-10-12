@@ -1,17 +1,11 @@
 package nl.saxion.calendar.client;
 
-import android.os.AsyncTask;
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
@@ -81,6 +75,25 @@ public class GoogleCalendarClient {
         List<Event> items = events.getItems();
         model.setEvents(items);
 
+    }
+
+    public void addCalendar(){
+
+
+// Create a new calendar
+        com.google.api.services.calendar.model.Calendar calendar = new Calendar();
+        calendar.setSummary("TestCalendar");
+        calendar.setTimeZone("Europe/Amsterdam");
+
+// Insert the new calendar
+        Calendar createdCalendar = null;
+        try {
+            createdCalendar = mService.calendars().insert(calendar).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(createdCalendar.getId());
     }
 
 

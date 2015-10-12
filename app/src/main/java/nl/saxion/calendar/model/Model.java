@@ -15,12 +15,10 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
-import com.google.api.services.calendar.Calendar.Events;
 
 import nl.saxion.calendar.client.GoogleCalendarClient;
 import nl.saxion.calendar.client.OpenweatherClient;
@@ -243,6 +241,13 @@ public class Model extends Observable{
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
         return;
+    }
+
+    public void selectWeatherAgenda(){
+
+    }
+    public void makeWeatherAgenda(){
+
     }
 
 

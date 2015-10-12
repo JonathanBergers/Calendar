@@ -97,6 +97,19 @@
                 android:layout_height="wrap_content"
                 android:text="Log in"
                 android:id="@+id/buttonLogin" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kies weeragenda"
+                android:id="@+id/buttonChooseWeatherAgenda" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="huidige weeragenda: "
+                android:id="@+id/textViewCurrentWeatherAgenda" />
         </LinearLayout>
 
     </LinearLayout>

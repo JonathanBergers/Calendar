@@ -34,11 +34,12 @@
 
 
         </activity>
-        <activity android:name=".activities.CustomizeActivity_"></activity>
         <activity android:name=".activities.SettingsActivity_"></activity>
         <activity android:name=".activities.LoginActivity_">
 
         </activity>
+        <activity android:name=".activities.GPSTrackerActivity_"></activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

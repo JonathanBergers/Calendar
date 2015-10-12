@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.calendar.model.Event;
+import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.Background;
@@ -22,6 +23,7 @@ import java.util.TreeMap;
 
 import nl.saxion.calendar.client.GoogleCalendarClient;
 import nl.saxion.calendar.client.OpenweatherClient;
+import nl.saxion.calendar.utils.Updatable;
 
 /**
  * Created by jonathan on 24-9-15.
@@ -46,10 +48,16 @@ public class Model extends Observable{
     private List<Event> events ;
     private List<Location> locations = new ArrayList<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
+    private Location standardLocation;
 
 
+    public Location getStandardLocation() {
+        return standardLocation;
+    }
 
-
+    public void setStandardLocation(Location standardLocation) {
+        this.standardLocation = standardLocation;
+    }
 
     public List<Event> getEvents() {
         return events;
@@ -101,10 +109,11 @@ public class Model extends Observable{
 
 
     @Background
-    public void retrieveEvents(){
-        calendarClient.retrieveEvents();
+    public void retrieveEvents(Updatable updatableCallBack){
+        calendarClient.retrieveEvents(updatableCallBack);
 
     }
+
 
     @Background
     public void retrieveForecasts(Location... city){

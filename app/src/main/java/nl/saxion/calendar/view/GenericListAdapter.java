@@ -1,4 +1,4 @@
-package nl.saxion.calendar.view.fragments;
+package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import nl.saxion.calendar.model.Model;
-import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 7-10-15.

@@ -1,4 +1,4 @@
-package nl.saxion.calendar.view.fragments;
+package nl.saxion.calendar.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

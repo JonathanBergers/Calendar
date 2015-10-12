@@ -33,7 +33,7 @@ import nl.saxion.calendar.utils.Updatable;
  */
 
 @EFragment(R.layout.weather_lisview_fragment)
-public class EventListViewFragment extends GenericListViewFragment<Forecast, ForecastView> implements Updatable<List<Event>> {
+public class EventListViewFragment extends GenericListViewFragment<Event, EventView> implements Updatable<List<Event>> {
 
 
     @Bean
@@ -52,22 +52,25 @@ public class EventListViewFragment extends GenericListViewFragment<Forecast, For
     public void update(List<Event> input) {
 
         Log.d("EVENTFRAG", input.toArray().toString());
+        mAdapter.notifyDataSetChanged();
 
     }
 
     @Override
-    public List<Forecast> getItems() {
-        return new ArrayList<>();
+    public List<Event> getItems() {
+        return model.getEvents();
     }
 
     @Override
-    protected Function<Context, ForecastView> createView() {
-        return new Function<Context, ForecastView>() {
+    protected Function<Context, EventView> createView() {
+        return new Function<Context, EventView>() {
             @Nullable
             @Override
-            public ForecastView apply(@Nullable Context input) {
-                return ForecastView_.build(input);
+            public EventView apply(@Nullable Context input) {
+                return EventView_.build(input);
             }
         };
     }
+
+
 }

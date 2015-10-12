@@ -1,6 +1,7 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,8 +43,13 @@ public class EventView extends LinearLayout implements SetData<Event> {
     @Override
     public void setData(Event event) {
 
-        //converts the dates to strings
-        stringCreated = convertDateToString(event.getCreated());
+
+        DateTime a = event.getCreated();
+        Log.d("DATETIME", a.toStringRfc3339());
+  //TODO convertion
+
+                //converts the dates to strings
+                stringCreated = convertDateToString(event.getCreated());
         stringStartDate = convertEventDateToString(event.getStart());
         stringEndDate = convertEventDateToString(event.getEnd());
 
@@ -66,7 +72,7 @@ public class EventView extends LinearLayout implements SetData<Event> {
      */
     public String convertDateToString(DateTime date) {
 
-        DateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm");
         String stringDate = df.format(date);
 
         return stringDate;

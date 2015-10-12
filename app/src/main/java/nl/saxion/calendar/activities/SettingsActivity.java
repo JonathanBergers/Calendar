@@ -1,17 +1,18 @@
 package nl.saxion.calendar.activities;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import nl.saxion.calendar.R;
@@ -45,6 +46,15 @@ public class SettingsActivity extends AppCompatActivity {
     @ViewById
     Button buttonSaveForecastSettings;
 
+    @ViewById
+    Button buttonChooseWeatherAgenda;
+
+    @ViewById
+    TextView textViewCurrentWeatherAgenda;
+
+    @Bean
+    Model model;
+
     @Click
     void buttonSaveForecastSettings() {
 
@@ -58,8 +68,32 @@ public class SettingsActivity extends AppCompatActivity {
         model.getSettings().setLocation(checkBoxLocation.isChecked());
     }
 
-    @Bean
-    Model model;
+    @Click
+    void ButtonChooseWeatherAgenda(){
+        //geef gebruiker keuze
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        model.selectWeatherAgenda();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        model.makeWeatherAgenda();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("Ja", dialogClickListener)
+                .setNegativeButton("Nee, ik wil een nieuwe agenda maken", dialogClickListener).show();
+    }
+
+
 
     @AfterViews
     public void initialize() {
@@ -91,4 +125,35 @@ public class SettingsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @UiThread
+    public void chooseWeatherCalendar(){
+
+            //geef gebruiker keuze
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("Ja", dialogClickListener)
+                    .setNegativeButton("Nee, ik wil een nieuwe agenda maken", dialogClickListener).show();
+    }
+
+
+
 }
+
+
+

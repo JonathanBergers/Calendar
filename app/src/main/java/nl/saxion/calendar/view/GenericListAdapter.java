@@ -25,7 +25,7 @@ import nl.saxion.calendar.model.Model;
  *
  * de viewholder wordt automatisch gemaakt
  */
-public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>> implements Observer{
+public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>>{
 
     RecyclerView recyclerView;
     Model model;
@@ -44,7 +44,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
         this.createView = functionCreateView;
 
         Log.d("ITEMS", ""+ items.size());
-        model.addObserver(this);
+
 
 
 
@@ -81,10 +81,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     }
 
 
-    @Override
-    public void update(Observable observable, Object data) {
-        notifyDataSetChanged();
-    }
+
 
 
 }

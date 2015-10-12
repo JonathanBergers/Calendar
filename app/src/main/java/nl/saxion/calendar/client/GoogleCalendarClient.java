@@ -12,6 +12,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import com.google.common.base.Function;
@@ -43,20 +44,7 @@ public class GoogleCalendarClient {
 
     public GoogleCalendarClient() {    }
 
-    @AfterInject
-    public void init() {
 
-
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        mService = new com.google.api.services.calendar.Calendar.Builder(
-                transport, jsonFactory, model.getCredentials())
-                .setApplicationName("Calendar")
-                .build();
-
-
-
-    }
 
 
     @Background
@@ -64,10 +52,21 @@ public class GoogleCalendarClient {
 
 
 
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
 
+
+
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        mService = new com.google.api.services.calendar.Calendar.Builder(
+                transport, jsonFactory, model.getCredentials())
+                .setApplicationName("Calendar")
+                .build();
 
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = null;
+        Events events;
+
+        Log.d("CALCLIENT", String.valueOf(mService == null));
+
         try {
             events = mService.events().list("primary")
                     .setMaxResults(10)
@@ -75,9 +74,14 @@ public class GoogleCalendarClient {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
+
+
+
+
             List<Event> items = events.getItems();
             model.setEvents(items);
             invokeCallBack(callBack, items);
+
 
 
 

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 
 import nl.saxion.calendar.model.Forecast;
+import nl.saxion.calendar.view.fragments.EventListViewFragment_;
 import nl.saxion.calendar.view.fragments.ForecastListViewFragment_;
 import nl.saxion.calendar.view.fragments.LocationListViewFragment_;
 
@@ -31,6 +32,9 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
 
         if(position == 1){
             return LocationListViewFragment_.builder().build();
+        }
+        if (position == 2) {
+            return EventListViewFragment_.builder().build();
         }
 
         return ForecastListViewFragment_.builder().build();

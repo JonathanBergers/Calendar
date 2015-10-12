@@ -1,4 +1,4 @@
-package nl.saxion.calendar.view.fragments;
+package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,8 +19,6 @@ import javax.annotation.Nullable;
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.model.Location;
-import nl.saxion.calendar.view.LocationView;
-import nl.saxion.calendar.view.LocationView_;
 
 /**
  * Created by falco on 24-9-15.

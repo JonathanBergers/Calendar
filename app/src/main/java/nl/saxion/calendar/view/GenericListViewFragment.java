@@ -1,8 +1,7 @@
-package nl.saxion.calendar.view.fragments;
+package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
-import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 7-10-15.

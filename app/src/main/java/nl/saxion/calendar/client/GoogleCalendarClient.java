@@ -14,17 +14,20 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.utils.Updatable;
 
 /**
  * Created by jonathan on 7-10-15.
@@ -38,13 +41,7 @@ public class GoogleCalendarClient {
     Model model;
 
 
-    public GoogleCalendarClient() {
-
-
-
-
-
-    }
+    public GoogleCalendarClient() {    }
 
     @AfterInject
     public void init() {
@@ -63,10 +60,13 @@ public class GoogleCalendarClient {
 
 
     @Background
-    public void retrieveEvents(){
+    public void retrieveEvents(Updatable<List<Event>> callBack){
+
+
+
+
 
         DateTime now = new DateTime(System.currentTimeMillis());
-        List<String> eventStrings = new ArrayList<String>();
         Events events = null;
         try {
             events = mService.events().list("primary")
@@ -75,12 +75,22 @@ public class GoogleCalendarClient {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
+            List<Event> items = events.getItems();
+            model.setEvents(items);
+            invokeCallBack(callBack, items);
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Event> items = events.getItems();
-        model.setEvents(items);
 
+
+    }
+
+    @UiThread
+    protected  <T, V> void invokeCallBack(Updatable<List<Event>> callBack, List<Event> input){
+        callBack.update(input);
     }
 
 

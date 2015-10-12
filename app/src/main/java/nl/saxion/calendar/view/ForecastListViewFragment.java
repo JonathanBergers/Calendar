@@ -1,4 +1,4 @@
-package nl.saxion.calendar.view.fragments;
+package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,8 +15,6 @@ import javax.annotation.Nullable;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Forecast;
-import nl.saxion.calendar.view.ForecastView;
-import nl.saxion.calendar.view.ForecastView_;
 
 /**
  * Created by falco on 24-9-15.

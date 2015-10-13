@@ -251,9 +251,9 @@ public class Model extends Observable{
         return;
     }
 
-    public void selectWeatherAgenda(){
+    public void selectWeatherAgenda(Updatable callback){
         // get all agenda's
-
+        calendarClient.getAgendas(callback);
         // choose agenda
 
         // set agenda

@@ -1,5 +1,7 @@
 package nl.saxion.calendar.client;
 
+import android.util.Log;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -8,14 +10,17 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
+import com.google.api.services.calendar.model.CalendarList;
+import com.google.api.services.calendar.model.CalendarListEntry;
 
-import org.androidannotations.annotations.AfterInject;
+
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import nl.saxion.calendar.model.Model;
@@ -26,7 +31,6 @@ import nl.saxion.calendar.utils.Updatable;
  */
 @EBean
 public class GoogleCalendarClient {
-    private com.google.api.services.calendar.Calendar mService = null;
     private Exception mLastError = null;
 
     @Bean
@@ -48,11 +52,7 @@ public class GoogleCalendarClient {
 
 
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        mService = new com.google.api.services.calendar.Calendar.Builder(
-                transport, jsonFactory, model.getCredentials())
-                .setApplicationName("Calendar")
-                .build();
-
+        com.google.api.services.calendar.Calendar mService = getmService();
         DateTime now = new DateTime(System.currentTimeMillis());
         Events events;
 
@@ -90,7 +90,7 @@ public class GoogleCalendarClient {
 
     public void addCalendar(){
 
-
+        com.google.api.services.calendar.Calendar mService = getmService();
 // Create a new calendar
         com.google.api.services.calendar.model.Calendar calendar = new Calendar();
         calendar.setSummary("TestCalendar");
@@ -105,6 +105,46 @@ public class GoogleCalendarClient {
         }
 
         System.out.println(createdCalendar.getId());
+    }
+
+    @Background
+    public void getAgendas(Updatable callback){
+
+        com.google.api.services.calendar.Calendar mService = getmService();
+
+        ArrayList<CalendarListEntry> r = new ArrayList<>();
+
+        // Iterate through entries in calendar list
+        String pageToken = null;
+        do {
+            CalendarList calendarList = null;
+            try {
+                calendarList = mService.calendarList().list().setPageToken(pageToken).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d("GET AGENDA", "ERROR");
+                return;
+            }
+            List<CalendarListEntry> items = calendarList.getItems();
+
+            for (CalendarListEntry calendarListEntry : items) {
+                r.add(calendarListEntry);
+                System.out.println(calendarListEntry.getSummary());
+            }
+            pageToken = calendarList.getNextPageToken();
+        } while (pageToken != null);
+
+        callback.update(r);
+        return;
+    }
+
+    private com.google.api.services.calendar.Calendar getmService(){
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        return new com.google.api.services.calendar.Calendar.Builder(
+                transport, jsonFactory, model.getCredentials())
+                .setApplicationName("Calendar")
+                .build();
     }
 
 

@@ -3,9 +3,12 @@ package nl.saxion.calendar.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.google.api.services.calendar.model.CalendarListEntry;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -13,11 +16,14 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
+
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.utils.Updatable;
 
 @EActivity(R.layout.activity_customize)
-public class SettingsActivity extends BaseActivity {
+public class SettingsActivity extends BaseActivity implements Updatable<List<CalendarListEntry>> {
 
 
     @ViewById
@@ -75,7 +81,7 @@ public class SettingsActivity extends BaseActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        model.selectWeatherAgenda();
+                        model.selectWeatherAgenda(SettingsActivity.this);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -90,6 +96,8 @@ public class SettingsActivity extends BaseActivity {
         builder.setMessage("Wilt u een bestaande agenda kiezen als weeragenda?").setPositiveButton("kies een agenda", dialogClickListener)
                 .setNegativeButton("maak een agenda", dialogClickListener).show();
     }
+
+
 
 
 
@@ -125,7 +133,45 @@ public class SettingsActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void update(final List<CalendarListEntry> input) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(SettingsActivity.this);
+        //builderSingle.setIcon(R.drawable.ic_launcher);
+        builderSingle.setTitle("Select One Name:-");
 
+        final ArrayAdapter<CalendarListEntry> arrayAdapter = new ArrayAdapter<CalendarListEntry>(
+                SettingsActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+
+        arrayAdapter.addAll(input);
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = input.get(which).getSummary();
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(SettingsActivity.this);
+                        builderInner.setMessage(strName);
+                        builderInner.setTitle("Your Selected Item is");
+                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        builderInner.show();
+                    }
+                });
+        builderSingle.show();
+    }
 }
 
 

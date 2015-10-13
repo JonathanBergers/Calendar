@@ -6,12 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 
 import nl.saxion.calendar.model.Forecast;
-<<<<<<< HEAD
-=======
-import nl.saxion.calendar.view.fragments.EventListViewFragment_;
-import nl.saxion.calendar.view.fragments.ForecastListViewFragment_;
-import nl.saxion.calendar.view.fragments.LocationListViewFragment_;
->>>>>>> alex3
+
+
 
 /**
  * Created by jonathan on 17-9-15.

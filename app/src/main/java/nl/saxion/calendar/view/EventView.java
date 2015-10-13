@@ -29,7 +29,6 @@ public class EventView extends LinearLayout implements SetData<Event> {
     TextView textViewSummary, textViewDescription, textViewCreator, textViewCreated,
             textViewStartDate, textViewEndDate, textViewTag, textViewLocationEvent;
 
-    String stringCreated, stringStartDate, stringEndDate;
 
     @Bean
     Model model;
@@ -42,47 +41,17 @@ public class EventView extends LinearLayout implements SetData<Event> {
     @Override
     public void setData(Event event) {
 
-        //converts the dates to strings
-        stringCreated = convertDateToString(event.getCreated());
-        stringStartDate = convertEventDateToString(event.getStart());
-        stringEndDate = convertEventDateToString(event.getEnd());
-
         textViewSummary.setText(event.getSummary());
         textViewDescription.setText(event.getDescription());
         textViewCreator.setText(event.getCreator().toString());
-        textViewCreated.setText(stringCreated);
-        textViewStartDate.setText(stringStartDate);
-        textViewEndDate.setText(stringEndDate);
+        textViewCreated.setText(event.getCreated().toStringRfc3339());
+        textViewStartDate.setText(event.getStart().toString());
+        textViewEndDate.setText(event.getEnd().toString());
         textViewTag.setText(event.getEtag());
         textViewLocationEvent.setText(event.getLocation());
 
 
     }
 
-    /**
-     * convert a DateTime to a string
-     * @param date the DateTime to convert
-     * @return a string with the converted DateTime
-     */
-    public String convertDateToString(DateTime date) {
-
-        DateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm");
-        String stringDate = df.format(date);
-
-        return stringDate;
-    }
-
-    /**
-     * convert an EventDateTime to a string
-     * @param date the EventDateTime to convert
-     * @return a string with the converted EventDateTime
-     */
-    public String convertEventDateToString(EventDateTime date) {
-
-        DateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm");
-        String stringDate = df.format(date);
-
-        return stringDate;
-    }
 
 }

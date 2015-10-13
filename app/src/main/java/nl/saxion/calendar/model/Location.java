@@ -1,12 +1,16 @@
 package nl.saxion.calendar.model;
 
+
+import lombok.Getter;
+
 /**
  * Created by falco on 28-9-15.
  */
 public class Location {
-    private double lat;
-    private double lon;
-    private String city;
+
+    private @Getter double lat;
+    private @Getter double lon;
+    private @Getter String city;
 
     public Location(String city, double lat, double lon) {
         assert city != null : "city can not be null";
@@ -16,15 +20,9 @@ public class Location {
         this.lon = lon;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public double getLat() {
-        return lat;
-    }
 
-    public double getLon() {
-        return lon;
-    }
+
+
+
 }

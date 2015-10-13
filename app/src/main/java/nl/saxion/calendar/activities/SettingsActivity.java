@@ -49,13 +49,13 @@ public class SettingsActivity extends AppCompatActivity {
     void buttonSaveForecastSettings() {
 
         //when save button is clicked, save whether checkbox is checked or not
-        model.getSettings().setTemp(checkBoxTemp.isChecked());
-        model.getSettings().setPressure(checkBoxPressure.isChecked());
-        model.getSettings().setHumidity(checkBoxHumidity.isChecked());
-        model.getSettings().setTempMin(checkBoxTempMin.isChecked());
-        model.getSettings().setTempMax(checkBoxTempMax.isChecked());
-        model.getSettings().setWindspeed(checkBoxWindSpeed.isChecked());
-        model.getSettings().setLocation(checkBoxLocation.isChecked());
+        model.getViewSettings().setTemp(checkBoxTemp.isChecked());
+        model.getViewSettings().setPressure(checkBoxPressure.isChecked());
+        model.getViewSettings().setHumidity(checkBoxHumidity.isChecked());
+        model.getViewSettings().setTempMin(checkBoxTempMin.isChecked());
+        model.getViewSettings().setTempMax(checkBoxTempMax.isChecked());
+        model.getViewSettings().setWindspeed(checkBoxWindSpeed.isChecked());
+        model.getViewSettings().setLocation(checkBoxLocation.isChecked());
     }
 
     @Bean
@@ -66,13 +66,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         //when Customize is called, sets the checkboxes to true or false
         //depending on the values of the ForeCastSettings object from the model
-        checkBoxTemp.setChecked(model.getSettings().isTemp());
-        checkBoxPressure.setChecked(model.getSettings().isPressure());
-        checkBoxHumidity.setChecked(model.getSettings().isHumidity());
-        checkBoxTempMin.setChecked(model.getSettings().isTempMin());
-        checkBoxTempMax.setChecked(model.getSettings().isTempMax());
-        checkBoxWindSpeed.setChecked(model.getSettings().isWindspeed());
-        checkBoxLocation.setChecked(model.getSettings().isLocation());
+        checkBoxTemp.setChecked(model.getViewSettings().isTemp());
+        checkBoxPressure.setChecked(model.getViewSettings().isPressure());
+        checkBoxHumidity.setChecked(model.getViewSettings().isHumidity());
+        checkBoxTempMin.setChecked(model.getViewSettings().isTempMin());
+        checkBoxTempMax.setChecked(model.getViewSettings().isTempMax());
+        checkBoxWindSpeed.setChecked(model.getViewSettings().isWindspeed());
+        checkBoxLocation.setChecked(model.getViewSettings().isLocation());
 
     }
 

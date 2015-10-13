@@ -26,7 +26,7 @@ import nl.saxion.calendar.model.Location;
 /**
  * Created by falco on 24-9-15.
  */
-@EFragment(R.layout.location_listview_fragment)
+@EFragment(R.layout.refresh_recyclerview_fragment)
 public class LocationListViewFragment extends GenericListViewFragment<Location, LocationView> {
 
     @ViewById

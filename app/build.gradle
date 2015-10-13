@@ -79,8 +79,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    // android annotations
+    provided "org.projectlombok:lombok:1.12.6"
+
+
+// android annotations
     apt "org.androidannotations:androidannotations:$AAVersion"
+    apt "org.projectlombok:lombok:1.12.6"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
@@ -100,6 +104,7 @@ dependencies {
     compile 'com.github.rengwuxian:MaterialEditText:2.1.4'
 
 
+
     //google calendar
     compile 'com.google.android.gms:play-services-identity:7.8.0'
     compile('com.google.api-client:google-api-client-android:1.20.0') {
@@ -108,6 +113,7 @@ dependencies {
     compile('com.google.apis:google-api-services-calendar:v3-rev125-1.20.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+
 
 
 

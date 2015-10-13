@@ -21,7 +21,7 @@ import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Model;
 
 @EActivity(R.layout.activity_gpstracker)
-public class GPSTrackerActivity extends Activity {
+public class GPSTrackerActivity extends BaseActivity {
 
 
     @Bean
@@ -42,7 +42,7 @@ public class GPSTrackerActivity extends Activity {
 
         //retrieves lat and long coordinates from the model
         String gpsLocation = "current location is: latitude = " +
-                model.getLatitude() + " and longitude = " + model.getLongitude();
+                model.getCurrentLocation().getLat() + " and longitude = " + model.getCurrentLocation().getLon();
 
         // logs coordinates and shows them with a toast
         Log.d("OnLocationChanged ", gpsLocation);
@@ -81,12 +81,11 @@ public class GPSTrackerActivity extends Activity {
             double longitude = location.getLongitude();
 
             //saves the latitude and longitude in the model
-            model.setLatitude(latitude);
-            model.setLongitude(longitude);
+            model.addLocation(new nl.saxion.calendar.model.Location("Huidige Locatie", latitude, longitude));
 
             //retrieves lat and long coordinates from the model
             String gpsLocation = "current location is: latitude = " +
-                    model.getLatitude() + " and longitude = " + model.getLongitude();
+                    model.getCurrentLocation().getLat() + " and longitude = " + model.getCurrentLocation().getLon();
 
             // logs coordinates and shows them with a toast
             Log.d("OnLocationChanged ", gpsLocation);

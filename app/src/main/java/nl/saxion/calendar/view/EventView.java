@@ -14,6 +14,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -39,6 +40,9 @@ public class EventView extends LinearLayout implements SetData<Event> {
         LayoutInflater.from(context).inflate(R.layout.event_view, this);
     }
 
+
+
+
     @Override
     public void setData(Event event) {
 
@@ -46,7 +50,11 @@ public class EventView extends LinearLayout implements SetData<Event> {
         textViewDescription.setText(event.getDescription());
         textViewCreator.setText(event.getCreator().getDisplayName());
         textViewCreated.setText(event.getCreated().toStringRfc3339());
-        textViewStartDate.setText(event.getStart().getDate().toStringRfc3339());
+        try {
+            textViewStartDate.setText(event.getStart().toPrettyString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         textViewEndDate.setText(event.getEnd().getTimeZone());
         textViewTag.setText(event.getEtag());
         textViewLocationEvent.setText(event.getLocation());

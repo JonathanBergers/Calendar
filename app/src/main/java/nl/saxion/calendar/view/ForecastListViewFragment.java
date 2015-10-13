@@ -2,6 +2,7 @@ package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 
 import com.google.common.base.Function;
 
@@ -15,12 +16,13 @@ import javax.annotation.Nullable;
 
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Forecast;
+import nl.saxion.calendar.utils.Updatable;
 
 /**
  * Created by falco on 24-9-15.
  */
-@EFragment(R.layout.weather_lisview_fragment)
-public class ForecastListViewFragment extends GenericListViewFragment<Forecast, ForecastView> {
+@EFragment(R.layout.refresh_recyclerview_fragment)
+public class ForecastListViewFragment extends GenericListViewFragment<Forecast, ForecastView> implements Updatable<List<Forecast>> {
 
 
     @ViewById
@@ -28,10 +30,14 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
 
 
     @Override
-    public List<Forecast> getItems() {
-
-        //return new ArrayList<>();
-        return model.getLocationForecasts();
+    public Function<Void, List<Forecast>> getItems() {
+        return new Function<Void, List<Forecast>>() {
+            @Nullable
+            @Override
+            public List<Forecast> apply(@Nullable Void input) {
+                return model.getLocationForecasts();
+            }
+        };
     }
 
     @Override
@@ -53,10 +59,27 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mAdapter.notifyDataSetChanged();
+                model.retrieveForecasts(ForecastListViewFragment.this);
                 swipeRefreshLayout.setRefreshing(false);
+
             }
         });
     }
 
+    @Override
+    public void update(List<Forecast> input) {
+
+
+        //mAdapter.mvp_notifyDataSetChanged();
+
+        Log.d("FORECASTFRAG", "Update");
+
+        //recyclerView.getAdapter().notifyDataSetChanged();
+
+        mAdapter.notifyDataSetChanged();
+
+        //genericListAdapter.notifyDataSetChanged();
+       // mAdapter.notifyDataSetChanged();
+
+    }
 }

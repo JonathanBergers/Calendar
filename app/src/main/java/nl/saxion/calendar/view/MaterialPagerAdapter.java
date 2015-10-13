@@ -7,6 +7,8 @@ import android.view.View;
 
 import nl.saxion.calendar.model.Forecast;
 
+
+
 /**
  * Created by jonathan on 17-9-15.
  */

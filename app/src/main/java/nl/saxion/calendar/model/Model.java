@@ -44,7 +44,7 @@ public class Model extends Observable{
     ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
 
     private GoogleAccountCredential credentials;
-    private List<Event> events ;
+    private List<Event> events  = new ArrayList<Event>();
     private List<Location> locations = new ArrayList<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
     private Location standardLocation;

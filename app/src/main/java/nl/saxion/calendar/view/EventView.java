@@ -44,10 +44,10 @@ public class EventView extends LinearLayout implements SetData<Event> {
 
         textViewSummary.setText(event.getSummary());
         textViewDescription.setText(event.getDescription());
-        textViewCreator.setText(event.getCreator().toString());
+        textViewCreator.setText(event.getCreator().getDisplayName());
         textViewCreated.setText(event.getCreated().toStringRfc3339());
-        textViewStartDate.setText(event.getStart().toString());
-        textViewEndDate.setText(event.getEnd().toString());
+        textViewStartDate.setText(event.getStart().getDate().toStringRfc3339());
+        textViewEndDate.setText(event.getEnd().getTimeZone());
         textViewTag.setText(event.getEtag());
         textViewLocationEvent.setText(event.getLocation());
 

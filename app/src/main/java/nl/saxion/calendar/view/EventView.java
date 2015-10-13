@@ -1,6 +1,7 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,6 +53,5 @@ public class EventView extends LinearLayout implements SetData<Event> {
 
 
     }
-
 
 }

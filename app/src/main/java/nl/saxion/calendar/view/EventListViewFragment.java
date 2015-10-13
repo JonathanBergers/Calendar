@@ -59,7 +59,6 @@ public class EventListViewFragment extends GenericListViewFragment<Event, EventV
 
     @Override
     public List<Event> getItems() {
-
         return model.getEvents();
     }
 

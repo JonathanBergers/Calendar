@@ -1,60 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="1">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#000000">
 
     <LinearLayout
+
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:background="@color/material_drawer_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/textViewSummary" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:id="@+id/textViewDescription" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Creator"
-            android:id="@+id/textViewCreator" />
+            android:hint="Title"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventTitle" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Created"
-            android:id="@+id/textViewCreated" />
+            android:hint="Description"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventDescription" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Start Date"
-            android:id="@+id/textViewStartDate" />
+            android:hint="Creator"
+            app:met_floatingLabel="normal"
+            android:text="100"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventCreator" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="End date"
-            android:id="@+id/textViewEndDate" />
+            android:hint="Created on"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventCreated" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Tag"
-            android:id="@+id/textViewTag" />
+            android:hint="Start Date"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventStartDate" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Location"
-            android:id="@+id/textViewLocationEvent" />
+            android:hint="End Date"
+            app:met_floatingLabel="normal"
+            android:text="100"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventEndDate" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tag"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventTag" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            app:met_floatingLabel="normal"
+            android:text="100"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEventLocation" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -27,8 +27,8 @@ import nl.saxion.calendar.model.Model;
 public class EventView extends LinearLayout implements SetData<Event> {
 
     @ViewById
-    TextView textViewSummary, textViewDescription, textViewCreator, textViewCreated,
-            textViewStartDate, textViewEndDate, textViewTag, textViewLocationEvent;
+    TextView materialEditTextEventTitle, materialEditTextEventDescription, materialEditTextEventCreator, materialEditTextEventCreated,
+            materialEditTextEventStartDate, materialEditTextEventEndDate, materialEditTextEventTag, materialEditTextEventLocation;
 
 
     @Bean
@@ -42,14 +42,14 @@ public class EventView extends LinearLayout implements SetData<Event> {
     @Override
     public void setData(Event event) {
 
-        textViewSummary.setText(event.getSummary());
-        textViewDescription.setText(event.getDescription());
-        textViewCreator.setText(event.getCreator().getDisplayName());
-        textViewCreated.setText(event.getCreated().toStringRfc3339());
-        textViewStartDate.setText(event.getStart().getDate().toStringRfc3339());
-        textViewEndDate.setText(event.getEnd().getTimeZone());
-        textViewTag.setText(event.getEtag());
-        textViewLocationEvent.setText(event.getLocation());
+        materialEditTextEventTitle.setText(event.getSummary());
+        materialEditTextEventDescription.setText(event.getDescription());
+        materialEditTextEventCreator.setText(event.getCreator().getDisplayName());
+        materialEditTextEventCreated.setText(event.getCreated().toStringRfc3339());
+        materialEditTextEventStartDate.setText(event.getStart().getTimeZone());
+        materialEditTextEventEndDate.setText(event.getEnd().getTimeZone());
+        materialEditTextEventTag.setText(event.getEtag());
+        materialEditTextEventLocation.setText(event.getLocation());
 
 
     }

@@ -2,14 +2,17 @@ package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 
 import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
 import java.util.List;
@@ -23,8 +26,11 @@ import nl.saxion.calendar.model.Location;
 /**
  * Created by falco on 24-9-15.
  */
-@EFragment(R.layout.location_listview_fragment)
+@EFragment(R.layout.refresh_recyclerview_fragment)
 public class LocationListViewFragment extends GenericListViewFragment<Location, LocationView> {
+
+    @ViewById
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @RestService
     OpenweatherClient openweatherClient;
@@ -85,8 +91,14 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
 
 
     @Override
-    public List<Location> getItems() {
-        return model.getLocations();
+    public Function<Void, List<Location>> getItems() {
+        return new Function<Void, List<Location>>() {
+            @Nullable
+            @Override
+            public List<Location> apply(@Nullable Void input) {
+                return model.getLocations();
+            }
+        };
     }
 
     @Override
@@ -99,4 +111,19 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
             }
         };
     }
+
+    @AfterViews
+    public void initRefreshlayout(){
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                model.getLocations();
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+    }
+
 }

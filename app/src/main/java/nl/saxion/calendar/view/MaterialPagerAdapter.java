@@ -33,7 +33,7 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
             case 1: return LocationListViewFragment_.builder().build();
             case 2: return EventListViewFragment_.builder().build();
         }
-
+        assert false: "get fragment outside pager";
         return null;
 
 

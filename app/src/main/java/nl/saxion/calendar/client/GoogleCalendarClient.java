@@ -93,7 +93,7 @@ public class GoogleCalendarClient {
     }
 
     @UiThread
-    protected  <T, V> void invokeCallBack(Updatable<List<Event>> callBack, List<Event> input){
+    protected  <T> void invokeCallBack(Updatable<T> callBack, T input){
         callBack.update(input);
     }
 

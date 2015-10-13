@@ -68,18 +68,7 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
 
     @Override
     public void update(List<Forecast> input) {
-
-
-        //mAdapter.mvp_notifyDataSetChanged();
-
-        Log.d("FORECASTFRAG", "Update");
-
-        //recyclerView.getAdapter().notifyDataSetChanged();
-
         mAdapter.notifyDataSetChanged();
-
-        //genericListAdapter.notifyDataSetChanged();
-       // mAdapter.notifyDataSetChanged();
 
     }
 }

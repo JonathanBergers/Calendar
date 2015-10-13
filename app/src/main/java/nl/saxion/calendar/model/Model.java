@@ -92,7 +92,10 @@ public class Model{
     public void retrieveForecasts(Updatable<List<Forecast>> callBack){
 
 
-        for(Location l: getLocations()){
+        List<Location> locations = getLocations();
+        locations.add(getCurrentLocation());
+        locations.add(getStandardLocation());
+        for(Location l: locations){
 
             locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
 

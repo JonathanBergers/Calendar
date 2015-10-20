@@ -25,26 +25,26 @@ import nl.saxion.calendar.model.Model;
  *
  * de viewholder wordt automatisch gemaakt
  */
-public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>> implements Observer{
+public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>>{
 
     RecyclerView recyclerView;
     Model model;
-    List<T> items = new ArrayList<>();
     Function<Context, V> createView;
+    Function<Void, List<T>> getItems;
 
     /**model om de observer bij te regristreren
      *
      * @param model
      * @param recyclerView
      */
-    public GenericListAdapter(Model model, RecyclerView recyclerView, List<T> items, Function<Context, V> functionCreateView) {
+    public GenericListAdapter(Model model, RecyclerView recyclerView, Function<Void, List<T>> functonGetItems, Function<Context, V> functionCreateView) {
         this.model = model;
         this.recyclerView = recyclerView;
-        this.items = items;
+        this.getItems = functonGetItems;
         this.createView = functionCreateView;
 
-        Log.d("ITEMS", ""+ items.size());
-        model.addObserver(this);
+
+
 
 
 
@@ -66,24 +66,24 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     @Override
     public void onBindViewHolder(GenericViewHolder<T, V> holder, int position) {
 
-        holder.setData(items.get(position));
+        holder.setData(getItems().get(position));
     }
 
 
 
     @Override
     public int getItemCount(){
-        if(items == null){
+        if(getItems() == null){
             return 0;
 
         }
-        return items.size();
+        return getItems().size();
     }
 
 
-    @Override
-    public void update(Observable observable, Object data) {
-        notifyDataSetChanged();
+
+    private List<T> getItems(){
+        return getItems.apply(null);
     }
 
 

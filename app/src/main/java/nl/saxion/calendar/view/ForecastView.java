@@ -75,12 +75,12 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
 
         //makes attribute visible or invisible depending on whether they are
         //checked or not in settings
-        materialEditTextHumidity.setVisibility(getVisible(model.getSettings().isHumidity()));
-        materialEditTextTemp.setVisibility(getVisible(model.getSettings().isWindspeed()));
-        materialEditTextWindspeed.setVisibility(getVisible(model.getSettings().isWindspeed()));
-        materialEditTextTempMin.setVisibility(getVisible(model.getSettings().isTempMin()));
-        materialEditTextTempMax.setVisibility(getVisible(model.getSettings().isTempMax()));
-        materialEditTextPressure.setVisibility(getVisible(model.getSettings().isPressure()));
+        materialEditTextHumidity.setVisibility(getVisible(model.getViewSettings().isHumidity()));
+        materialEditTextTemp.setVisibility(getVisible(model.getViewSettings().isWindspeed()));
+        materialEditTextWindspeed.setVisibility(getVisible(model.getViewSettings().isWindspeed()));
+        materialEditTextTempMin.setVisibility(getVisible(model.getViewSettings().isTempMin()));
+        materialEditTextTempMax.setVisibility(getVisible(model.getViewSettings().isTempMax()));
+        materialEditTextPressure.setVisibility(getVisible(model.getViewSettings().isPressure()));
 
     }
 

@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity {
         model.addLocation(new Location("london", 0, 0));
         model.addLocation(new Location("zutphen", 0, 0));
 
-        model.retrieveForecasts();
 
 
     }

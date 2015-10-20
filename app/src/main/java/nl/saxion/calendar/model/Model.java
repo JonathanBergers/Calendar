@@ -21,6 +21,10 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.TreeMap;
 
+import javax.annotation.Nullable;
+
+import lombok.Getter;
+import lombok.Setter;
 import nl.saxion.calendar.client.GoogleCalendarClient;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.utils.Updatable;
@@ -29,7 +33,7 @@ import nl.saxion.calendar.utils.Updatable;
  * Created by jonathan on 24-9-15.
  */
 @EBean(scope = EBean.Scope.Singleton)
-public class Model extends Observable{
+public class Model{
 
 
 
@@ -42,41 +46,16 @@ public class Model extends Observable{
     @Bean
     GoogleCalendarClient calendarClient;
 
-    ForecastSettings setting = new ForecastSettings(true,true,true,true,true,true,true);
-
-    private GoogleAccountCredential credentials;
-    private List<Event> events ;
-    private List<Location> locations = new ArrayList<>();
+    private @Getter @Setter ForecastSettings viewSettings = new ForecastSettings(true,true,true,true,true,true,true);
+    private @Getter @Setter GoogleAccountCredential credentials;
+    private @Getter @Setter List<Event> events  = new ArrayList<Event>();
+    private @Getter List<Location> locations = new ArrayList<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
-    private Location standardLocation;
+    private @Getter @Setter Location standardLocation;
+    private @Getter @Setter Location currentLocation;
 
 
-    public Location getStandardLocation() {
-        return standardLocation;
-    }
 
-    public void setStandardLocation(Location standardLocation) {
-        this.standardLocation = standardLocation;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
-
-    public GoogleAccountCredential getCredentials() {
-        return credentials;
-    }
-
-    public void setCredentials(GoogleAccountCredential credentials) {
-        this.credentials = credentials;
-    }
-    public List<Location> getLocations() {
-        return locations;
-    }
 
     public List<Forecast> getLocationForecasts(){
 
@@ -93,19 +72,7 @@ public class Model extends Observable{
         System.out.println("Location added");
     }
 
-    /**
-     *
-     * @param city the city nam eof the location
-     * @return the location as an object or null if not found
-     */
-    public Location getLocationByCity(String city){
-        for(Location l : locations){
-            if(l.getCity().equalsIgnoreCase(city)){
-                return l;
-            }
-        }
-        return null;
-    }
+
 
 
     @Background
@@ -115,91 +82,47 @@ public class Model extends Observable{
     }
 
 
-    @Background
-    public void retrieveForecasts(Location... city){
-
-
-        for(Location l: city){
-
-            locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
-
-
-        }
-
-
-
-
-        UInotifiyObservers();
-    }
 
     /**retrieves the forecasts for the current locations
      *
      */
     @Background
-    public void retrieveForecasts(){
+    public void retrieveForecasts(Updatable<List<Forecast>> callBack){
 
 
-        for(Location l: getLocations()){
+        List<Location> locations = getLocations();
+        locations.add(getCurrentLocation());
+        locations.add(getStandardLocation());
+        for(Location l: locations){
 
             locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
 
 
         }
 
+        invokeCallBack(callBack, getLocationForecasts());
 
 
 
-        UInotifiyObservers();
     }
 
 
     @UiThread
-    public void UInotifiyObservers(){
-
-        setChanged();
-        notifyObservers();
-
+    protected  <T> void invokeCallBack(Updatable<T> callBack, T input){
+        callBack.update(input);
     }
 
-    public void UInotifyEvents(){
 
 
-        setChanged();
-        notifyObservers();
-    }
-
-    private Double latitude;
-    private Double longitude;
-
-    public void setLatitude(Double latitude) {
-
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Double longitude) {
-
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
-
-        return latitude;
-    }
-
-    public Double getLongitude() {
-
-        return longitude;
-    }
-
-    public ForecastSettings getSettings() {
-        return setting;
-    }
 
 
     @Background
     public void searchCity(String city, Context c){
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
         if(result!=null){
+
+
+
 
 
             JsonObject coord = result.getAsJsonObject("coord");
@@ -219,7 +142,7 @@ public class Model extends Observable{
         } else {
             //give error
         }
-        return;
+
     }
     @UiThread
     public void getRightCity(String searedCity, final Location resultLocation, Context c){
@@ -234,7 +157,6 @@ public class Model extends Observable{
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes button clicked
                             addLocation(resultLocation);
-                            UInotifiyObservers();
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -246,7 +168,7 @@ public class Model extends Observable{
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(c);
-            builder.setMessage("u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+            builder.setMessage("u zocht op: "+ searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
         return;

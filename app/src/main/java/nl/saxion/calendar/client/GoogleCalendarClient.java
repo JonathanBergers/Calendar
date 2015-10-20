@@ -37,20 +37,7 @@ public class GoogleCalendarClient {
 
     public GoogleCalendarClient() {    }
 
-    @AfterInject
-    public void init() {
 
-
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        mService = new com.google.api.services.calendar.Calendar.Builder(
-                transport, jsonFactory, model.getCredentials())
-                .setApplicationName("Calendar")
-                .build();
-
-
-
-    }
 
 
     @Background
@@ -58,10 +45,21 @@ public class GoogleCalendarClient {
 
 
 
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
 
+
+
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        mService = new com.google.api.services.calendar.Calendar.Builder(
+                transport, jsonFactory, model.getCredentials())
+                .setApplicationName("Calendar")
+                .build();
 
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = null;
+        Events events;
+
+        Log.d("CALCLIENT", String.valueOf(mService == null));
+
         try {
             events = mService.events().list("primary")
                     .setMaxResults(10)
@@ -69,9 +67,14 @@ public class GoogleCalendarClient {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
+
+
+
+
             List<Event> items = events.getItems();
             model.setEvents(items);
             invokeCallBack(callBack, items);
+
 
 
 
@@ -83,7 +86,7 @@ public class GoogleCalendarClient {
     }
 
     @UiThread
-    protected  <T, V> void invokeCallBack(Updatable<List<Event>> callBack, List<Event> input){
+    protected  <T> void invokeCallBack(Updatable<T> callBack, T input){
         callBack.update(input);
     }
 

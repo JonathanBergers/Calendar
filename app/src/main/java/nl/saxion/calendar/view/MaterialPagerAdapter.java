@@ -7,6 +7,8 @@ import android.view.View;
 
 import nl.saxion.calendar.model.Forecast;
 
+
+
 /**
  * Created by jonathan on 17-9-15.
  */
@@ -31,7 +33,7 @@ public class MaterialPagerAdapter extends FragmentStatePagerAdapter{
             case 1: return LocationListViewFragment_.builder().build();
             case 2: return EventListViewFragment_.builder().build();
         }
-
+        assert false: "get fragment outside pager";
         return null;
 
 

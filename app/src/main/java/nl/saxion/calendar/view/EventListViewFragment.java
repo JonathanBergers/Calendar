@@ -1,20 +1,15 @@
 package nl.saxion.calendar.view;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.util.Log;
 
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.google.api.services.calendar.model.Event;
 import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -28,8 +23,8 @@ import nl.saxion.calendar.utils.Updatable;
  * Created by jonathan on 17-9-15.
  */
 
-@EFragment(R.layout.weather_lisview_fragment)
-public class EventListViewFragment extends Fragment implements Updatable<List<Event>> {
+@EFragment(R.layout.refresh_recyclerview_fragment)
+public class EventListViewFragment extends GenericListViewFragment<Event, EventView> implements Updatable<List<Event>> {
 
 
     @Bean
@@ -47,7 +42,34 @@ public class EventListViewFragment extends Fragment implements Updatable<List<Ev
     @Override
     public void update(List<Event> input) {
 
+        Log.d("EVENTFRAG", input.toArray().toString());
+        mAdapter.notifyDataSetChanged();
 
-        System.out.println(input.toArray().toString());
+
     }
+
+
+    @Override
+    public Function<Void, List<Event>> getItems() {
+        return new Function<Void, List<Event>>() {
+            @Nullable
+            @Override
+            public List<Event> apply(@Nullable Void input) {
+                return model.getEvents();
+            }
+        };
+    }
+
+    @Override
+    protected Function<Context, EventView> createView() {
+        return new Function<Context, EventView>() {
+            @Nullable
+            @Override
+            public EventView apply(@Nullable Context input) {
+                return EventView_.build(input);
+            }
+        };
+    }
+
+
 }

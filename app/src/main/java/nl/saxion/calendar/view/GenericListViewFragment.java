@@ -23,7 +23,7 @@ import nl.saxion.calendar.model.Model;
 /**
  * Created by jonathan on 7-10-15.
  */
-@EFragment(R.layout.weather_lisview_fragment)
+@EFragment(R.layout.refresh_recyclerview_fragment)
 public abstract class GenericListViewFragment<T, V extends View & SetData<T>> extends Fragment {
 
 
@@ -38,10 +38,11 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
 
         RecyclerViewMaterialAdapter mAdapter;
 
+        GenericListAdapter<T, V> genericListAdapter;
 
 
 
-    public abstract List<T> getItems();
+    public abstract Function<Void, List<T>> getItems();
     protected abstract Function<Context, V> createView();
 
 
@@ -63,18 +64,16 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
 
             // make view for adapter
             // make adapter
-            GenericListAdapter<T, V> adapter  =
-                    new GenericListAdapter<T, V>(model, recyclerView, getItems(), createView() );
+            genericListAdapter= new GenericListAdapter<T, V>(model, recyclerView, getItems(), createView() );
 
 
             // set adapter
-            mAdapter = new RecyclerViewMaterialAdapter(adapter);
+            mAdapter = new RecyclerViewMaterialAdapter(genericListAdapter);
             recyclerView.setAdapter(mAdapter);
 
             MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
 
 
-            model.retrieveForecasts();
 
 
 

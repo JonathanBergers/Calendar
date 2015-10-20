@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.calendar.model.Calendar;
+import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
-import com.google.common.base.Function;
 import com.google.gson.JsonObject;
 
 import org.androidannotations.annotations.Background;
@@ -18,10 +20,7 @@ import org.androidannotations.annotations.rest.RestService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.TreeMap;
-
-import javax.annotation.Nullable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -53,6 +52,7 @@ public class Model{
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
     private @Getter @Setter Location standardLocation;
     private @Getter @Setter Location currentLocation;
+    private @Getter @Setter CalendarListEntry weatherAgenda = null;
 
 
 
@@ -122,9 +122,6 @@ public class Model{
         if(result!=null){
 
 
-
-
-
             JsonObject coord = result.getAsJsonObject("coord");
 
             if(coord!=null) {
@@ -174,14 +171,28 @@ public class Model{
         return;
     }
 
-    public void selectWeatherAgenda(){
+    public void selectWeatherAgenda(Updatable callback){
+        // get all agenda's
+        calendarClient.getAgendas(callback);
+        // choose agenda
 
+        // set agenda
+        System.out.println("SELECT AGENDA");
     }
-    public void makeWeatherAgenda(){
-
+    public void makeWeatherAgenda(Calendar agenda){
+        // make new agenda
+        calendarClient.makeAgenda(agenda);
+        // set agenda
+        System.out.println("MAKE AGENDA");
     }
 
+    public CalendarListEntry getWeatherAgenda() {
+        return weatherAgenda;
+    }
 
+    public void setWeatherAgenda(CalendarListEntry weatherAgenda) {
+        this.weatherAgenda = weatherAgenda;
+    }
 }
 
 

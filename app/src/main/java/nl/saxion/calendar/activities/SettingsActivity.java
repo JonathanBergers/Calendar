@@ -6,7 +6,9 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.api.services.calendar.model.CalendarListEntry;
 
@@ -14,6 +16,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -86,7 +89,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
-                        model.makeWeatherAgenda();
+                        makeWeatherAgenda();
                         break;
                 }
             }
@@ -114,6 +117,20 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         checkBoxWindSpeed.setChecked(model.getSettings().isWindspeed());
         checkBoxLocation.setChecked(model.getSettings().isLocation());
 
+        setCorrectAgendaToTextview();
+
+
+    }
+
+    private void setCorrectAgendaToTextview(){
+        //sets the current agenda textview to the correct agenda name
+        CalendarListEntry currentWeatherAgenda = model.getWeatherAgenda();
+        if(currentWeatherAgenda == null){
+            textViewCurrentWeatherAgenda.setText("uw huidige weeragenda is: \n" + "geen agenda");
+        } else {
+            textViewCurrentWeatherAgenda.setText("uw huidige weeragenda is: \n" + currentWeatherAgenda.getSummary());
+        }
+
     }
 
 
@@ -134,43 +151,73 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
 
     @Override
+    @UiThread
     public void update(final List<CalendarListEntry> input) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(SettingsActivity.this);
         //builderSingle.setIcon(R.drawable.ic_launcher);
-        builderSingle.setTitle("Select One Name:-");
+        builderSingle.setTitle("Kies een agenda: ");
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
+        for(CalendarListEntry cle : input){
+            arrayAdapter.add(cle.getSummary());
+        }
+        builderSingle.setNegativeButton("annuleren", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-        final ArrayAdapter<CalendarListEntry> arrayAdapter = new ArrayAdapter<CalendarListEntry>(
-                SettingsActivity.this,
-                android.R.layout.select_dialog_singlechoice);
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = input.get(which).getSummary();
+                model.setWeatherAgenda(input.get(which));
+                setCorrectAgendaToTextview();
 
-        arrayAdapter.addAll(input);
-
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builderInner = new AlertDialog.Builder(SettingsActivity.this);
+                builderInner.setMessage(strName);
+                builderInner.setTitle("De gekozen agenda is");
+                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
+                builderInner.show();
+            }
+        });
+        builderSingle.show();
 
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String strName = input.get(which).getSummary();
-                        AlertDialog.Builder builderInner = new AlertDialog.Builder(SettingsActivity.this);
-                        builderInner.setMessage(strName);
-                        builderInner.setTitle("Your Selected Item is");
-                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        builderInner.show();
+    }
+
+    private void makeWeatherAgenda(){
+        // Create a new calendar list entry
+        final com.google.api.services.calendar.model.Calendar agenda = new com.google.api.services.calendar.model.Calendar();
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        alert.setMessage("Geef een naam voor de agenda");
+        alert.setView(input);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+                agenda.setSummary(value);
+                agenda.setTimeZone("Europe/Amsterdam");
+
+                model.makeWeatherAgenda(agenda);
+                Toast.makeText(getApplicationContext(), "agenda aan het maken...",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
                     }
                 });
-        builderSingle.show();
+        alert.show();
+
     }
 }
 

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.calendar.model.Calendar;
+import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.gson.JsonObject;
 
@@ -48,6 +50,7 @@ public class Model extends Observable{
     private List<Location> locations = new ArrayList<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
     private Location standardLocation;
+    private CalendarListEntry weatherAgenda = null;
 
 
     public Location getStandardLocation() {
@@ -259,14 +262,20 @@ public class Model extends Observable{
         // set agenda
         System.out.println("SELECT AGENDA");
     }
-    public void makeWeatherAgenda(){
+    public void makeWeatherAgenda(Calendar agenda){
         // make new agenda
-
+        calendarClient.makeAgenda(agenda);
         // set agenda
         System.out.println("MAKE AGENDA");
     }
 
+    public CalendarListEntry getWeatherAgenda() {
+        return weatherAgenda;
+    }
 
+    public void setWeatherAgenda(CalendarListEntry weatherAgenda) {
+        this.weatherAgenda = weatherAgenda;
+    }
 }
 
 

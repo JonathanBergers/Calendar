@@ -8,11 +8,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
 import com.google.api.services.calendar.model.CalendarList;
 import com.google.api.services.calendar.model.CalendarListEntry;
-
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -88,24 +87,7 @@ public class GoogleCalendarClient {
         callBack.update(input);
     }
 
-    public void addCalendar(){
 
-        com.google.api.services.calendar.Calendar mService = getmService();
-// Create a new calendar
-        com.google.api.services.calendar.model.Calendar calendar = new Calendar();
-        calendar.setSummary("TestCalendar");
-        calendar.setTimeZone("Europe/Amsterdam");
-
-// Insert the new calendar
-        Calendar createdCalendar = null;
-        try {
-            createdCalendar = mService.calendars().insert(calendar).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(createdCalendar.getId());
-    }
 
     @Background
     public void getAgendas(Updatable callback){
@@ -138,12 +120,38 @@ public class GoogleCalendarClient {
         return;
     }
 
+    @Background
+    public void makeAgenda(Calendar agenda){
+
+        com.google.api.services.calendar.Calendar mService = getmService();
+
+// Insert the new calendar
+        Calendar createdCalendar = null;
+        try {
+            createdCalendar = mService.calendars().insert(agenda).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CalendarListEntry agendaListEntry = new CalendarListEntry();
+        agendaListEntry.setId(createdCalendar.getId());
+
+// Insert the new calendar list entry
+        CalendarListEntry createdCalendarListEntry = null;
+        try {
+            createdCalendarListEntry = mService.calendarList().insert(agendaListEntry).execute();
+            model.setWeatherAgenda(createdCalendarListEntry);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private com.google.api.services.calendar.Calendar getmService(){
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         return new com.google.api.services.calendar.Calendar.Builder(
                 transport, jsonFactory, model.getCredentials())
-                .setApplicationName("Calendar")
+                .setApplicationName("CalendarApplication")
                 .build();
     }
 

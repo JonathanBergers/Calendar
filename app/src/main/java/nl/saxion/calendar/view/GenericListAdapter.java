@@ -89,4 +89,6 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     }
 
 
+
+
 }

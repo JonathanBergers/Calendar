@@ -1,40 +1,33 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.api.client.json.Json;
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
 import nl.saxion.calendar.R;
-import nl.saxion.calendar.model.Location;
+import nl.saxion.calendar.model.EventWrapper;
+import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.utils.Updatable;
 
 /**
  * Created by Alec on 12-10-2015.
  */
-@EViewGroup
-public class EventView extends LinearLayout implements SetData<Event> {
+@EViewGroup(R.layout.event_view)
+public class EventView extends LinearLayout implements SetData<EventWrapper> , Updatable<Bitmap>{
 
     @ViewById
     TextView textViewSummary, textViewDescription;
@@ -42,54 +35,83 @@ public class EventView extends LinearLayout implements SetData<Event> {
     @ViewById
     MaterialEditText materialEditTextStart, materialEditTextEnd;
 
+    @ViewById
+    FrameLayout frameLayout;
+
+    @ViewById
+    ImageView imageView;
+
     @Bean
     Model model;
+
+
+    Forecast forecast;
+
+    boolean showingForecast = false;
 
     public EventView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.event_view, this);
+
+
     }
 
 
 
 
     @Override
-    public void setData(Event event) {
+    public void setData(final EventWrapper event) {
+
 
         textViewSummary.setText(event.getSummary());
         textViewDescription.setText(event.getDescription());
-
-        String[] startArray = event.getStart().toString().split("\"");
-        String[] endArray = event.getEnd().toString().split("\"");
-
-        String startString = startArray[3];
-        String endString  = endArray[3];
+        materialEditTextStart.setText(event.getStart());
+        materialEditTextEnd.setText(event.getEnd());
 
 
 
 
-        endString = endString.replace('T', ' ');
+        final Forecast f = event.getForecast();
+        if(f != null){
+            this.forecast = f;
+            Log.d("EVENTJO", event.getForecast().toString());
 
+            ForecastView fv = ForecastView_.build(getContext());
+            fv.setData(forecast);
+            frameLayout.addView(fv);
+            fv.getBitmapFromURL(this, fv.getBitmapUrl());
+            showingForecast = true;
 
-        if(startString.length() > 10){
-            startString = startString.substring(0, startString.length() - 13);
-            startString = startString.replace('T', ' ');
-        }
-        if(endString.length() > 10){
-            endString = endString.substring(0, endString.length() - 13);
-            endString = endString.replace('T', ' ');
         }
 
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
+                if(forecast == null) return false;
 
-        materialEditTextStart.setText(startString);
-        materialEditTextEnd.setText(endString);
-
-
-
-
+                if(!showingForecast){
+                    ForecastView fv = ForecastView_.build(getContext());
+                    fv.setData(forecast);
+                    frameLayout.addView(fv);
+                    showingForecast = true;
+                }else{
+                    frameLayout.removeAllViews();
+                    showingForecast = false;
+                }
+                return false;
+            }
+        });
 
 
     }
 
+
+    @Override
+    @UiThread
+    public void update(Bitmap input) {
+        imageView.setImageBitmap(input);
+        imageView.setMinimumWidth(100);
+        imageView.setMinimumHeight(100);
+    }
 }

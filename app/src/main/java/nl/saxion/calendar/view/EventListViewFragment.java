@@ -1,14 +1,9 @@
 package nl.saxion.calendar.view;
 
 
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.CalendarContract;
 import android.util.Log;
 
-import com.google.api.services.calendar.model.Event;
 import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterViews;
@@ -20,6 +15,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.model.EventWrapper;
 import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.utils.Updatable;
 
@@ -28,7 +24,7 @@ import nl.saxion.calendar.utils.Updatable;
  */
 
 @EFragment(R.layout.refresh_recyclerview_fragment)
-public class EventListViewFragment extends GenericListViewFragment<Event, EventView> implements Updatable<List<Event>> {
+public class EventListViewFragment extends GenericListViewFragment<EventWrapper, EventView> implements Updatable<List<EventWrapper>> {
 
 
     @Bean
@@ -44,7 +40,7 @@ public class EventListViewFragment extends GenericListViewFragment<Event, EventV
 
 
     @Override
-    public void update(List<Event> input) {
+    public void update(List<EventWrapper> input) {
 
         Log.d("EVENTFRAG", input.toArray().toString());
         mAdapter.notifyDataSetChanged();
@@ -56,11 +52,11 @@ public class EventListViewFragment extends GenericListViewFragment<Event, EventV
 
 
     @Override
-    public Function<Void, List<Event>> getItems() {
-        return new Function<Void, List<Event>>() {
+    public Function<Void, List<EventWrapper>> getItems() {
+        return new Function<Void, List<EventWrapper>>() {
             @Nullable
             @Override
-            public List<Event> apply(@Nullable Void input) {
+            public List<EventWrapper> apply(@Nullable Void input) {
                 return model.getEvents();
             }
         };

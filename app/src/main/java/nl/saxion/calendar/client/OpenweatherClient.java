@@ -23,5 +23,7 @@ public interface OpenweatherClient {
     JsonObject recieveCurrentWeather(double lat, double lon);
 
 
+    @Get("weather?zip={zip},nl"+ Resources.OPENWEATHER_APP_ID)
+    JsonObject recieveCurrentWeatherZIP(String zip);
 
 }

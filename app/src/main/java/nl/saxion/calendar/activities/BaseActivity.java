@@ -21,7 +21,10 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+
+import nl.saxion.calendar.model.Model;
 
 
 @EActivity()
@@ -29,14 +32,15 @@ public class BaseActivity extends AppCompatActivity{
 
     Drawer navigationDrawer;
 
+
     @AfterViews
     public void init(){
 
-            // setup the navigation drawer
-            Toolbar toolbar = new Toolbar(this);
+        // setup the navigation drawer
+        Toolbar toolbar = new Toolbar(this);
 
 
-            navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
+        navigationDrawer = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withTranslucentStatusBar(false).build();
 
 
         PrimaryDrawerItem settingsItem = new PrimaryDrawerItem().withName("Settings").withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {

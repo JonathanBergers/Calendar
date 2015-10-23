@@ -20,6 +20,12 @@
         android:background="@color/material_drawer_background">
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_weight="0" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +70,8 @@
             android:text="datum"
             android:singleLine="false"
             android:layout_weight="1"
-            android:id="@+id/materialEditTextStart" />
+            android:id="@+id/materialEditTextStart"
+            android:enabled="false" />
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -75,8 +82,17 @@
             android:text="10"
             android:singleLine="false"
             android:layout_weight="1"
-            android:id="@+id/materialEditTextEnd" />
+            android:id="@+id/materialEditTextEnd"
+            android:enabled="false"
+           />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/frameLayout"></FrameLayout>
 
 </RelativeLayout>

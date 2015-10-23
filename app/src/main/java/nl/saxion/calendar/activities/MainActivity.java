@@ -58,6 +58,11 @@ public class MainActivity extends BaseActivity {
         model.addLocation(new Location("london", 0, 0));
         model.addLocation(new Location("zutphen", 0, 0));
 
+        if(model.getCredentials() == null){
+            LoginActivity_.intent(this).start();
+        }
+
+
 
 
     }

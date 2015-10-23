@@ -48,6 +48,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
 
 
 
+
     }
 
 
@@ -68,6 +69,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
 
         holder.setData(getItems().get(position));
     }
+
 
 
 

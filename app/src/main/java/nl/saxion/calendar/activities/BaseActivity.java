@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity{
             @Override
             public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
 
-                GPSTrackerActivity_.intent(BaseActivity.this).start();
+//                GPSTrackerActivity_.intent(BaseActivity.this).start();
                 return false;
             }
         });

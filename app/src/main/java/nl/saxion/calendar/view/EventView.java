@@ -6,9 +6,14 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.api.client.json.Json;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
@@ -16,9 +21,13 @@ import org.androidannotations.annotations.ViewById;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
 
 /**
@@ -28,9 +37,10 @@ import nl.saxion.calendar.model.Model;
 public class EventView extends LinearLayout implements SetData<Event> {
 
     @ViewById
-    TextView textViewSummary, textViewDescription, textViewCreator, textViewCreated,
-            textViewStartDate, textViewEndDate, textViewTag, textViewLocationEvent;
+    TextView textViewSummary, textViewDescription;
 
+    @ViewById
+    MaterialEditText materialEditTextStart, materialEditTextEnd;
 
     @Bean
     Model model;
@@ -48,16 +58,36 @@ public class EventView extends LinearLayout implements SetData<Event> {
 
         textViewSummary.setText(event.getSummary());
         textViewDescription.setText(event.getDescription());
-        textViewCreator.setText(event.getCreator().getDisplayName());
-        textViewCreated.setText(event.getCreated().toStringRfc3339());
-        try {
-            textViewStartDate.setText(event.getStart().toPrettyString());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        String[] startArray = event.getStart().toString().split("\"");
+        String[] endArray = event.getEnd().toString().split("\"");
+
+        String startString = startArray[3];
+        String endString  = endArray[3];
+
+
+
+
+        endString = endString.replace('T', ' ');
+
+
+        if(startString.length() > 10){
+            startString = startString.substring(0, startString.length() - 13);
+            startString = startString.replace('T', ' ');
         }
-        textViewEndDate.setText(event.getEnd().getTimeZone());
-        textViewTag.setText(event.getEtag());
-        textViewLocationEvent.setText(event.getLocation());
+        if(endString.length() > 10){
+            endString = endString.substring(0, endString.length() - 13);
+            endString = endString.replace('T', ' ');
+        }
+
+
+
+        materialEditTextStart.setText(startString);
+        materialEditTextEnd.setText(endString);
+
+
+
+
 
 
     }

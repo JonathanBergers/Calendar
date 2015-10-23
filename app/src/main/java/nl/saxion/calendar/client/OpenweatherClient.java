@@ -6,6 +6,7 @@ import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Rest;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
+import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.utils.Resources;
 
 /**
@@ -20,6 +21,7 @@ public interface OpenweatherClient {
 
     @Get("weather?lat={lat}&lon={lon}&APPID="+ Resources.OPENWEATHER_APP_ID)
     JsonObject recieveCurrentWeather(double lat, double lon);
+
 
 
 }

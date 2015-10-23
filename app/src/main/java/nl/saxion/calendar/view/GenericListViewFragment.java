@@ -15,6 +15,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Collection;
 import java.util.List;
 
 import nl.saxion.calendar.R;
@@ -79,7 +80,9 @@ public abstract class GenericListViewFragment<T, V extends View & SetData<T>> ex
 
 
 
+
         }
+
 
 
 

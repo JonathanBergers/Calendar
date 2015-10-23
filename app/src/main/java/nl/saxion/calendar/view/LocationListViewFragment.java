@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.widget.Button;
 
 import com.google.common.base.Function;
 import com.google.gson.JsonObject;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -26,7 +29,7 @@ import nl.saxion.calendar.model.Location;
 /**
  * Created by falco on 24-9-15.
  */
-@EFragment(R.layout.refresh_recyclerview_fragment)
+@EFragment(R.layout.location_recyclerview_fragment)
 public class LocationListViewFragment extends GenericListViewFragment<Location, LocationView> {
 
     @ViewById
@@ -35,6 +38,23 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
     @RestService
     OpenweatherClient openweatherClient;
 
+    @ViewById
+    Button buttonAddLocation;
+
+    @ViewById
+    MaterialEditText materialEditTextLocation;
+
+    @Click
+    public void buttonAddLocation(){
+
+        String input = materialEditTextLocation.getText().toString();
+
+        if(!input.isEmpty()){
+            searchCity(input);
+        }
+
+
+    }
 
     @Background
     protected void searchCity(String city){
@@ -83,11 +103,15 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage(model.getCredentials().getSelectedAccountName() + "u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+            builder.setMessage("u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
 
     }
+
+
+
+
 
 
     @Override

@@ -1,7 +1,11 @@
 package nl.saxion.calendar.view;
 
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.CalendarContract;
 import android.util.Log;
 
 import com.google.api.services.calendar.model.Event;
@@ -44,6 +48,8 @@ public class EventListViewFragment extends GenericListViewFragment<Event, EventV
 
         Log.d("EVENTFRAG", input.toArray().toString());
         mAdapter.notifyDataSetChanged();
+
+
 
 
     }

@@ -2,7 +2,9 @@ package nl.saxion.calendar.model;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.calendar.model.Calendar;
@@ -17,10 +19,16 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,14 +56,25 @@ public class Model{
     private @Getter @Setter ForecastSettings viewSettings = new ForecastSettings(true,true,true,true,true,true,true);
     private @Getter @Setter GoogleAccountCredential credentials;
     private @Getter @Setter List<Event> events  = new ArrayList<Event>();
-    private @Getter List<Location> locations = new ArrayList<>();
+    private Set<Location> locations = new HashSet<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
     private @Getter @Setter Location standardLocation;
     private @Getter @Setter Location currentLocation;
     private @Getter @Setter CalendarListEntry weatherAgenda = null;
 
 
+    public List<Location> getLocations() {
+        List<Location> locationsCopy = new ArrayList<>();
+        locationsCopy.addAll(locations);
 
+        Location currentLocation = getCurrentLocation();
+        Location standardLocation = getStandardLocation();
+
+        if(currentLocation!= null && !locationsCopy.contains(currentLocation)) locationsCopy.add(currentLocation);
+        if(standardLocation != null && !locationsCopy.contains(standardLocation)) locationsCopy.add(standardLocation);
+
+        return locationsCopy;
+    }
 
     public List<Forecast> getLocationForecasts(){
 
@@ -64,6 +83,8 @@ public class Model{
             l.add(locationForecasts.get(s));
         }
         return l;
+
+
 
     }
 
@@ -90,15 +111,18 @@ public class Model{
     public void retrieveForecasts(Updatable<List<Forecast>> callBack){
 
 
-        List<Location> locations = getLocations();
-        locations.add(getCurrentLocation());
-        locations.add(getStandardLocation());
-        for(Location l: locations){
+        HashSet<Location> locationsCopy = new HashSet<>();
+        locationsCopy.addAll(getLocations());
+        if(getCurrentLocation()!= null) locationsCopy.add(getCurrentLocation());
+        if(getStandardLocation()!= null) locationsCopy.add(getStandardLocation());
 
+        for(Location l: locationsCopy){
+            Log.d("MODEL", l.toString());
             locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
 
 
         }
+
 
         invokeCallBack(callBack, getLocationForecasts());
 
@@ -108,7 +132,7 @@ public class Model{
 
 
     @UiThread
-    protected  <T> void invokeCallBack(Updatable<T> callBack, T input){
+    protected  <T> void invokeCallBack(Updatable<T> callBack, T input) {
         callBack.update(input);
     }
 

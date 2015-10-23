@@ -1,60 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp"
+
+    android:elevation="2dp"
+    android:background="#000000">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/LayoutMain"
+        android:layout_alignParentTop="true"
+        android:elevation="3dp"
+        android:background="@color/material_drawer_background">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Titel"
+
+            android:layout_weight="1"
             android:id="@+id/textViewSummary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Description"
+
+            android:layout_weight="1"
             android:id="@+id/textViewDescription" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Creator"
-            android:id="@+id/textViewCreator" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Created"
-            android:id="@+id/textViewCreated" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start Date"
-            android:id="@+id/textViewStartDate" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End date"
-            android:id="@+id/textViewEndDate" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tag"
-            android:id="@+id/textViewTag" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:id="@+id/textViewLocationEvent" />
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_below="@+id/LayoutMain"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout"
+
+        android:background="@color/material_drawer_background">
+
+
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Start"
+            app:met_floatingLabel="normal"
+            android:text="datum"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextStart" />
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Eind"
+            app:met_floatingLabel="normal"
+            android:text="10"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:id="@+id/materialEditTextEnd" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -99,7 +99,10 @@ public class LoginActivity extends BaseActivity {
         assert mCredential.getSelectedAccountName() != null: "acc name null";
         assert !mCredential.getSelectedAccountName().isEmpty(): "acc name empty";
 
-        Log.d("LOGIN", mCredential.getSelectedAccountName());
+
+
+
+        //Log.d("LOGIN", mCredential.getSelectedAccountName());
 
 
         model.setCredentials(mCredential);

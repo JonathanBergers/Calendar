@@ -51,6 +51,9 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     Button buttonChooseWeatherAgenda;
 
     @ViewById
+    Button buttonLogin;
+
+    @ViewById
     Button buttonLogOut;
 
     @ViewById
@@ -62,6 +65,11 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
     @Bean
     Model model;
+
+    @Click
+    void buttonLogin() {
+        LoginActivity_.intent(SettingsActivity.this).start();
+    }
 
     @Click
     void buttonExportToCalendar(){

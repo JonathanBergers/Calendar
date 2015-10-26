@@ -25,6 +25,7 @@ import java.util.TreeMap;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.saxion.calendar.activities.SettingsActivity;
 import nl.saxion.calendar.client.GoogleCalendarClient;
 import nl.saxion.calendar.client.OpenweatherClient;
 import nl.saxion.calendar.utils.Updatable;
@@ -263,18 +264,22 @@ public class Model{
      */
 
 
-    public boolean exportWeatherToAgenda(){
+    public void exportWeatherToAgenda(SettingsActivity settingsActivity){
 
 
         if(standardLocation == null){
-            return false;
+
+            settingsActivity.showToast("kies eerst uw standaard locatie");
+            return;
         }
 
         if(weatherAgenda==null){
-            return false;
+
+            settingsActivity.showToast("Kies eerst een weer-agenda");
+            return;
         }
         getAndExportForecasts();
-        return true;
+        return;
     }
     @Background
     public void getAndExportForecasts(){
@@ -282,6 +287,8 @@ public class Model{
         calendarClient.exportForecasts(forecastConverter.getForecastsFromJson(openweatherClient.recieveDailyForcasts(standardLocation.getLat(), standardLocation.getLon(), 10)));
 
     }
+
+
 }
 
 

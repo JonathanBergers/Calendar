@@ -78,17 +78,23 @@
                     android:id="@+id/textViewTitleAccount" />
             </LinearLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log in"
-                android:id="@+id/buttonLogin" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LOG OUT"
-                android:id="@+id/buttonLogOut" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log in"
+                    android:id="@+id/buttonLogin" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOG OUT"
+                    android:id="@+id/buttonLogOut" />
+            </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
@@ -102,6 +108,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="huidige weeragenda: "
                 android:id="@+id/textViewCurrentWeatherAgenda" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exporteer naar GoogleCalendar"
+                android:id="@+id/buttonExportToCalendar" />
         </LinearLayout>
 
     </LinearLayout>

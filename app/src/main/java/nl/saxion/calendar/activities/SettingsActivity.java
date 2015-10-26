@@ -2,7 +2,6 @@ package nl.saxion.calendar.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,10 +54,19 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     Button buttonLogOut;
 
     @ViewById
+    Button buttonExportToCalendar;
+
+    @ViewById
     TextView textViewCurrentWeatherAgenda;
+
 
     @Bean
     Model model;
+
+    @Click
+    void buttonExportToCalendar(){
+        model.exportWeatherToAgenda(this);
+    }
 
     @Click
     void buttonLogOut() {
@@ -77,8 +85,6 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         model.getViewSettings().setTempMax(checkBoxTempMax.isChecked());
         model.getViewSettings().setWindspeed(checkBoxWindSpeed.isChecked());
 
-        model.getViewSettings().setLocation(checkBoxLocation.isChecked());
-        model.exportWeatherToAgenda();
     }
 
     @Click
@@ -213,6 +219,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
                 model.makeWeatherAgenda(agenda);
                 Toast.makeText(getApplicationContext(), "agenda aan het maken...",
                         Toast.LENGTH_LONG).show();
+                setCorrectAgendaToTextview();
             }
         });
 
@@ -224,6 +231,12 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
                 });
         alert.show();
 
+    }
+
+    @UiThread
+    public void showToast(String message){
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_LONG).show();
     }
 
 }

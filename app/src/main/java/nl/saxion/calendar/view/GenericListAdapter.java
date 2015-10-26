@@ -48,6 +48,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
 
 
 
+
     }
 
 
@@ -71,6 +72,7 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
 
 
 
+
     @Override
     public int getItemCount(){
         if(getItems() == null){
@@ -85,6 +87,8 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     private List<T> getItems(){
         return getItems.apply(null);
     }
+
+
 
 
 }

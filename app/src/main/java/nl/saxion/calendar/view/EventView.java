@@ -1,58 +1,117 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import nl.saxion.calendar.R;
+import nl.saxion.calendar.model.EventWrapper;
+import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.utils.Updatable;
 
 /**
  * Created by Alec on 12-10-2015.
  */
-@EViewGroup
-public class EventView extends LinearLayout implements SetData<Event> {
+@EViewGroup(R.layout.event_view)
+public class EventView extends LinearLayout implements SetData<EventWrapper> , Updatable<Bitmap>{
 
     @ViewById
-    TextView materialEditTextEventTitle, materialEditTextEventDescription, materialEditTextEventCreator, materialEditTextEventCreated,
-            materialEditTextEventStartDate, materialEditTextEventEndDate, materialEditTextEventTag, materialEditTextEventLocation;
+    TextView textViewSummary, textViewDescription;
 
+    @ViewById
+    MaterialEditText materialEditTextStart, materialEditTextEnd;
+
+    @ViewById
+    FrameLayout frameLayout;
+
+    @ViewById
+    ImageView imageView;
 
     @Bean
     Model model;
 
+
+    Forecast forecast;
+
+    boolean showingForecast = false;
+
     public EventView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.event_view, this);
+
+
     }
+
+
+
 
     @Override
-    public void setData(Event event) {
+    public void setData(final EventWrapper event) {
 
-        materialEditTextEventTitle.setText(event.getSummary());
-        materialEditTextEventDescription.setText(event.getDescription());
-        materialEditTextEventCreator.setText(event.getCreator().getDisplayName());
-        materialEditTextEventCreated.setText(event.getCreated().toStringRfc3339());
-        materialEditTextEventStartDate.setText(event.getStart().getTimeZone());
-        materialEditTextEventEndDate.setText(event.getEnd().getTimeZone());
-        materialEditTextEventTag.setText(event.getEtag());
-        materialEditTextEventLocation.setText(event.getLocation());
+
+        textViewSummary.setText(event.getSummary());
+        textViewDescription.setText(event.getDescription());
+        materialEditTextStart.setText(event.getStart());
+        materialEditTextEnd.setText(event.getEnd());
+
+
+
+
+        final Forecast f = event.getForecast();
+        if(f != null){
+            this.forecast = f;
+            Log.d("EVENTJO", event.getForecast().toString());
+
+            ForecastView fv = ForecastView_.build(getContext());
+            fv.setData(forecast);
+            frameLayout.addView(fv);
+            fv.getBitmapFromURL(this, fv.getBitmapUrl());
+            showingForecast = true;
+
+        }
+
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if(forecast == null) return false;
+
+                if(!showingForecast){
+                    ForecastView fv = ForecastView_.build(getContext());
+                    fv.setData(forecast);
+                    frameLayout.addView(fv);
+                    showingForecast = true;
+                }else{
+                    frameLayout.removeAllViews();
+                    showingForecast = false;
+                }
+                return false;
+            }
+        });
 
 
     }
 
+
+    @Override
+    @UiThread
+    public void update(Bitmap input) {
+        imageView.setImageBitmap(input);
+        imageView.setMinimumWidth(100);
+        imageView.setMinimumHeight(100);
+    }
 }

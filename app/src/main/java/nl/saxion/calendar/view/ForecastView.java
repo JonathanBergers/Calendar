@@ -20,22 +20,25 @@ import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.Get;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import lombok.Getter;
 import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
+import nl.saxion.calendar.utils.Updatable;
 import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 24-9-15.
  */
 @EViewGroup
-public class ForecastView extends LinearLayout implements SetData<Forecast> {
+public class ForecastView extends LinearLayout implements SetData<Forecast>, Updatable<Bitmap> {
 
 
 
@@ -48,6 +51,7 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
     @ViewById
     MaterialEditText materialEditTextTemp, materialEditTextHumidity, materialEditTextWindspeed, materialEditTextPressure, materialEditTextTempMin, materialEditTextTempMax;
 
+    private @Getter String bitmapUrl;
 
     @Bean
     Model model;
@@ -63,7 +67,8 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
 
     public void setData(Forecast f){
 
-        getBitmapFromURL("http://openweathermap.org/img/w/" + f.getWeather().get(0).getIconId() + ".png");
+        bitmapUrl = "http://openweathermap.org/img/w/" + f.getWeather().get(0).getIconId() + ".png";
+        getBitmapFromURL(this, getBitmapUrl());
         textViewCity.setText(f.getLocation().getCity());
         textViewMessage.setText(f.getWeather().get(0).getDescription());
         materialEditTextHumidity.setText("" + f.getHumidity());
@@ -88,7 +93,7 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
 
 
     @Background
-    public  void getBitmapFromURL(String src) {
+    public  void getBitmapFromURL(Updatable<Bitmap> callBack, String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -96,17 +101,13 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            setImage(myBitmap);
+            callBack.update(myBitmap);
         } catch (IOException e) {
             e.printStackTrace();
 
         }
     }
-    @UiThread
-    public void setImage(Bitmap b){
-        imageViewIcon.setImageBitmap(b);
 
-    }
 
 
 
@@ -121,5 +122,11 @@ public class ForecastView extends LinearLayout implements SetData<Forecast> {
     @AfterViews
     public void init(){
 
+    }
+
+    @Override
+    @UiThread
+    public void update(Bitmap input) {
+        imageViewIcon.setImageBitmap(input);
     }
 }

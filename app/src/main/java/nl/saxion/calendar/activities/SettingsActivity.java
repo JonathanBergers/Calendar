@@ -73,6 +73,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         model.getViewSettings().setTempMax(checkBoxTempMax.isChecked());
         model.getViewSettings().setWindspeed(checkBoxWindSpeed.isChecked());
         model.getViewSettings().setLocation(checkBoxLocation.isChecked());
+        model.exportWeatherToAgenda();
     }
 
     @Click
@@ -120,6 +121,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         setCorrectAgendaToTextview();
 
 
+
     }
 
     private void setCorrectAgendaToTextview(){
@@ -140,6 +142,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

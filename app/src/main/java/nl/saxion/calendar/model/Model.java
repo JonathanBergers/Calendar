@@ -46,7 +46,7 @@ public class Model{
     @Bean
     GoogleCalendarClient calendarClient;
 
-    private @Getter @Setter ForecastSettings viewSettings = new ForecastSettings(true,true,true,true,true,true,true);
+    private @Getter @Setter ForecastSettings viewSettings = new ForecastSettings(true,true,true,true,true);
     private @Getter @Setter GoogleAccountCredential credentials;
     private @Getter @Setter List<EventWrapper> events  = new ArrayList<EventWrapper>();
     private Set<Location> locations = new HashSet<>();
@@ -104,10 +104,9 @@ public class Model{
     public void retrieveForecasts(Updatable<List<Forecast>> callBack){
 
 
-        HashSet<Location> locationsCopy = new HashSet<>();
+        ArrayList<Location> locationsCopy = new ArrayList<>();
         locationsCopy.addAll(getLocations());
-        if(getCurrentLocation()!= null) locationsCopy.add(getCurrentLocation());
-        if(getStandardLocation()!= null) locationsCopy.add(getStandardLocation());
+
 
         for(Location l: locationsCopy){
             Log.d("MODEL", l.toString());

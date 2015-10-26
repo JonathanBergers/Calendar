@@ -81,7 +81,6 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>, Upd
         //makes attribute visible or invisible depending on whether they are
         //checked or not in settings
         materialEditTextHumidity.setVisibility(getVisible(model.getViewSettings().isHumidity()));
-        materialEditTextTemp.setVisibility(getVisible(model.getViewSettings().isWindspeed()));
         materialEditTextWindspeed.setVisibility(getVisible(model.getViewSettings().isWindspeed()));
         materialEditTextTempMin.setVisibility(getVisible(model.getViewSettings().isTempMin()));
         materialEditTextTempMax.setVisibility(getVisible(model.getViewSettings().isTempMax()));

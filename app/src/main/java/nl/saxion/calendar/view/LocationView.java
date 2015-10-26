@@ -1,10 +1,12 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
+import android.support.annotation.UiThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -37,6 +39,7 @@ public class LocationView extends LinearLayout implements SetData<Location>{
         super(context);
         LayoutInflater.from(context).inflate(R.layout.location_view, this);
     }
+
     public void setData(Location l){
         if(l==null){
             materialEditTextLocation.setText("zoek hier");
@@ -57,6 +60,8 @@ public class LocationView extends LinearLayout implements SetData<Location>{
             buttonSearch.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Toast.makeText(getContext(), materialEditTextLocation.getText().toString() + " ingesteld als standaard locatie", Toast.LENGTH_SHORT).show();
                     model.setStandardLocation(new Location(materialEditTextLocation.getText().toString(), 0, 0));
                 }
             });

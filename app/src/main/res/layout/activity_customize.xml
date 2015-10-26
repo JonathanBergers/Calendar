@@ -27,13 +27,6 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Temperatuur"
-                android:id="@+id/checkBoxTemp"
-                android:checked="false" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/checkBoxPressure"
                 android:checked="false"
                 android:text="Pressure" />
@@ -66,13 +59,6 @@
                 android:id="@+id/checkBoxWindSpeed"
                 android:checked="false" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:id="@+id/checkBoxLocation"
-                android:checked="false" />
-
             <Button
                 android:layout_width="148dp"
                 android:layout_height="wrap_content"
@@ -97,6 +83,12 @@
                 android:layout_height="wrap_content"
                 android:text="Log in"
                 android:id="@+id/buttonLogin" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOG OUT"
+                android:id="@+id/buttonLogOut" />
 
             <Button
                 android:layout_width="wrap_content"

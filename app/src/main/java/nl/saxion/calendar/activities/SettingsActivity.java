@@ -2,6 +2,7 @@ package nl.saxion.calendar.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,9 +31,6 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
 
     @ViewById
-    CheckBox checkBoxTemp;
-
-    @ViewById
     CheckBox checkBoxPressure;
 
     @ViewById
@@ -48,13 +46,13 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     CheckBox checkBoxWindSpeed;
 
     @ViewById
-    CheckBox checkBoxLocation;
-
-    @ViewById
     Button buttonSaveForecastSettings;
 
     @ViewById
     Button buttonChooseWeatherAgenda;
+
+    @ViewById
+    Button buttonLogOut;
 
     @ViewById
     TextView textViewCurrentWeatherAgenda;
@@ -63,16 +61,22 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     Model model;
 
     @Click
+    void buttonLogOut() {
+        model.setCredentials(null);
+        Toast.makeText(getBaseContext(), "uitgelogt", Toast.LENGTH_SHORT).show();
+       //Log.d("SETTINGS", "hay thereeee "+ model.getCredentials().getSelectedAccountName());
+    }
+
+    @Click
     void buttonSaveForecastSettings() {
 
         //when save button is clicked, save whether checkbox is checked or not
-        model.getViewSettings().setTemp(checkBoxTemp.isChecked());
         model.getViewSettings().setPressure(checkBoxPressure.isChecked());
         model.getViewSettings().setHumidity(checkBoxHumidity.isChecked());
         model.getViewSettings().setTempMin(checkBoxTempMin.isChecked());
         model.getViewSettings().setTempMax(checkBoxTempMax.isChecked());
         model.getViewSettings().setWindspeed(checkBoxWindSpeed.isChecked());
-        model.getViewSettings().setLocation(checkBoxLocation.isChecked());
+
     }
 
     @Click
@@ -109,13 +113,11 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
         //when Customize is called, sets the checkboxes to true or false
         //depending on the values of the ForeCastSettings object from the model
-        checkBoxTemp.setChecked(model.getViewSettings().isTemp());
         checkBoxPressure.setChecked(model.getViewSettings().isPressure());
         checkBoxHumidity.setChecked(model.getViewSettings().isHumidity());
         checkBoxTempMin.setChecked(model.getViewSettings().isTempMin());
         checkBoxTempMax.setChecked(model.getViewSettings().isTempMax());
         checkBoxWindSpeed.setChecked(model.getViewSettings().isWindspeed());
-        checkBoxLocation.setChecked(model.getViewSettings().isLocation());
 
         setCorrectAgendaToTextview();
 
@@ -219,6 +221,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         alert.show();
 
     }
+
 }
 
 

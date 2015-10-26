@@ -7,25 +7,19 @@ public class ForecastSettings {
 
 
 
-    private boolean temp, tempMin, tempMax, pressure, humidity, windspeed, location;
+    private boolean tempMin, tempMax, pressure, humidity, windspeed;
 
 
-    public ForecastSettings(boolean temp, boolean tempMin, boolean tempMax, boolean pressure, boolean humidity, boolean windspeed, boolean location) {
-        this.temp = temp;
+    public ForecastSettings(boolean tempMin, boolean tempMax, boolean pressure, boolean humidity, boolean windspeed) {
         this.tempMin = tempMin;
         this.tempMax = tempMax;
         this.pressure = pressure;
         this.humidity = humidity;
         this.windspeed = windspeed;
-        this.location = location;
     }
 
     public ForecastSettings() {
 
-    }
-
-    public boolean isTemp() {
-        return temp;
     }
 
     public boolean isTempMin() {
@@ -48,14 +42,6 @@ public class ForecastSettings {
         return windspeed;
     }
 
-    public boolean isLocation() {
-        return location;
-    }
-
-    public void setTemp(boolean temp) {
-        this.temp = temp;
-    }
-
     public void setTempMin(boolean tempMin) {
         this.tempMin = tempMin;
     }
@@ -76,7 +62,4 @@ public class ForecastSettings {
         this.windspeed = windspeed;
     }
 
-    public void setLocation(boolean location) {
-        this.location = location;
-    }
 }

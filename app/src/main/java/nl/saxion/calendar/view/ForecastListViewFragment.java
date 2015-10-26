@@ -35,9 +35,6 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
     @ViewById
     SwipeRefreshLayout swipeRefreshLayout;
 
-
-
-
     @Override
     public Function<Void, List<Forecast>> getItems() {
         return new Function<Void, List<Forecast>>() {
@@ -85,6 +82,8 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
                 0, 0, myLocationListener);
 
 
+        Toast.makeText(getContext(), model.getCurrentLocation() + " is de huidige locatie", Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -101,6 +100,8 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
             //gets the coordinates of your current location
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
+
+
 
             //saves the latitude and longitude in the model
             model.setCurrentLocation(new nl.saxion.calendar.model.Location("Huidige Locatie", latitude, longitude));
@@ -133,6 +134,5 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
         }
 
     }
-
 
 }

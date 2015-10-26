@@ -256,6 +256,32 @@ public class Model{
     public void setWeatherAgenda(CalendarListEntry weatherAgenda) {
         this.weatherAgenda = weatherAgenda;
     }
+
+    /**
+     *
+     * @return if the weather is exported
+     */
+
+
+    public boolean exportWeatherToAgenda(){
+
+
+        if(standardLocation == null){
+            return false;
+        }
+
+        if(weatherAgenda==null){
+            return false;
+        }
+        getAndExportForecasts();
+        return true;
+    }
+    @Background
+    public void getAndExportForecasts(){
+
+        calendarClient.exportForecasts(forecastConverter.getForecastsFromJson(openweatherClient.recieveDailyForcasts(standardLocation.getLat(), standardLocation.getLon(), 10)));
+
+    }
 }
 
 

@@ -50,7 +50,7 @@ public class Forecast {
 
     @Override
     public String toString() {
-        String s = "The forcast is:\n";
+        String s = "The forecast is:\n";
         for(Weather w : weather){
             s += w.toString();
         }

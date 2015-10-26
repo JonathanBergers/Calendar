@@ -6,19 +6,17 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.CalendarList;
 import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 import com.google.gson.JsonObject;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
-import com.google.maps.PendingResult;
-import com.google.maps.errors.ZeroResultsException;
-import com.google.maps.internal.ExceptionResult;
 import com.google.maps.model.GeocodingResult;
 
 import org.androidannotations.annotations.Background;
@@ -26,19 +24,23 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import nl.saxion.calendar.model.EventWrapper;
 import nl.saxion.calendar.model.Forecast;
-import nl.saxion.calendar.model.JsonConverterWeather;
 import nl.saxion.calendar.model.Location;
 import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.utils.Resources;
 import nl.saxion.calendar.utils.Updatable;
-import nl.saxion.calendar.model.EventWrapper;
 
 /**
  * Created by jonathan on 7-10-15.
@@ -73,7 +75,7 @@ public class GoogleCalendarClient {
 
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         com.google.api.services.calendar.Calendar mService = getmService();
-        DateTime now = new DateTime(System.currentTimeMillis());
+        com.google.api.client.util.DateTime now = new com.google.api.client.util.DateTime(System.currentTimeMillis());
         Events events;
 
         Log.d("CALCLIENT", String.valueOf(mService == null));
@@ -281,6 +283,89 @@ public class GoogleCalendarClient {
         }
     }
 
+    @Background
+    public void exportForecasts(ArrayList<Forecast> forecasts){
+
+
+        com.google.api.services.calendar.Calendar mService = getmService();
+
+
+
+        DateTimeZone timeZone = DateTimeZone.forID("Europe/Amsterdam");
+        org.joda.time.DateTime now = DateTime.now(timeZone);
+        org.joda.time.DateTime beginToday = now.withTimeAtStartOfDay();
+        org.joda.time.DateTime beginTomorrow= now.plusDays( 1 ).withTimeAtStartOfDay();
+
+
+
+
+
+        for(Forecast f : forecasts){
+
+
+            double temp;
+            int pressure;
+            int humidity;
+            double temp_min;
+            double temp_max;
+            double windSpeed;
+
+            Event event = new Event()
+                    .setSummary("Weerbericht")
+                    .setLocation(model.getStandardLocation().getCity())
+                    .setDescription(f.toString());
+
+            Date startDate =  beginToday.toDate();
+            Date endDate = beginTomorrow.toDate();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startDateStr = dateFormat.format(startDate);
+            String endDateStr = dateFormat.format(endDate);
+
+
+            com.google.api.client.util.DateTime startDateTime = new com.google.api.client.util.DateTime(startDateStr);
+            com.google.api.client.util.DateTime  endDateTime = new com.google.api.client.util.DateTime(endDateStr);
+
+            // Must use the setDate() method for an all-day event (setDateTime() is used for timed events)
+            EventDateTime startEventDateTime = new EventDateTime().setDate(startDateTime);
+            EventDateTime endEventDateTime = new EventDateTime().setDate(endDateTime);
+
+            event.setStart(startEventDateTime);
+            event.setEnd(endEventDateTime);
+
+            EventAttendee[] attendees = new EventAttendee[] {};
+            event.setAttendees(Arrays.asList(attendees));
+
+            Event.Reminders reminders = new Event.Reminders();
+            event.setReminders(reminders);
+
+            String calendarId = model.getWeatherAgenda().getId();
+            try {
+                event = mService.events().insert(calendarId, event).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            //add +1 day
+            beginToday = beginTomorrow;
+            beginTomorrow = beginToday.plusDays( 1 ).withTimeAtStartOfDay();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
     private com.google.api.services.calendar.Calendar getmService(){
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -293,113 +378,7 @@ public class GoogleCalendarClient {
 
 
 
-//    /**
-//     * An asynchronous task that handles the Google Calendar API call.
-//     * Placing the API calls in their own task ensures the UI stays responsive.
-//     */
-//    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-//        private com.google.api.services.calendar.Calendar mService = null;
-//        private Exception mLastError = null;
-//
-//        public MakeRequestTask(GoogleAccountCredential credential) {
-//            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-//            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-//            mService = new com.google.api.services.calendar.Calendar.Builder(
-//                    transport, jsonFactory, credential)
-//                    .setApplicationName("Calendar")
-//                    .build();
-//        }
-//
-//        /**
-//         * Background task to call Google Calendar API.
-//         * @param params no parameters needed for this task.
-//         */
-//        @Override
-//        public List<String> doInBackground(Void... params) {
-//            try {
-//                return getDataFromApi();
-//            } catch (Exception e) {
-//                mLastError = e;
-//                cancel(true);
-//                return null;
-//            }
-//        }
-//
-//        /**
-//         * Fetch a list of the next 10 events from the primary calendar.
-//         * @return List of Strings describing returned events.
-//         * @throws IOException
-//         */
-//        private List<String> getDataFromApi() throws IOException {
-//            // List the next 10 events from the primary calendar.
-//            DateTime now = new DateTime(System.currentTimeMillis());
-//            List<String> eventStrings = new ArrayList<String>();
-//            Events events = mService.events().list("primary")
-//                    .setMaxResults(10)
-//                    .setTimeMin(now)
-//                    .setOrderBy("startTime")
-//                    .setSingleEvents(true)
-//                    .execute();
-//            List<Event> items = events.getItems();
-//
-//            for (Event event : items) {
-//
-//                DateTime start = event.getStart().getDateTime();
-//                if (start == null) {
-//                    // All-day events don't have start times, so just use
-//                    // the start date.
-//                    start = event.getStart().getDate();
-//                }
-//                eventStrings.add(
-//                        String.format("%s (%s)", event.getSummary(), start));
-//            }
-//
-//            Log.d("LOGIN", eventStrings.toString());
-//            return eventStrings;
-//        }
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            mOutputText.setText("");
-//            mProgress.show();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<String> output) {
-//            mProgress.hide();
-//            Log.d("ONPOST", output.toString());
-//            if (output == null || output.size() == 0) {
-//                mOutputText.setText("No results returned.");
-//            } else {
-//                output.add(0, "Data retrieved using the Google Calendar API:");
-//                mOutputText.setText(TextUtils.join("\n", output));
-//            }
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            mProgress.hide();
-//            if (mLastError != null) {
-//                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
-//                    showGooglePlayServicesAvailabilityErrorDialog(
-//                            ((GooglePlayServicesAvailabilityIOException) mLastError)
-//                                    .getConnectionStatusCode());
-//                } else if (mLastError instanceof UserRecoverableAuthIOException) {
-//                    startActivityForResult(
-//                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
-//                            LoginActivity.REQUEST_AUTHORIZATION);
-//                } else {
-//                    mOutputText.setText("The following error occurred:\n"
-//                            + mLastError.getMessage());
-//                }
-//            } else {
-//                mOutputText.setText("Request cancelled.");
-//            }
-//        }
-//    }
-//
-//
+
 
 
 }

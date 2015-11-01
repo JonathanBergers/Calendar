@@ -6,15 +6,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.common.base.Function;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -59,7 +56,7 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
 
 
     @AfterViews
-    public void initForecastFragment(){
+    public void initForecastFragment() {
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -70,7 +67,6 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
 
             }
         });
-
 
 
         LocationManager myLocationManager =
@@ -102,7 +98,6 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
             double longitude = location.getLongitude();
 
 
-
             //saves the latitude and longitude in the model
             model.setCurrentLocation(new nl.saxion.calendar.model.Location("Huidige Locatie", latitude, longitude));
 
@@ -111,7 +106,7 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
 //                    model.getCurrentLocation().getLat() + " and longitude = " + model.getCurrentLocation().getLon();
 
             // logs coordinates and shows them with a toast
-           // Log.d("OnLocationChanged ", gpsLocation);
+            // Log.d("OnLocationChanged ", gpsLocation);
             //Toast.makeText(getApplicationContext(), gpsLocation, Toast.LENGTH_SHORT).show();
         }
 
@@ -129,7 +124,7 @@ public class ForecastListViewFragment extends GenericListViewFragment<Forecast, 
         @Override
         public void onProviderDisabled(String provider) {
 
-           // Toast.makeText(getApplicationContext(), "GPS disabled", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "GPS disabled", Toast.LENGTH_SHORT).show();
 
         }
 

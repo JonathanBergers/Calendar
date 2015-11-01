@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,12 +14,9 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.rest.Get;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,14 +28,12 @@ import nl.saxion.calendar.R;
 import nl.saxion.calendar.model.Forecast;
 import nl.saxion.calendar.model.Model;
 import nl.saxion.calendar.utils.Updatable;
-import nl.saxion.calendar.view.SetData;
 
 /**
  * Created by jonathan on 24-9-15.
  */
 @EViewGroup
 public class ForecastView extends LinearLayout implements SetData<Forecast>, Updatable<Bitmap> {
-
 
 
     @ViewById
@@ -50,11 +44,11 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>, Upd
 
     @ViewById
     MaterialEditText materialEditTextTemp, materialEditTextHumidity, materialEditTextWindspeed, materialEditTextPressure, materialEditTextTempMin, materialEditTextTempMax;
-
-    private @Getter String bitmapUrl;
-
     @Bean
     Model model;
+    private
+    @Getter
+    String bitmapUrl;
 
 
     public ForecastView(Context context) {
@@ -63,9 +57,7 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>, Upd
     }
 
 
-
-
-    public void setData(Forecast f){
+    public void setData(Forecast f) {
 
         bitmapUrl = "http://openweathermap.org/img/w/" + f.getWeather().get(0).getIconId() + ".png";
         getBitmapFromURL(this, getBitmapUrl());
@@ -89,10 +81,8 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>, Upd
     }
 
 
-
-
     @Background
-    public  void getBitmapFromURL(Updatable<Bitmap> callBack, String src) {
+    public void getBitmapFromURL(Updatable<Bitmap> callBack, String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -108,18 +98,15 @@ public class ForecastView extends LinearLayout implements SetData<Forecast>, Upd
     }
 
 
-
-
     //if true show view else make invisible
     public int getVisible(boolean b) {
         if (b) {
             return View.VISIBLE;
-        }
-        else return View.GONE;
+        } else return View.GONE;
     }
 
     @AfterViews
-    public void init(){
+    public void init() {
 
     }
 

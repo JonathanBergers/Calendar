@@ -6,7 +6,6 @@ package nl.saxion.calendar.model;
 public class ForecastSettings {
 
 
-
     private boolean tempMin, tempMax, pressure, humidity, windspeed;
 
 
@@ -26,36 +25,36 @@ public class ForecastSettings {
         return tempMin;
     }
 
-    public boolean isTempMax() {
-        return tempMax;
-    }
-
-    public boolean isPressure() {
-        return pressure;
-    }
-
-    public boolean isHumidity() {
-        return humidity;
-    }
-
-    public boolean isWindspeed() {
-        return windspeed;
-    }
-
     public void setTempMin(boolean tempMin) {
         this.tempMin = tempMin;
+    }
+
+    public boolean isTempMax() {
+        return tempMax;
     }
 
     public void setTempMax(boolean tempMax) {
         this.tempMax = tempMax;
     }
 
+    public boolean isPressure() {
+        return pressure;
+    }
+
     public void setPressure(boolean pressure) {
         this.pressure = pressure;
     }
 
+    public boolean isHumidity() {
+        return humidity;
+    }
+
     public void setHumidity(boolean humidity) {
         this.humidity = humidity;
+    }
+
+    public boolean isWindspeed() {
+        return windspeed;
     }
 
     public void setWindspeed(boolean windspeed) {

@@ -15,19 +15,18 @@ import nl.saxion.calendar.utils.Resources;
 public interface OpenweatherClient {
 
 
-    @Get("weather?q={city}&APPID="+ Resources.OPENWEATHER_APP_ID)
+    @Get("weather?q={city}&APPID=" + Resources.OPENWEATHER_APP_ID)
     JsonObject recieveCurrentWeather(String city);
 
-    @Get("weather?lat={lat}&lon={lon}&APPID="+ Resources.OPENWEATHER_APP_ID)
+    @Get("weather?lat={lat}&lon={lon}&APPID=" + Resources.OPENWEATHER_APP_ID)
     JsonObject recieveCurrentWeather(double lat, double lon);
 
 
-    @Get("weather?zip={zip},nl"+ Resources.OPENWEATHER_APP_ID)
+    @Get("weather?zip={zip},nl" + Resources.OPENWEATHER_APP_ID)
     JsonObject recieveCurrentWeatherZIP(String zip);
 
-    @Get("forecast/daily?lat={lat}&lon={lon}&count={count}&APPID="+ Resources.OPENWEATHER_APP_ID)
+    @Get("forecast/daily?lat={lat}&lon={lon}&count={count}&APPID=" + Resources.OPENWEATHER_APP_ID)
     JsonObject recieveDailyForcasts(double lat, double lon, int count);
-
 
 
 }

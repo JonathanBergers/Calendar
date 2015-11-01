@@ -2,37 +2,35 @@ package nl.saxion.calendar.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.common.base.Function;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import nl.saxion.calendar.model.Model;
 
 /**
  * Created by jonathan on 7-10-15.
- *
+ * <p/>
  * generieke listadapter met daarin de viewholder.
  * V is de view waar in de data gezet moet worden.
  * VH is de viewholder die dit doet, gebruik generic viewholder
  * T is het type data voor de view
- *
+ * <p/>
  * de viewholder wordt automatisch gemaakt
  */
-public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>>{
+public class GenericListAdapter<T, V extends View & SetData<T>> extends RecyclerView.Adapter<GenericViewHolder<T, V>> {
 
     RecyclerView recyclerView;
     Model model;
     Function<Context, V> createView;
     Function<Void, List<T>> getItems;
 
-    /**model om de observer bij te regristreren
+
+    /**
+     * model om de observer bij te regristreren
      *
      * @param model
      * @param recyclerView
@@ -43,25 +41,17 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
         this.getItems = functonGetItems;
         this.createView = functionCreateView;
 
-
-
-
-
-
-
     }
 
 
     @Override
-    public  GenericViewHolder<T, V> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GenericViewHolder<T, V> onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-
-        V view = (V) createView.apply(parent.getContext());
+        V view = createView.apply(parent.getContext());
 
         return new GenericViewHolder<>(view);
     }
-
 
 
     @Override
@@ -71,11 +61,9 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     }
 
 
-
-
     @Override
-    public int getItemCount(){
-        if(getItems() == null){
+    public int getItemCount() {
+        if (getItems() == null) {
             return 0;
 
         }
@@ -83,12 +71,9 @@ public class GenericListAdapter<T, V extends View & SetData<T>> extends Recycler
     }
 
 
-
-    private List<T> getItems(){
+    private List<T> getItems() {
         return getItems.apply(null);
     }
-
-
 
 
 }

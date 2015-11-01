@@ -14,18 +14,15 @@ import org.androidannotations.annotations.EApplication;
 public class CalendarApplication extends Application {
 
 
-
-
-
-    /**Aan het begin van de applicatie
+    /**
+     * Aan het begin van de applicatie
      * Hier kunnen zaken geinitialiseerd worden
      */
     @AfterInject
-    protected void init(){
+    protected void init() {
 
 
     }
-
 
 
 }

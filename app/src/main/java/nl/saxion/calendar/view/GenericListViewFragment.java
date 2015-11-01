@@ -15,7 +15,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.Collection;
 import java.util.List;
 
 import nl.saxion.calendar.R;
@@ -28,68 +27,52 @@ import nl.saxion.calendar.model.Model;
 public abstract class GenericListViewFragment<T, V extends View & SetData<T>> extends Fragment {
 
 
+    @Bean
+    Model model;
 
+    @ViewById
+    RecyclerView recyclerView;
 
+    RecyclerViewMaterialAdapter mAdapter;
 
-        @Bean
-        Model model;
-
-        @ViewById
-        RecyclerView recyclerView;
-
-        RecyclerViewMaterialAdapter mAdapter;
-
-        GenericListAdapter<T, V> genericListAdapter;
-
+    GenericListAdapter<T, V> genericListAdapter;
 
 
     public abstract Function<Void, List<T>> getItems();
+
     protected abstract Function<Context, V> createView();
 
 
-
     @AfterViews
-    public void init(){
+    public void init() {
 
 
-            // set layout manager, or else bug, nullpointer exep
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        // set layout manager, or else bug, nullpointer exep
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
 
         //linearLayoutManager.setRecycleChildrenOnDetach(false);
-            //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(null, 2);
 
-            System.out.println(recyclerView==null);
-            recyclerView.setLayoutManager(linearLayoutManager);
-
-
-            // make view for adapter
-            // make adapter
-            genericListAdapter= new GenericListAdapter<T, V>(model, recyclerView, getItems(), createView() );
+        System.out.println(recyclerView == null);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
-            // set adapter
-            mAdapter = new RecyclerViewMaterialAdapter(genericListAdapter);
-            recyclerView.setAdapter(mAdapter);
-
-            MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+        // make view for adapter
+        // make adapter
+        genericListAdapter = new GenericListAdapter<T, V>(model, recyclerView, getItems(), createView());
 
 
+        // set adapter
+        mAdapter = new RecyclerViewMaterialAdapter(genericListAdapter);
+        recyclerView.setAdapter(mAdapter);
 
-
-
-
-
-
-
-
-        }
-
-
-
-
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
 
 
     }
+
+
+}
 
 

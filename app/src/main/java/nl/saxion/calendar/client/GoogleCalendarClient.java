@@ -47,30 +47,27 @@ import nl.saxion.calendar.utils.Updatable;
  */
 @EBean
 public class GoogleCalendarClient {
-    private Exception mLastError = null;
-
     @Bean
     Model model;
-
-
     @RestService
     OpenweatherClient openweatherClient;
+    private Exception mLastError = null;
 
-    public GoogleCalendarClient() {    }
+    public GoogleCalendarClient() {
+    }
 
 
-    /**haalt events op
+    /**
+     * haalt events op
      * als een event een locatie heeft dan wordt hier de long en lat van opgehaald
      *
      * @param callBack
      */
     @Background
-    public void retrieveEvents(Updatable<List<Event>> callBack){
-
+    public void retrieveEvents(Updatable<List<Event>> callBack) {
 
 
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
-
 
 
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -81,9 +78,7 @@ public class GoogleCalendarClient {
         Log.d("CALCLIENT", String.valueOf(mService == null));
 
 
-
         GeoApiContext context = new GeoApiContext().setApiKey(Resources.GEOCODING_KEY);
-
 
 
         try {
@@ -105,13 +100,13 @@ public class GoogleCalendarClient {
         List<Event> items = events.getItems();
         List<EventWrapper> eventWrapperList = new ArrayList<>();
 
-        for(Event e: items){
+        for (Event e : items) {
 
 
             final EventWrapper eventWrapper = new EventWrapper(e);
             String location = e.getLocation();
 
-            if(location != null) {
+            if (location != null) {
                 Log.d("GEOCODING", location);
                 // haal locatie op bij event
 
@@ -119,9 +114,9 @@ public class GoogleCalendarClient {
                 // split de locatie
                 String[] locationMogelijkheden = location.split(",");
 
-               boolean found = false;
+                boolean found = false;
                 // voor elk deel van de locatie zoek een geo coordinaat
-                for(String s: locationMogelijkheden){
+                for (String s : locationMogelijkheden) {
 
                     Log.d("GEOCODING", "TRYING TO FIND GEO FOR: " + s);
 
@@ -129,7 +124,7 @@ public class GoogleCalendarClient {
                     s = s.trim();
                     s = s.trim();
 
-                    if(found){
+                    if (found) {
                         break;
                     }
                     GeocodingApiRequest request = GeocodingApi.geocode(context,
@@ -142,7 +137,6 @@ public class GoogleCalendarClient {
                         if (results.length > 0) {
 
                             GeocodingResult r = results[0];
-
 
 
                             Location l = new Location(e.getDescription(), r.geometry.location.lat, r.geometry.location.lng);
@@ -159,8 +153,6 @@ public class GoogleCalendarClient {
                             found = true;
 
 
-
-
                         }
 
 
@@ -170,12 +162,6 @@ public class GoogleCalendarClient {
                     }
 
                 }
-
-
-
-
-
-
 
 
             }
@@ -189,19 +175,15 @@ public class GoogleCalendarClient {
         invokeCallBack(callBack, items);
 
 
-
-
-
-
     }
 
     @Background
-    protected void searchCity(String city){
+    protected void searchCity(String city) {
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
-        if(result!=null){
+        if (result != null) {
 
             JsonObject coord = result.getAsJsonObject("coord");
-            if(coord!=null) {
+            if (coord != null) {
                 double resultLon = coord.get("lon").getAsDouble();
                 double resultLat = coord.get("lat").getAsDouble();
                 String resultCity = result.get("name").getAsString();
@@ -209,7 +191,7 @@ public class GoogleCalendarClient {
                 Location resultLocation = new Location(resultCity, resultLat, resultLon);
 
 
-            }else{
+            } else {
                 // give error , plaats niet gevonden
             }
         } else {
@@ -220,14 +202,13 @@ public class GoogleCalendarClient {
 
 
     @UiThread
-    protected  <T> void invokeCallBack(Updatable<T> callBack, T input){
+    protected <T> void invokeCallBack(Updatable<T> callBack, T input) {
         callBack.update(input);
     }
 
 
-
     @Background
-    public void getAgendas(Updatable callback){
+    public void getAgendas(Updatable callback) {
 
         com.google.api.services.calendar.Calendar mService = getmService();
 
@@ -258,7 +239,7 @@ public class GoogleCalendarClient {
     }
 
     @Background
-    public void makeAgenda(Calendar agenda){
+    public void makeAgenda(Calendar agenda) {
 
         com.google.api.services.calendar.Calendar mService = getmService();
 
@@ -284,23 +265,19 @@ public class GoogleCalendarClient {
     }
 
     @Background
-    public void exportForecasts(ArrayList<Forecast> forecasts){
+    public void exportForecasts(ArrayList<Forecast> forecasts) {
 
 
         com.google.api.services.calendar.Calendar mService = getmService();
 
 
-
         DateTimeZone timeZone = DateTimeZone.forID("Europe/Amsterdam");
         org.joda.time.DateTime now = DateTime.now(timeZone);
         org.joda.time.DateTime beginToday = now.withTimeAtStartOfDay();
-        org.joda.time.DateTime beginTomorrow= now.plusDays( 1 ).withTimeAtStartOfDay();
+        org.joda.time.DateTime beginTomorrow = now.plusDays(1).withTimeAtStartOfDay();
 
 
-
-
-
-        for(Forecast f : forecasts){
+        for (Forecast f : forecasts) {
 
 
             double temp;
@@ -315,7 +292,7 @@ public class GoogleCalendarClient {
                     .setLocation(model.getStandardLocation().getCity())
                     .setDescription(f.toString());
 
-            Date startDate =  beginToday.toDate();
+            Date startDate = beginToday.toDate();
             Date endDate = beginTomorrow.toDate();
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -324,7 +301,7 @@ public class GoogleCalendarClient {
 
 
             com.google.api.client.util.DateTime startDateTime = new com.google.api.client.util.DateTime(startDateStr);
-            com.google.api.client.util.DateTime  endDateTime = new com.google.api.client.util.DateTime(endDateStr);
+            com.google.api.client.util.DateTime endDateTime = new com.google.api.client.util.DateTime(endDateStr);
 
             // Must use the setDate() method for an all-day event (setDateTime() is used for timed events)
             EventDateTime startEventDateTime = new EventDateTime().setDate(startDateTime);
@@ -333,7 +310,7 @@ public class GoogleCalendarClient {
             event.setStart(startEventDateTime);
             event.setEnd(endEventDateTime);
 
-            EventAttendee[] attendees = new EventAttendee[] {};
+            EventAttendee[] attendees = new EventAttendee[]{};
             event.setAttendees(Arrays.asList(attendees));
 
             Event.Reminders reminders = new Event.Reminders();
@@ -349,24 +326,13 @@ public class GoogleCalendarClient {
 
             //add +1 day
             beginToday = beginTomorrow;
-            beginTomorrow = beginToday.plusDays( 1 ).withTimeAtStartOfDay();
+            beginTomorrow = beginToday.plusDays(1).withTimeAtStartOfDay();
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
 
-    private com.google.api.services.calendar.Calendar getmService(){
+    private com.google.api.services.calendar.Calendar getmService() {
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         return new com.google.api.services.calendar.Calendar.Builder(
@@ -374,11 +340,6 @@ public class GoogleCalendarClient {
                 .setApplicationName("CalendarApplication")
                 .build();
     }
-
-
-
-
-
 
 
 }

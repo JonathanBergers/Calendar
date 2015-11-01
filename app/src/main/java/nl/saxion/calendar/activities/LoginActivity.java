@@ -1,4 +1,5 @@
 package nl.saxion.calendar.activities;
+
 import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -43,22 +44,20 @@ import nl.saxion.calendar.model.Model;
 
 @EActivity
 public class LoginActivity extends BaseActivity {
-    GoogleAccountCredential mCredential;
-    private TextView mOutputText;
-    ProgressDialog mProgress;
-
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR};
-
+    private static final String[] SCOPES = {CalendarScopes.CALENDAR};
+    GoogleAccountCredential mCredential;
+    ProgressDialog mProgress;
     @Bean
     Model model;
-
+    private TextView mOutputText;
 
     /**
      * Create the main activity.
+     *
      * @param savedInstanceState previously saved instance data.
      */
     @Override
@@ -95,11 +94,9 @@ public class LoginActivity extends BaseActivity {
                 .setBackOff(new ExponentialBackOff())
                 .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
 
-        assert mCredential!= null: "credentials null";
-        assert mCredential.getSelectedAccountName() != null: "acc name null";
-        assert !mCredential.getSelectedAccountName().isEmpty(): "acc name empty";
-
-
+        assert mCredential != null : "credentials null";
+        assert mCredential.getSelectedAccountName() != null : "acc name null";
+        assert !mCredential.getSelectedAccountName().isEmpty() : "acc name empty";
 
 
         //Log.d("LOGIN", mCredential.getSelectedAccountName());
@@ -129,17 +126,18 @@ public class LoginActivity extends BaseActivity {
      * Called when an activity launched here (specifically, AccountPicker
      * and authorization) exits, giving you the requestCode you started it with,
      * the resultCode it returned, and any additional data from it.
+     *
      * @param requestCode code indicating which activity result is incoming.
-     * @param resultCode code indicating the result of the incoming
-     *     activity result.
-     * @param data Intent (containing result data) returned by incoming
-     *     activity result.
+     * @param resultCode  code indicating the result of the incoming
+     *                    activity result.
+     * @param data        Intent (containing result data) returned by incoming
+     *                    activity result.
      */
     @Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
+        switch (requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
                     isGooglePlayServicesAvailable();
@@ -148,14 +146,10 @@ public class LoginActivity extends BaseActivity {
             case REQUEST_ACCOUNT_PICKER:
 
 
-
-
-                if (resultCode == RESULT_OK  && data!= null&&
+                if (resultCode == RESULT_OK && data != null &&
                         data.getExtras() != null) {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-
-
 
 
                     if (accountName != null) {
@@ -169,9 +163,7 @@ public class LoginActivity extends BaseActivity {
                         editor.apply();
 
 
-
-
-                }
+                    }
                 } else if (resultCode == RESULT_CANCELED) {
                     mOutputText.setText("Account unspecified.");
                 }
@@ -186,7 +178,7 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
 
-      super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -221,6 +213,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * Checks whether the device currently has a network connection.
+     *
      * @return true if the device has a network connection, false otherwise.
      */
     private boolean isDeviceOnline() {
@@ -228,7 +221,7 @@ public class LoginActivity extends BaseActivity {
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        Log.d("DEVICE STATUS" , networkInfo.isConnected() + networkInfo.getReason());
+        Log.d("DEVICE STATUS", networkInfo.isConnected() + networkInfo.getReason());
         return (networkInfo != null && networkInfo.isConnected());
     }
 
@@ -236,8 +229,9 @@ public class LoginActivity extends BaseActivity {
      * Check that Google Play services APK is installed and up to date. Will
      * launch an error dialog for the user to update Google Play Services if
      * possible.
+     *
      * @return true if Google Play Services is available and up to
-     *     date on this device; false otherwise.
+     * date on this device; false otherwise.
      */
     private boolean isGooglePlayServicesAvailable() {
         final int connectionStatusCode =
@@ -245,7 +239,7 @@ public class LoginActivity extends BaseActivity {
         if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
             return false;
-        } else if (connectionStatusCode != ConnectionResult.SUCCESS ) {
+        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
             return false;
         }
         return true;
@@ -254,8 +248,9 @@ public class LoginActivity extends BaseActivity {
     /**
      * Display an error dialog showing that Google Play Services is missing
      * or out of date.
+     *
      * @param connectionStatusCode code describing the presence (or lack of)
-     *     Google Play Services on this device.
+     *                             Google Play Services on this device.
      */
     void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
@@ -285,6 +280,7 @@ public class LoginActivity extends BaseActivity {
 
         /**
          * Background task to call Google Calendar API.
+         *
          * @param params no parameters needed for this task.
          */
         @Override
@@ -300,6 +296,7 @@ public class LoginActivity extends BaseActivity {
 
         /**
          * Fetch a list of the next 10 events from the primary calendar.
+         *
          * @return List of Strings describing returned events.
          * @throws IOException
          */

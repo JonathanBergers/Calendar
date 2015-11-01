@@ -8,9 +8,15 @@ import lombok.Getter;
  */
 public class Location {
 
-    private @Getter double lat;
-    private @Getter double lon;
-    private @Getter String city;
+    private
+    @Getter
+    double lat;
+    private
+    @Getter
+    double lon;
+    private
+    @Getter
+    String city;
 
     public Location(String city, double lat, double lon) {
         assert city != null : "city can not be null";
@@ -22,7 +28,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "City: " + getCity() +  " | lon: " + getLon() + " | lat: "+ getLat();
+        return "City: " + getCity() + " | lon: " + getLon() + " | lat: " + getLat();
     }
 
     @Override

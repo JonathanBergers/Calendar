@@ -45,11 +45,11 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
     MaterialEditText materialEditTextLocation;
 
     @Click
-    public void buttonAddLocation(){
+    public void buttonAddLocation() {
 
         String input = materialEditTextLocation.getText().toString();
 
-        if(!input.isEmpty()){
+        if (!input.isEmpty()) {
             searchCity(input);
         }
 
@@ -57,12 +57,12 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
     }
 
     @Background
-    protected void searchCity(String city){
+    protected void searchCity(String city) {
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
-        if(result!=null){
+        if (result != null) {
 
             JsonObject coord = result.getAsJsonObject("coord");
-            if(coord!=null) {
+            if (coord != null) {
                 double resultLon = coord.get("lon").getAsDouble();
                 double resultLat = coord.get("lat").getAsDouble();
                 String resultCity = result.get("name").getAsString();
@@ -70,7 +70,7 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
                 Location resultLocation = new Location(resultCity, resultLat, resultLon);
 
                 getRightCity(city, resultLocation);
-            }else{
+            } else {
                 // give error , plaats niet gevonden
             }
         } else {
@@ -80,15 +80,15 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
     }
 
     @UiThread
-    public void getRightCity(String searedCity, final Location resultLocation){
-        if(searedCity.equalsIgnoreCase(resultLocation.getCity())){
+    public void getRightCity(String searedCity, final Location resultLocation) {
+        if (searedCity.equalsIgnoreCase(resultLocation.getCity())) {
             model.addLocation(resultLocation);
         } else {
             //geef gebruiker keuze
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes button clicked
                             model.addLocation(resultLocation);
@@ -103,15 +103,11 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("u zocht op: "+searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+            builder.setMessage("u zocht op: " + searedCity + "\nBedoelt u: " + resultLocation.getCity() + "?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
 
     }
-
-
-
-
 
 
     @Override
@@ -137,7 +133,7 @@ public class LocationListViewFragment extends GenericListViewFragment<Location, 
     }
 
     @AfterViews
-    public void initRefreshlayout(){
+    public void initRefreshlayout() {
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -34,8 +34,7 @@ import nl.saxion.calendar.utils.Updatable;
  * Created by jonathan on 24-9-15.
  */
 @EBean(scope = EBean.Scope.Singleton)
-public class Model{
-
+public class Model {
 
 
     @RestService
@@ -47,14 +46,32 @@ public class Model{
     @Bean
     GoogleCalendarClient calendarClient;
 
-    private @Getter @Setter ForecastSettings viewSettings = new ForecastSettings(true,true,true,true,true);
-    private @Getter @Setter GoogleAccountCredential credentials;
-    private @Getter @Setter List<EventWrapper> events  = new ArrayList<EventWrapper>();
+    private
+    @Getter
+    @Setter
+    ForecastSettings viewSettings = new ForecastSettings(true, true, true, true, true);
+    private
+    @Getter
+    @Setter
+    GoogleAccountCredential credentials;
+    private
+    @Getter
+    @Setter
+    List<EventWrapper> events = new ArrayList<EventWrapper>();
     private Set<Location> locations = new HashSet<>();
     private Map<String, Forecast> locationForecasts = new TreeMap<>();
-    private @Getter @Setter Location standardLocation;
-    private @Getter @Setter Location currentLocation;
-    private @Getter @Setter CalendarListEntry weatherAgenda = null;
+    private
+    @Getter
+    @Setter
+    Location standardLocation;
+    private
+    @Getter
+    @Setter
+    Location currentLocation;
+    private
+    @Getter
+    @Setter
+    CalendarListEntry weatherAgenda = null;
 
 
     public List<Location> getLocations() {
@@ -64,52 +81,50 @@ public class Model{
         Location currentLocation = getCurrentLocation();
         Location standardLocation = getStandardLocation();
 
-        if(currentLocation!= null && !locationsCopy.contains(currentLocation)) locationsCopy.add(currentLocation);
-        if(standardLocation != null && !locationsCopy.contains(standardLocation)) locationsCopy.add(standardLocation);
+        if (currentLocation != null && !locationsCopy.contains(currentLocation))
+            locationsCopy.add(currentLocation);
+        if (standardLocation != null && !locationsCopy.contains(standardLocation))
+            locationsCopy.add(standardLocation);
 
         return locationsCopy;
     }
 
-    public List<Forecast> getLocationForecasts(){
+    public List<Forecast> getLocationForecasts() {
 
         List<Forecast> l = new ArrayList<>();
-        for(String s: locationForecasts.keySet()){
+        for (String s : locationForecasts.keySet()) {
             l.add(locationForecasts.get(s));
         }
         return l;
 
 
-
     }
 
-    public void addLocation(Location location){
+    public void addLocation(Location location) {
         locations.add(location);
         System.out.println("Location added");
     }
 
 
-
-
     @Background
-    public void retrieveEvents(Updatable updatableCallBack){
+    public void retrieveEvents(Updatable updatableCallBack) {
         calendarClient.retrieveEvents(updatableCallBack);
 
     }
 
 
-
-    /**retrieves the forecasts for the current locations
-     *
+    /**
+     * retrieves the forecasts for the current locations
      */
     @Background
-    public void retrieveForecasts(Updatable<List<Forecast>> callBack){
+    public void retrieveForecasts(Updatable<List<Forecast>> callBack) {
 
 
         ArrayList<Location> locationsCopy = new ArrayList<>();
         locationsCopy.addAll(getLocations());
 
 
-        for(Location l: locationsCopy){
+        for (Location l : locationsCopy) {
             Log.d("MODEL", l.toString());
             locationForecasts.put(l.getCity(), forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity())));
 
@@ -120,42 +135,41 @@ public class Model{
         invokeCallBack(callBack, getLocationForecasts());
 
 
-
     }
-    /**retrieves the forecasts for the current locations
-     *
+
+    /**
+     * retrieves the forecasts for the current locations
      */
     @Background
-    public void retrieveForecastLocation(Updatable<Forecast> callBack, Location l){
+    public void retrieveForecastLocation(Updatable<Forecast> callBack, Location l) {
 
         Forecast f = forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getCity()));
         invokeCallBack(callBack, f);
 
 
-
     }
-    /**retrieves the forecasts for the current locations
-     *
+
+    /**
+     * retrieves the forecasts for the current locations
      */
     @Background
-    public void retrieveForecastLocationLatLong(Updatable<Forecast> callBack, Location l){
+    public void retrieveForecastLocationLatLong(Updatable<Forecast> callBack, Location l) {
 
         Forecast f = forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeather(l.getLat(), l.getLon()));
         invokeCallBack(callBack, f);
 
 
-
     }
 
 
     @Background
-    public void retrieveForecastsZip(Updatable<List<Forecast>> callBack, String... zip){
+    public void retrieveForecastsZip(Updatable<List<Forecast>> callBack, String... zip) {
 
 
         List<Forecast> forecasts = new ArrayList<>();
 
 
-        for(String l: zip){
+        for (String l : zip) {
 
             Log.d("MODEL", l.toString());
             forecasts.add(forecastConverter.fromJsonObject(openweatherClient.recieveCurrentWeatherZIP(l)));
@@ -167,28 +181,24 @@ public class Model{
         invokeCallBack(callBack, forecasts);
 
 
-
     }
 
 
     @UiThread
-    protected  <T> void invokeCallBack(Updatable<T> callBack, T input) {
+    protected <T> void invokeCallBack(Updatable<T> callBack, T input) {
         callBack.update(input);
     }
 
 
-
-
-
     @Background
-    public void searchCity(String city, Context c){
+    public void searchCity(String city, Context c) {
         JsonObject result = openweatherClient.recieveCurrentWeather(city);
-        if(result!=null){
+        if (result != null) {
 
 
             JsonObject coord = result.getAsJsonObject("coord");
 
-            if(coord!=null) {
+            if (coord != null) {
                 double resultLon = coord.get("lon").getAsDouble();
                 double resultLat = coord.get("lat").getAsDouble();
                 String resultCity = result.get("name").getAsString();
@@ -197,7 +207,7 @@ public class Model{
 
                 getRightCity(city, resultLocation, c);
 
-            }else{
+            } else {
                 // give error
             }
         } else {
@@ -205,16 +215,17 @@ public class Model{
         }
 
     }
+
     @UiThread
-    public void getRightCity(String searedCity, final Location resultLocation, Context c){
-        if(searedCity.equalsIgnoreCase(resultLocation.getCity())){
+    public void getRightCity(String searedCity, final Location resultLocation, Context c) {
+        if (searedCity.equalsIgnoreCase(resultLocation.getCity())) {
             addLocation(resultLocation);
         } else {
             //geef gebruiker keuze
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             //Yes button clicked
                             addLocation(resultLocation);
@@ -229,13 +240,13 @@ public class Model{
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(c);
-            builder.setMessage("u zocht op: "+ searedCity+"\nBedoelt u: "+resultLocation.getCity()+"?").setPositiveButton("Ja", dialogClickListener)
+            builder.setMessage("u zocht op: " + searedCity + "\nBedoelt u: " + resultLocation.getCity() + "?").setPositiveButton("Ja", dialogClickListener)
                     .setNegativeButton("Nee", dialogClickListener).show();
         }
         return;
     }
 
-    public void selectWeatherAgenda(Updatable callback){
+    public void selectWeatherAgenda(Updatable callback) {
         // get all agenda's
         calendarClient.getAgendas(callback);
         // choose agenda
@@ -243,7 +254,8 @@ public class Model{
         // set agenda
         System.out.println("SELECT AGENDA");
     }
-    public void makeWeatherAgenda(Calendar agenda){
+
+    public void makeWeatherAgenda(Calendar agenda) {
         // make new agenda
         calendarClient.makeAgenda(agenda);
         // set agenda
@@ -259,21 +271,20 @@ public class Model{
     }
 
     /**
-     *
      * @return if the weather is exported
      */
 
 
-    public void exportWeatherToAgenda(SettingsActivity settingsActivity){
+    public void exportWeatherToAgenda(SettingsActivity settingsActivity) {
 
 
-        if(standardLocation == null){
+        if (standardLocation == null) {
 
             settingsActivity.showToast("kies eerst uw standaard locatie");
             return;
         }
 
-        if(weatherAgenda==null){
+        if (weatherAgenda == null) {
 
             settingsActivity.showToast("Kies eerst een weer-agenda");
             return;
@@ -281,8 +292,9 @@ public class Model{
         getAndExportForecasts();
         return;
     }
+
     @Background
-    public void getAndExportForecasts(){
+    public void getAndExportForecasts() {
 
         calendarClient.exportForecasts(forecastConverter.getForecastsFromJson(openweatherClient.recieveDailyForcasts(standardLocation.getLat(), standardLocation.getLon(), 10)));
 

@@ -72,7 +72,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     }
 
     @Click
-    void buttonExportToCalendar(){
+    void buttonExportToCalendar() {
         model.exportWeatherToAgenda(this);
     }
 
@@ -80,7 +80,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     void buttonLogOut() {
         model.setCredentials(null);
         Toast.makeText(getBaseContext(), "uitgelogt", Toast.LENGTH_SHORT).show();
-       //Log.d("SETTINGS", "hay thereeee "+ model.getCredentials().getSelectedAccountName());
+        //Log.d("SETTINGS", "hay thereeee "+ model.getCredentials().getSelectedAccountName());
     }
 
     @Click
@@ -96,12 +96,12 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     }
 
     @Click
-    void buttonChooseWeatherAgenda(){
+    void buttonChooseWeatherAgenda() {
         //geef gebruiker keuze
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         model.selectWeatherAgenda(SettingsActivity.this);
@@ -121,9 +121,6 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     }
 
 
-
-
-
     @AfterViews
     public void initialize() {
 
@@ -138,13 +135,12 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         setCorrectAgendaToTextview();
 
 
-
     }
 
-    private void setCorrectAgendaToTextview(){
+    private void setCorrectAgendaToTextview() {
         //sets the current agenda textview to the correct agenda name
         CalendarListEntry currentWeatherAgenda = model.getWeatherAgenda();
-        if(currentWeatherAgenda == null){
+        if (currentWeatherAgenda == null) {
             textViewCurrentWeatherAgenda.setText("uw huidige weeragenda is: \n" + "geen agenda");
         } else {
             textViewCurrentWeatherAgenda.setText("uw huidige weeragenda is: \n" + currentWeatherAgenda.getSummary());
@@ -177,7 +173,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
         //builderSingle.setIcon(R.drawable.ic_launcher);
         builderSingle.setTitle("Kies een agenda: ");
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(SettingsActivity.this, android.R.layout.select_dialog_singlechoice);
-        for(CalendarListEntry cle : input){
+        for (CalendarListEntry cle : input) {
             arrayAdapter.add(cle.getSummary());
         }
         builderSingle.setNegativeButton("annuleren", new DialogInterface.OnClickListener() {
@@ -210,7 +206,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
 
     }
 
-    private void makeWeatherAgenda(){
+    private void makeWeatherAgenda() {
         // Create a new calendar list entry
         final com.google.api.services.calendar.model.Calendar agenda = new com.google.api.services.calendar.model.Calendar();
 
@@ -242,7 +238,7 @@ public class SettingsActivity extends BaseActivity implements Updatable<List<Cal
     }
 
     @UiThread
-    public void showToast(String message){
+    public void showToast(String message) {
         Toast.makeText(getApplicationContext(), message,
                 Toast.LENGTH_LONG).show();
     }

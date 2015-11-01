@@ -18,14 +18,15 @@ import java.util.ArrayList;
 public class JsonConverterWeather {
 
 
-    /**Returns a forecast object given a jsonobject from the client
+    /**
+     * Returns a forecast object given a jsonobject from the client
      *
      * @param jsonObject
      * @return
      */
-    public Forecast fromJsonObject(JsonObject jsonObject){
+    public Forecast fromJsonObject(JsonObject jsonObject) {
 
-        assert jsonObject != null: "jsonobject null";
+        assert jsonObject != null : "jsonobject null";
 
 
         ArrayList<Weather> weatherArray = new ArrayList<>();
@@ -39,24 +40,23 @@ public class JsonConverterWeather {
         Location location;
 
 
-
         JsonArray weatherMessageArray = jsonObject.get("weather").getAsJsonArray();
 
-        assert weatherMessageArray != null: "no weather message in json";
+        assert weatherMessageArray != null : "no weather message in json";
 
 
-        for(JsonElement j : weatherMessageArray){
+        for (JsonElement j : weatherMessageArray) {
 
             JsonObject jo = j.getAsJsonObject();
-            assert jo != null: "weather json object null";
+            assert jo != null : "weather json object null";
 
             String main = jo.get("main").getAsString();
             String description = jo.get("description").getAsString();
 
             iconId = jo.get("icon").getAsString();
 
-            assert main !=null && !main.isEmpty(): "main string null or empty";
-            assert description !=null && !description.isEmpty(): "description string null or empty";
+            assert main != null && !main.isEmpty() : "main string null or empty";
+            assert description != null && !description.isEmpty() : "description string null or empty";
 
             weatherArray.add(new Weather(main, description, iconId));
 
@@ -64,7 +64,7 @@ public class JsonConverterWeather {
         // get the main weather
 
         JsonObject main = jsonObject.get("main").getAsJsonObject();
-        assert main != null: "main json object null";
+        assert main != null : "main json object null";
         temp = main.get("temp").getAsDouble();
         pressure = main.get("pressure").getAsInt();
         humidity = main.get("humidity").getAsInt();
@@ -86,17 +86,12 @@ public class JsonConverterWeather {
         location = new Location(city, lat, lon);
 
 
-       
-
-
-
-
         return new Forecast(weatherArray, temp, pressure, humidity, temp_min, temp_max, windSpeed, location);
 
 
     }
 
-    public ArrayList<Forecast> getForecastsFromJson(JsonObject jsonObject){
+    public ArrayList<Forecast> getForecastsFromJson(JsonObject jsonObject) {
 
         ArrayList<Forecast> forcasts = new ArrayList<>();
 
@@ -112,10 +107,10 @@ public class JsonConverterWeather {
         JsonArray forecastsJsonArray = jsonObject.get("list").getAsJsonArray();
 
 
-        Log.d("FORECASTS","" + lon);
-        Log.d("FORECASTS","" + lat);
-        Log.d("FORECASTS","" + city);
-        for(JsonElement o : forecastsJsonArray){
+        Log.d("FORECASTS", "" + lon);
+        Log.d("FORECASTS", "" + lat);
+        Log.d("FORECASTS", "" + city);
+        for (JsonElement o : forecastsJsonArray) {
             forcasts.add(getForecastFromJson(o.getAsJsonObject(), location));
         }
 
@@ -123,7 +118,7 @@ public class JsonConverterWeather {
 
     }
 
-    private Forecast getForecastFromJson(JsonObject jsonObject, Location location){
+    private Forecast getForecastFromJson(JsonObject jsonObject, Location location) {
 
         ArrayList<Weather> weatherArray = new ArrayList<>();
         double temp;
@@ -147,7 +142,7 @@ public class JsonConverterWeather {
 
         JsonArray weatherMessageArray = jsonObject.get("weather").getAsJsonArray();
 
-        for(JsonElement j : weatherMessageArray){
+        for (JsonElement j : weatherMessageArray) {
 
             JsonObject jo = j.getAsJsonObject();
 

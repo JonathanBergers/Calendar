@@ -27,7 +27,7 @@ import nl.saxion.calendar.utils.Updatable;
  * Created by Alec on 12-10-2015.
  */
 @EViewGroup(R.layout.event_view)
-public class EventView extends LinearLayout implements SetData<EventWrapper> , Updatable<Bitmap>{
+public class EventView extends LinearLayout implements SetData<EventWrapper>, Updatable<Bitmap> {
 
     @ViewById
     TextView textViewSummary, textViewDescription;
@@ -57,8 +57,6 @@ public class EventView extends LinearLayout implements SetData<EventWrapper> , U
     }
 
 
-
-
     @Override
     public void setData(final EventWrapper event) {
 
@@ -69,10 +67,8 @@ public class EventView extends LinearLayout implements SetData<EventWrapper> , U
         materialEditTextEnd.setText(event.getEnd());
 
 
-
-
         final Forecast f = event.getForecast();
-        if(f != null){
+        if (f != null) {
             this.forecast = f;
             Log.d("EVENTJO", event.getForecast().toString());
 
@@ -88,14 +84,14 @@ public class EventView extends LinearLayout implements SetData<EventWrapper> , U
             @Override
             public boolean onLongClick(View v) {
 
-                if(forecast == null) return false;
+                if (forecast == null) return false;
 
-                if(!showingForecast){
+                if (!showingForecast) {
                     ForecastView fv = ForecastView_.build(getContext());
                     fv.setData(forecast);
                     frameLayout.addView(fv);
                     showingForecast = true;
-                }else{
+                } else {
                     frameLayout.removeAllViews();
                     showingForecast = false;
                 }

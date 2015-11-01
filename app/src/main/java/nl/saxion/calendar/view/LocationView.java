@@ -1,7 +1,6 @@
 package nl.saxion.calendar.view;
 
 import android.content.Context;
-import android.support.annotation.UiThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,7 @@ import nl.saxion.calendar.model.Model;
  * Created by falco on 28-9-15.
  */
 @EViewGroup
-public class LocationView extends LinearLayout implements SetData<Location>{
+public class LocationView extends LinearLayout implements SetData<Location> {
 
     @ViewById(R.id.materialEditText_Location)
     MaterialEditText materialEditTextLocation;
@@ -34,14 +33,13 @@ public class LocationView extends LinearLayout implements SetData<Location>{
     Model model;
 
 
-
     public LocationView(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.location_view, this);
     }
 
-    public void setData(Location l){
-        if(l==null){
+    public void setData(Location l) {
+        if (l == null) {
             materialEditTextLocation.setText("zoek hier");
             buttonSearch.setOnClickListener(new OnClickListener() {
                 @Override
@@ -68,11 +66,7 @@ public class LocationView extends LinearLayout implements SetData<Location>{
         }
 
 
-
-
     }
-
-
 
 
 }

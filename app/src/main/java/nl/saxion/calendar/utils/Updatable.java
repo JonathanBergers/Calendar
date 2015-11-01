@@ -6,7 +6,7 @@ package nl.saxion.calendar.utils;
 public interface Updatable<T> {
 
 
-    public void update(T input);
+    void update(T input);
 
 
 }

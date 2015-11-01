@@ -1,18 +1,12 @@
 package nl.saxion.calendar.activities;
 
-import android.content.Context;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
@@ -32,8 +26,6 @@ import nl.saxion.calendar.view.MaterialPagerAdapter;
 public class MainActivity extends BaseActivity {
 
 
-
-
     @Bean
     Model model;
 
@@ -41,15 +33,12 @@ public class MainActivity extends BaseActivity {
     OpenweatherClient client;
 
 
-
-
     @ViewById
     MaterialViewPager materialViewPager;
 
 
-
     @AfterViews
-    public void initialize(){
+    public void initialize() {
 
         //model.retrieveForecasts("Londen");
         createMaterialViewpager();
@@ -58,19 +47,17 @@ public class MainActivity extends BaseActivity {
         model.addLocation(new Location("london", 0, 0));
         model.addLocation(new Location("zutphen", 0, 0));
 
-        if(model.getCredentials() == null){
+        if (model.getCredentials() == null) {
             LoginActivity_.intent(this).start();
         }
 
 
-
-
     }
 
-    /** inititalizes the material viewpager with the recyclerviews
-     *
+    /**
+     * inititalizes the material viewpager with the recyclerviews
      */
-    private void createMaterialViewpager(){
+    private void createMaterialViewpager() {
 
 
         // Header design
@@ -103,8 +90,6 @@ public class MainActivity extends BaseActivity {
         });
 
 
-
-
         // get the viewpager
         ViewPager viewPager = materialViewPager.getViewPager();
         // set the pager adapter
@@ -114,9 +99,6 @@ public class MainActivity extends BaseActivity {
 
 
     }
-
-
-
 
 
     @Override

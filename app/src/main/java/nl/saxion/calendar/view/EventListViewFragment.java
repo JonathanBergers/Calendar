@@ -31,9 +31,8 @@ public class EventListViewFragment extends GenericListViewFragment<EventWrapper,
     Model model;
 
 
-
     @AfterViews
-    public void afterInject(){
+    public void afterInject() {
         model.retrieveEvents(this);
 
     }
@@ -44,8 +43,6 @@ public class EventListViewFragment extends GenericListViewFragment<EventWrapper,
 
         Log.d("EVENTFRAG", input.toArray().toString());
         mAdapter.notifyDataSetChanged();
-
-
 
 
     }
